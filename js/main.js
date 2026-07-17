@@ -22,8 +22,10 @@ function initSiteParticles() {
   let pixelRatio = 1;
   let animationFrame = 0;
   let resizeFrame = 0;
+  let scrollFrame = 0;
   let lastFrameTime = 0;
   let isVisible = !document.hidden;
+  let scrollOffset = window.scrollY;
   let pointerX = 0;
   let pointerY = 0;
   let pointerActive = false;
@@ -44,8 +46,13 @@ function initSiteParticles() {
   };
 
   const particleTarget = () => {
-    if (width < 768) return 2000;
-    return 2500;
+    if (width < 768) return 3000;
+    return 4000;
+  };
+
+  const getScreenY = (particleY) => {
+    const fieldHeight = height + 48;
+    return ((((particleY - scrollOffset) + 24) % fieldHeight) + fieldHeight) % fieldHeight - 24;
   };
 
   const rebuildParticles = () => {
@@ -144,10 +151,11 @@ function initSiteParticles() {
 
         let interactionTargetX = 0;
         let interactionTargetY = 0;
+        const screenY = getScreenY(particle.y);
 
         if (pointerActive && shouldMove) {
           const dx = particle.x - pointerX;
-          const dy = particle.y - pointerY;
+          const dy = screenY - pointerY;
           const interactionRadius = 180;
 
           if (Math.abs(dx) < interactionRadius && Math.abs(dy) < interactionRadius) {
@@ -165,7 +173,7 @@ function initSiteParticles() {
         particle.interactionY += (interactionTargetY - particle.interactionY) * interactionEase;
 
         const drawX = particle.x + particle.interactionX;
-        const drawY = particle.y + particle.interactionY;
+        const drawY = screenY + particle.interactionY;
         context.moveTo(drawX + particle.radius, drawY);
         context.arc(drawX, drawY, particle.radius, 0, Math.PI * 2);
       });
@@ -232,6 +240,15 @@ function initSiteParticles() {
       resizeCanvas();
     });
   });
+
+  window.addEventListener('scroll', () => {
+    scrollOffset = window.scrollY;
+    if (!reducedMotion.matches || scrollFrame) return;
+    scrollFrame = window.requestAnimationFrame(() => {
+      scrollFrame = 0;
+      drawParticles(performance.now(), false);
+    });
+  }, { passive: true });
 
   const handleMotionPreference = () => {
     if (reducedMotion.matches) {
