@@ -33,7 +33,7 @@ body {
   position: relative;
   min-width: 320px;
   margin: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   background: var(--bg);
   color: var(--text);
   font-family: "JetBrains Mono", monospace;
@@ -551,6 +551,7 @@ main > section + section::before {
 .cases-section {
   position: relative;
   height: calc(var(--case-count, 9) * 100vh);
+  height: calc(var(--case-count, 9) * 100dvh);
   scroll-margin-top: var(--header-height);
 }
 
@@ -558,6 +559,7 @@ main > section + section::before {
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   background: var(--surface-1);
   isolation: isolate;
