@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/calculator-config.js" defer></script>
+    <script src="/js/calculator.js" defer></script>
     <script src="/js/main.js" defer></script>
   </head>
   <body>
@@ -39,6 +41,7 @@
       <nav class="site-nav" aria-label="Основная навигация">
         <a href="#cases">Кейсы</a>
         <a href="#services">Услуги</a>
+        <a href="#calculator">Стоимость</a>
         <a href="#process">Процесс</a>
         <a href="#faq">FAQ</a>
         <a href="#contacts">Контакты</a>
@@ -109,9 +112,37 @@
         </div>
       </section>
 
+      <section class="content-section calculator-section section-tone section-assembly section-tone--calculator" id="calculator" data-section-name="Стоимость" aria-labelledby="calculator-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">02 / РАСЧЁТ СТОИМОСТИ</p>
+            <p class="calculator-duration">≈ 1–2 МИНУТЫ</p>
+          </div>
+          <div>
+            <h2 id="calculator-title">Рассчитайте стоимость проекта</h2>
+            <p class="section-heading__lead">Ответьте на несколько вопросов и получите предварительную вилку стоимости разработки.</p>
+          </div>
+        </div>
+        <div class="calculator-shell" data-calculator>
+          <div class="calculator-head">
+            <span data-calculator-step>01 / 05</span>
+            <div class="calculator-progress" role="progressbar" aria-label="Прогресс расчёта" aria-valuemin="0" aria-valuemax="100" aria-valuenow="20" data-calculator-progress>
+              <span></span>
+            </div>
+            <span data-calculator-progress-text>20%</span>
+          </div>
+          <div class="calculator-stage" data-calculator-stage aria-live="polite"></div>
+          <div class="calculator-controls">
+            <button class="button" type="button" data-calculator-back>← Назад</button>
+            <p data-calculator-hint aria-live="polite"></p>
+            <button class="button" type="button" data-calculator-next>Далее →</button>
+          </div>
+        </div>
+      </section>
+
       <section class="content-section process-section section-tone section-assembly section-tone--process" id="process" data-section-name="Процесс" aria-labelledby="process-title">
         <div class="section-heading">
-          <p class="eyebrow">02 / ПРОЦЕСС</p>
+          <p class="eyebrow">03 / ПРОЦЕСС</p>
           <h2 id="process-title">От задачи до запуска</h2>
         </div>
         <ol class="process-list">
@@ -140,7 +171,7 @@
 
       <section class="content-section stack-section section-tone section-assembly section-tone--stack" id="stack" data-section-name="Стек" aria-labelledby="stack-title">
         <div class="section-heading section-heading--compact">
-          <p class="eyebrow">03 / СТЕК</p>
+          <p class="eyebrow">04 / СТЕК</p>
           <h2 id="stack-title">Инструменты</h2>
         </div>
         <ul class="tag-list" aria-label="Технологии">
@@ -150,7 +181,7 @@
 
       <section class="content-section faq-section section-tone section-assembly section-tone--faq" id="faq" data-section-name="FAQ" aria-labelledby="faq-title">
         <div class="section-heading">
-          <p class="eyebrow">04 / FAQ</p>
+          <p class="eyebrow">05 / FAQ</p>
           <h2 id="faq-title">Частые вопросы</h2>
         </div>
         <div class="faq-list">
@@ -184,7 +215,7 @@
       <section class="content-section contacts-section section-tone section-assembly section-tone--contacts" id="contacts" data-section-name="Контакты" aria-labelledby="contacts-title">
         <div class="contact-card">
           <div class="contact-card__intro">
-            <p class="eyebrow">05 / КОНТАКТЫ</p>
+            <p class="eyebrow">06 / КОНТАКТЫ</p>
             <h2 id="contacts-title">Обсудим ваш проект</h2>
             <p>Расскажите о задаче — отвечу в течение дня и предложу следующий шаг.</p>
             <div class="contact-links">

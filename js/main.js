@@ -1,4 +1,4 @@
-const CASES_BREAKPOINT = 1024;
+const CASES_BREAKPOINT = 760;
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
@@ -429,6 +429,7 @@ function initSectionAssembly() {
     ['#top', '.hero__inner > *'],
     ['#cases', '.cases-loading'],
     ['#services', '.section-heading, .service-card'],
+    ['#calculator', '.section-heading, .calculator-shell'],
     ['#process', '.section-heading, .process-list > li'],
     ['#stack', '.section-heading, .tag-list > li'],
     ['#faq', '.section-heading, .faq-list > details'],
@@ -460,8 +461,8 @@ function initSectionAssembly() {
       observer.unobserve(entry.target);
     });
   }, {
-    threshold: 0.05,
-    rootMargin: '0px 0px -12% 0px'
+    threshold: 0.01,
+    rootMargin: '-5% 0px -35% 0px'
   });
 
   sections.forEach((section) => observer.observe(section));
@@ -512,6 +513,7 @@ function initPageSlider() {
     sectionLabel.textContent = activeSection.dataset.sectionName;
     track.setAttribute('aria-valuenow', String(percent));
     track.setAttribute('aria-valuetext', `${percent}% · ${activeSection.dataset.sectionName}`);
+    sections.forEach((section, index) => section.classList.toggle('is-tone-active', index === activeIndex));
     markers.forEach((marker, index) => marker.classList.toggle('is-active', index === activeIndex));
   };
 
@@ -583,6 +585,38 @@ function initPageSlider() {
   update();
 }
 
+function initAmbientInteractive() {
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+  const sections = document.querySelectorAll('.content-section:not(.contacts-section)');
+
+  sections.forEach((section) => {
+    const field = createElement('div', 'ambient-field');
+    field.setAttribute('aria-hidden', 'true');
+    field.innerHTML = `
+      <span class="ambient-field__axis ambient-field__axis--x"></span>
+      <span class="ambient-field__axis ambient-field__axis--y"></span>
+      <span class="ambient-field__ring"></span>
+      <span class="ambient-field__readout">X 000 · Y 000</span>
+      <span class="ambient-field__node ambient-field__node--a"></span>
+      <span class="ambient-field__node ambient-field__node--b"></span>
+      <span class="ambient-field__node ambient-field__node--c"></span>
+    `;
+    section.append(field);
+
+    section.addEventListener('pointermove', (event) => {
+      const rect = section.getBoundingClientRect();
+      const x = clamp(event.clientX - rect.left, 0, rect.width);
+      const y = clamp(event.clientY - rect.top, 0, rect.height);
+      field.style.setProperty('--ambient-x', `${x}px`);
+      field.style.setProperty('--ambient-y', `${y}px`);
+      field.querySelector('.ambient-field__readout').textContent = `X ${String(Math.round(x)).padStart(3, '0')} · Y ${String(Math.round(y)).padStart(3, '0')}`;
+      field.classList.add('is-active');
+    }, { passive: true });
+
+    section.addEventListener('pointerleave', () => field.classList.remove('is-active'));
+  });
+}
+
 function initContactForm() {
   const form = document.querySelector('#contact-form');
   const status = document.querySelector('#form-status');
@@ -634,5 +668,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initCases();
   initSectionAssembly();
   initPageSlider();
+  initAmbientInteractive();
   initContactForm();
 });
