@@ -8,40 +8,40 @@
     "stack": ["Node.js", "SQLite", "Vercel"],
     "url": "https://bliss-home.ru",
     "accent": "blue",
-    "image": "/img/cases/01.png"
+    "image": "/assets/cases/bliss-home.jpg"
   },
   {
     "id": "provibe",
     "num": "02",
     "title": "ProVibe",
     "category": "Корпоративный сайт",
-    "description": "Сайт компании с акцентом на услуги, экспертизу и быстрый контакт. Адаптивная структура сохраняет ясную иерархию на любом экране.",
-    "stack": ["JavaScript", "Node.js", "Vercel"],
+    "description": "Лендинг строительной компании с портфолио, расчётом стоимости и отправкой заявок в Telegram. Галерея автоматически собирается из фотографий объектов.",
+    "stack": ["JavaScript", "Node.js", "Telegram Bot API"],
     "url": "https://provibemsk.ru",
     "accent": "orange",
-    "image": "/img/cases/02.png"
+    "image": "/assets/cases/provibe.jpg"
   },
   {
     "id": "studforma",
     "num": "03",
     "title": "Studforma",
     "category": "Каталог",
-    "description": "Каталог формы с быстрым доступом к категориям и ключевой информации. Интерфейс рассчитан на понятный выбор и отправку заявки без лишних шагов.",
-    "stack": ["JavaScript", "PostgreSQL", "Timeweb"],
+    "description": "MVP AI-сервиса для подготовки учебных материалов: тарифы, примеры, документы и пошаговая анкета заказа из десяти шагов.",
+    "stack": ["Next.js 14", "TypeScript", "Tailwind CSS"],
     "url": "https://studforma.ru",
     "accent": "blue",
-    "image": "/img/cases/03.png"
+    "image": "/assets/cases/studforma.jpg"
   },
   {
     "id": "botai-crm",
     "num": "04",
     "title": "BOTai CRM",
     "category": "SaaS · В разработке",
-    "description": "CRM для работы с обращениями и автоматизации клиентских сценариев. Проект объединяет управление данными, коммуникации и ежедневные процессы команды.",
-    "stack": ["Node.js", "PostgreSQL", "Telegram Bot API"],
+    "description": "SaaS-платформа для репетиторов, учеников, родителей и онлайн-школ: CRM, расписание, оплаты, домашние задания, прогресс и AI-агенты.",
+    "stack": ["Next.js 15", "React 19", "TypeScript"],
     "url": "https://botaicrm.ru",
     "accent": "orange",
-    "image": "/img/cases/04.png"
+    "image": "/assets/cases/botai.jpg"
   },
   {
     "id": "soon-05",
@@ -52,7 +52,7 @@
     "stack": ["Node.js", "Vercel"],
     "url": "",
     "accent": "blue",
-    "image": "/img/cases/05.png"
+    "image": ""
   },
   {
     "id": "soon-06",
@@ -63,7 +63,7 @@
     "stack": ["Telegram Bot API", "SQLite"],
     "url": "",
     "accent": "orange",
-    "image": "/img/cases/06.png"
+    "image": ""
   },
   {
     "id": "soon-07",
@@ -74,7 +74,7 @@
     "stack": ["PostgreSQL", "GitHub"],
     "url": "",
     "accent": "blue",
-    "image": "/img/cases/07.png"
+    "image": ""
   },
   {
     "id": "soon-08",
@@ -85,7 +85,7 @@
     "stack": ["Node.js", "ЮKassa"],
     "url": "",
     "accent": "orange",
-    "image": "/img/cases/08.png"
+    "image": ""
   },
   {
     "id": "soon-09",
@@ -96,6 +96,6 @@
     "stack": ["JavaScript", "Timeweb"],
     "url": "",
     "accent": "blue",
-    "image": "/img/cases/09.png"
+    "image": ""
   }
 ]

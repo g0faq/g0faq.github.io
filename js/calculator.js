@@ -114,30 +114,6 @@
     timeline: null
   });
 
-  const validId = (items, id) => Boolean(findById(items, id));
-
-  const loadState = () => {
-    const fallback = { step: 0, result: false, answers: defaultAnswers() };
-    try {
-      const saved = JSON.parse(localStorage.getItem(config.storageKey));
-      if (!saved || typeof saved !== 'object') return fallback;
-      const answers = {
-        product: validId(config.products, saved.answers?.product) ? saved.answers.product : null,
-        scale: validId(config.scales, saved.answers?.scale) ? saved.answers.scale : null,
-        features: Array.isArray(saved.answers?.features)
-          ? saved.answers.features.filter((id) => validId(config.features, id))
-          : [],
-        design: validId(config.designs, saved.answers?.design) ? saved.answers.design : null,
-        timeline: validId(config.timelines, saved.answers?.timeline) ? saved.answers.timeline : null
-      };
-      const step = Number.isInteger(saved.step) ? Math.min(Math.max(saved.step, 0), steps.length - 1) : 0;
-      const complete = answers.product && answers.scale && answers.design && answers.timeline;
-      return { step, result: Boolean(saved.result && complete), answers };
-    } catch {
-      return fallback;
-    }
-  };
-
   const init = () => {
     const shell = document.querySelector('[data-calculator]');
     if (!shell) return;
@@ -149,7 +125,12 @@
     const backButton = shell.querySelector('[data-calculator-back]');
     const nextButton = shell.querySelector('[data-calculator-next]');
     const hint = shell.querySelector('[data-calculator-hint]');
-    const state = loadState();
+    const state = { step: 0, result: false, answers: defaultAnswers() };
+    try {
+      localStorage.removeItem(config.storageKey);
+    } catch {
+      // Each new visit starts from a clean questionnaire even without storage access.
+    }
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let advanceTimer = 0;
 
@@ -210,11 +191,11 @@
 
     const renderStep = () => {
       const step = steps[state.step];
-      const percent = Math.round(((state.step + 1) / steps.length) * 100);
+      const percent = Math.round((state.step / steps.length) * 100);
       shell.classList.remove('is-result');
       stage.classList.remove('is-choice-locked');
       stepLabel.textContent = `${String(state.step + 1).padStart(2, '0')} / ${String(steps.length).padStart(2, '0')}`;
-      progress.style.setProperty('--calculator-progress', String((state.step + 1) / steps.length));
+      progress.style.setProperty('--calculator-progress', String(state.step / steps.length));
       progress.setAttribute('aria-valuenow', String(percent));
       progressText.textContent = `${percent}%`;
       animateProgress();

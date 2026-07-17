@@ -308,6 +308,15 @@ function createCasePanel(caseData, index) {
   const media = createElement('div', 'case-media');
   media.dataset.image = caseData.image;
   media.setAttribute('aria-hidden', 'true');
+  if (caseData.image) {
+    const image = createElement('img', 'case-media__image');
+    image.src = caseData.image;
+    image.alt = '';
+    image.decoding = 'async';
+    image.loading = index === 0 ? 'eager' : 'lazy';
+    media.append(image);
+    media.classList.add('case-media--image');
+  }
 
   const content = createElement('div', 'case-content');
   content.append(
@@ -482,6 +491,7 @@ function initPageSlider() {
   const markers = sections.map((section, index) => {
     const marker = createElement('span', 'page-slider__marker');
     marker.dataset.index = String(index + 1).padStart(2, '0');
+    marker.dataset.name = section.dataset.sectionName;
     marker.title = section.dataset.sectionName;
     markersContainer.append(marker);
     return marker;
@@ -648,9 +658,12 @@ function initContentVisuals() {
     visual.updateTimer = window.setTimeout(() => {
       visual.querySelector('[data-process-current], [data-faq-current]').textContent = String(index + 1).padStart(2, '0');
       visual.querySelector('[data-process-label], [data-faq-label]').textContent = label;
-      visual.querySelectorAll('.process-visual__track span, .faq-visual__signal span').forEach((marker, markerIndex) => {
+      visual.querySelectorAll('.process-visual__track span, .faq-visual__deck span').forEach((marker, markerIndex) => {
         marker.classList.toggle('is-active', markerIndex === index);
       });
+      if (visual.classList.contains('faq-visual')) {
+        visual.style.setProperty('--faq-index', String(index));
+      }
       visual.classList.remove('is-updating');
     }, 130);
   };
@@ -684,9 +697,68 @@ function initContentVisuals() {
 
   faqItems.forEach((details, index) => {
     details.addEventListener('pointerenter', () => activateFaq(index));
-    details.querySelector('summary')?.addEventListener('focus', () => activateFaq(index));
+    const summary = details.querySelector('summary');
+    const answer = details.querySelector('.faq-answer');
+    const inner = details.querySelector('.faq-answer__inner');
+    summary?.addEventListener('focus', () => activateFaq(index));
     details.addEventListener('toggle', () => {
       if (details.open) activateFaq(index);
+    });
+
+    if (!summary || !answer || !inner) return;
+    summary.addEventListener('click', (event) => {
+      event.preventDefault();
+      activateFaq(index);
+
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reducedMotion) {
+        details.open = !details.open;
+        return;
+      }
+
+      details.faqAnimation?.cancel();
+      inner.getAnimations().forEach((animation) => animation.cancel());
+
+      if (!details.open) {
+        details.open = true;
+        answer.style.height = '0px';
+        answer.style.opacity = '0';
+        const targetHeight = inner.scrollHeight;
+        details.faqAnimation = answer.animate([
+          { height: '0px', opacity: 0 },
+          { height: `${targetHeight}px`, opacity: 1 }
+        ], {
+          duration: 520,
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
+        });
+        inner.animate([
+          { transform: 'translate3d(30px, -14px, 0) skewX(-2deg)', clipPath: 'inset(0 100% 0 0)' },
+          { transform: 'translate3d(0, 0, 0) skewX(0)', clipPath: 'inset(0 0 0 0)' }
+        ], {
+          duration: 620,
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
+        });
+        details.faqAnimation.finished.then(() => {
+          answer.style.height = 'auto';
+          answer.style.opacity = '1';
+        }).catch(() => {});
+        return;
+      }
+
+      const startHeight = answer.getBoundingClientRect().height;
+      answer.style.height = `${startHeight}px`;
+      details.faqAnimation = answer.animate([
+        { height: `${startHeight}px`, opacity: 1 },
+        { height: '0px', opacity: 0 }
+      ], {
+        duration: 300,
+        easing: 'cubic-bezier(0.7, 0, 0.84, 0)'
+      });
+      details.faqAnimation.finished.then(() => {
+        details.open = false;
+        answer.style.height = '';
+        answer.style.opacity = '';
+      }).catch(() => {});
     });
   });
   if (faqItems.length) activateFaq(0);
@@ -701,11 +773,27 @@ function initContactForm() {
   const contactInput = form.querySelector('#contact');
   const contactLabel = form.querySelector('[data-contact-label]');
   const channelFields = {
-    Telegram: { label: 'Ваш Telegram', placeholder: '@username', autocomplete: 'off', inputMode: 'text' },
-    VK: { label: 'Ссылка или ID во VK', placeholder: 'vk.com/username', autocomplete: 'url', inputMode: 'url' },
-    MAX: { label: 'Номер в MAX', placeholder: '+7 999 000-00-00', autocomplete: 'tel', inputMode: 'tel' },
-    'Телефон': { label: 'Номер телефона', placeholder: '+7 999 000-00-00', autocomplete: 'tel', inputMode: 'tel' }
+    Telegram: { label: 'Ваш Telegram', placeholder: '@username', autocomplete: 'off', inputMode: 'text', phone: false },
+    VK: { label: 'Ссылка или ID во VK', placeholder: 'vk.com/username', autocomplete: 'url', inputMode: 'url', phone: false },
+    MAX: { label: 'Номер в MAX', placeholder: '+7(999)-999-99-99', autocomplete: 'tel', inputMode: 'tel', phone: true },
+    'Телефон': { label: 'Номер телефона', placeholder: '+7(999)-999-99-99', autocomplete: 'tel', inputMode: 'tel', phone: true }
   };
+
+  const formatRussianPhone = (value) => {
+    let digits = String(value || '').replace(/\D/g, '');
+    if (digits.startsWith('7') || digits.startsWith('8')) digits = digits.slice(1);
+    digits = digits.slice(0, 10);
+
+    let formatted = '+7';
+    if (digits.length > 0) formatted += `(${digits.slice(0, 3)}`;
+    if (digits.length >= 3) formatted += ')';
+    if (digits.length > 3) formatted += `-${digits.slice(3, 6)}`;
+    if (digits.length > 6) formatted += `-${digits.slice(6, 8)}`;
+    if (digits.length > 8) formatted += `-${digits.slice(8, 10)}`;
+    return formatted;
+  };
+
+  let previousField = channelFields[channelSelect.value] || channelFields.Telegram;
 
   const updateContactField = () => {
     const field = channelFields[channelSelect.value] || channelFields.Telegram;
@@ -713,9 +801,28 @@ function initContactForm() {
     contactInput.placeholder = field.placeholder;
     contactInput.autocomplete = field.autocomplete;
     contactInput.inputMode = field.inputMode;
+    contactInput.maxLength = field.phone ? 17 : 200;
+    if (field.phone) {
+      contactInput.pattern = '\\+7\\(\\d{3}\\)-\\d{3}-\\d{2}-\\d{2}';
+      contactInput.value = previousField.phone
+        ? formatRussianPhone(contactInput.value)
+        : '+7';
+    } else {
+      contactInput.removeAttribute('pattern');
+      if (previousField.phone && /^\+7(?:\D|$)/.test(contactInput.value)) contactInput.value = '';
+    }
+    previousField = field;
   };
 
   channelSelect.addEventListener('change', updateContactField);
+  contactInput.addEventListener('focus', () => {
+    const field = channelFields[channelSelect.value] || channelFields.Telegram;
+    if (field.phone && !contactInput.value) contactInput.value = '+7';
+  });
+  contactInput.addEventListener('input', () => {
+    const field = channelFields[channelSelect.value] || channelFields.Telegram;
+    if (field.phone) contactInput.value = formatRussianPhone(contactInput.value);
+  });
   updateContactField();
 
   form.addEventListener('submit', async (event) => {
@@ -727,7 +834,8 @@ function initContactForm() {
       name: String(formData.get('name') || '').trim(),
       channel: String(formData.get('channel') || '').trim(),
       contact: String(formData.get('contact') || '').trim(),
-      message: String(formData.get('message') || '').trim()
+      message: String(formData.get('message') || '').trim(),
+      consent: formData.get('consent') === 'on'
     };
 
     submitButton.disabled = true;

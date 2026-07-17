@@ -26,9 +26,10 @@ module.exports = async function contactHandler(req, res) {
   const channel = typeof body?.channel === 'string' ? body.channel.trim() : '';
   const contact = typeof body?.contact === 'string' ? body.contact.trim() : '';
   const message = typeof body?.message === 'string' ? body.message.trim() : '';
+  const consent = body?.consent === true;
   const allowedChannels = new Set(['Telegram', 'VK', 'MAX', 'Телефон']);
 
-  if (!name || !allowedChannels.has(channel) || !contact || !message) {
+  if (!name || !allowedChannels.has(channel) || !contact || !message || !consent) {
     return res.status(400).json({ ok: false, error: 'All fields are required' });
   }
 
@@ -56,6 +57,7 @@ module.exports = async function contactHandler(req, res) {
     '🧩 <b>ЗАДАЧА</b>',
     escapeHtml(message),
     '━━━━━━━━━━━━━━━━━━',
+    '✅ <b>Согласие на обработку персональных данных:</b> получено',
     `🕒 <b>Получено:</b> ${escapeHtml(receivedAt)} · МСК`,
     '🌐 <b>Источник:</b> portfolio-site'
   ].join('\n');
