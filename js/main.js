@@ -9,11 +9,10 @@ function createElement(tag, className, text) {
   return element;
 }
 
-function initHeroParticles() {
-  const hero = document.querySelector('.hero');
-  const canvas = hero?.querySelector('.hero-particles');
+function initSiteParticles() {
+  const canvas = document.querySelector('.site-particles');
   const context = canvas?.getContext('2d', { alpha: true, desynchronized: true });
-  if (!hero || !canvas || !context) return;
+  if (!canvas || !context) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const alphaBuckets = Array.from({ length: 6 }, () => []);
@@ -24,11 +23,14 @@ function initHeroParticles() {
   let animationFrame = 0;
   let resizeFrame = 0;
   let lastFrameTime = 0;
-  let isVisible = false;
+  let isVisible = !document.hidden;
   let parallaxX = 0;
   let parallaxY = 0;
   let targetParallaxX = 0;
   let targetParallaxY = 0;
+  let pointerX = 0;
+  let pointerY = 0;
+  let pointerActive = false;
 
   const fade = (value) => value * value * (3 - (2 * value));
   const hash = (x, y) => {
@@ -81,14 +83,9 @@ function initHeroParticles() {
       });
 
       const density = clamp(0.08 + (noise * 0.42) + (clusterStrength * 0.82), 0, 1);
-      const isTextZone = normalizedY > (width < 768 ? 0.5 : 0.56)
-        && normalizedX < (width < 768 ? 1 : 0.78);
-      const readabilityFactor = isTextZone ? 0.24 : 1;
-      if (Math.random() > density * 0.58 * readabilityFactor) continue;
+      if (Math.random() > density * 0.58) continue;
 
-      const alpha = isTextZone
-        ? 0.15 + (Math.random() * 0.12)
-        : clamp(0.15 + (Math.random() * 0.42) + (density * 0.28), 0.15, 0.9);
+      const alpha = clamp(0.15 + (Math.random() * 0.42) + (density * 0.28), 0.15, 0.9);
       nextParticles.push({
         x: normalizedX * width,
         y: normalizedY * height,
@@ -96,7 +93,10 @@ function initHeroParticles() {
         alphaBucket: Math.min(5, Math.floor(((alpha - 0.15) / 0.75) * 6)),
         velocityX: (Math.random() - 0.5) * 0.032,
         velocityY: (Math.random() - 0.5) * 0.024,
-        phase: Math.random() * Math.PI * 2
+        phase: Math.random() * Math.PI * 2,
+        interactionX: 0,
+        interactionY: 0,
+        response: 0.7 + (Math.random() * 0.6)
       });
     }
 
@@ -108,7 +108,10 @@ function initHeroParticles() {
         alphaBucket: Math.floor(Math.random() * 6),
         velocityX: (Math.random() - 0.5) * 0.032,
         velocityY: (Math.random() - 0.5) * 0.024,
-        phase: Math.random() * Math.PI * 2
+        phase: Math.random() * Math.PI * 2,
+        interactionX: 0,
+        interactionY: 0,
+        response: 0.7 + (Math.random() * 0.6)
       });
     }
 
@@ -149,8 +152,32 @@ function initHeroParticles() {
           if (particle.y > height + 24) particle.y = -24;
         }
 
-        context.moveTo(particle.x + particle.radius, particle.y);
-        context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        let interactionTargetX = 0;
+        let interactionTargetY = 0;
+
+        if (pointerActive && shouldMove) {
+          const dx = particle.x + parallaxX - pointerX;
+          const dy = particle.y + parallaxY - pointerY;
+          const interactionRadius = 180;
+
+          if (Math.abs(dx) < interactionRadius && Math.abs(dy) < interactionRadius) {
+            const distance = Math.sqrt((dx * dx) + (dy * dy));
+            if (distance > 0 && distance < interactionRadius) {
+              const force = ((1 - (distance / interactionRadius)) ** 2) * 28 * particle.response;
+              interactionTargetX = (dx / distance) * force;
+              interactionTargetY = (dy / distance) * force;
+            }
+          }
+        }
+
+        const interactionEase = pointerActive ? 0.16 : 0.07;
+        particle.interactionX += (interactionTargetX - particle.interactionX) * interactionEase;
+        particle.interactionY += (interactionTargetY - particle.interactionY) * interactionEase;
+
+        const drawX = particle.x + particle.interactionX;
+        const drawY = particle.y + particle.interactionY;
+        context.moveTo(drawX + particle.radius, drawY);
+        context.arc(drawX, drawY, particle.radius, 0, Math.PI * 2);
       });
 
       context.fill();
@@ -184,9 +211,8 @@ function initHeroParticles() {
   };
 
   const resizeCanvas = () => {
-    const bounds = hero.getBoundingClientRect();
-    width = Math.max(1, Math.round(bounds.width));
-    height = Math.max(1, Math.round(bounds.height));
+    width = Math.max(1, Math.round(window.innerWidth));
+    height = Math.max(1, Math.round(window.innerHeight));
     pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(width * pixelRatio);
     canvas.height = Math.round(height * pixelRatio);
@@ -194,17 +220,25 @@ function initHeroParticles() {
     drawParticles(performance.now(), false);
   };
 
-  hero.addEventListener('pointermove', (event) => {
-    if (reducedMotion.matches) return;
-    const bounds = hero.getBoundingClientRect();
-    targetParallaxX = (((event.clientX - bounds.left) / bounds.width) - 0.5) * 32;
-    targetParallaxY = (((event.clientY - bounds.top) / bounds.height) - 0.5) * 24;
-  }, { passive: true });
-
-  hero.addEventListener('pointerleave', () => {
+  const clearPointer = () => {
+    pointerActive = false;
     targetParallaxX = 0;
     targetParallaxY = 0;
-  });
+    canvas.dataset.pointerActive = 'false';
+  };
+
+  window.addEventListener('pointermove', (event) => {
+    if (reducedMotion.matches) return;
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+    pointerActive = true;
+    targetParallaxX = ((pointerX / width) - 0.5) * 32;
+    targetParallaxY = ((pointerY / height) - 0.5) * 24;
+    canvas.dataset.pointerActive = 'true';
+  }, { passive: true });
+
+  document.documentElement.addEventListener('pointerleave', clearPointer);
+  window.addEventListener('blur', clearPointer);
 
   window.addEventListener('resize', () => {
     if (resizeFrame) window.cancelAnimationFrame(resizeFrame);
@@ -216,10 +250,15 @@ function initHeroParticles() {
 
   const handleMotionPreference = () => {
     if (reducedMotion.matches) {
+      clearPointer();
       targetParallaxX = 0;
       targetParallaxY = 0;
       parallaxX = 0;
       parallaxY = 0;
+      particles.forEach((particle) => {
+        particle.interactionX = 0;
+        particle.interactionY = 0;
+      });
       stopAnimation();
       drawParticles(performance.now(), false);
     } else {
@@ -231,17 +270,13 @@ function initHeroParticles() {
   resizeCanvas();
   canvas.dataset.animationState = reducedMotion.matches ? 'static' : 'paused';
 
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(([entry]) => {
-      isVisible = entry.isIntersecting;
-      if (isVisible) startAnimation();
-      else stopAnimation();
-    }, { threshold: 0.01 });
-    observer.observe(hero);
-  } else {
-    isVisible = true;
-    startAnimation();
-  }
+  document.addEventListener('visibilitychange', () => {
+    isVisible = !document.hidden;
+    if (isVisible) startAnimation();
+    else stopAnimation();
+  });
+
+  startAnimation();
 }
 
 function createCasePanel(caseData, index) {
@@ -429,7 +464,7 @@ function initContactForm() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  initHeroParticles();
+  initSiteParticles();
   initCases();
   initContactForm();
 });

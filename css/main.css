@@ -25,6 +25,7 @@ html {
 }
 
 body {
+  position: relative;
   min-width: 320px;
   margin: 0;
   overflow-x: hidden;
@@ -35,6 +36,12 @@ body {
   font-weight: 400;
   line-height: 1.7;
   letter-spacing: 0.06em;
+}
+
+main,
+.site-footer {
+  position: relative;
+  z-index: 1;
 }
 
 body,
@@ -220,8 +227,8 @@ h3 {
   isolation: isolate;
 }
 
-.hero-particles {
-  position: absolute;
+.site-particles {
+  position: fixed;
   z-index: 0;
   inset: 0;
   width: 100%;
