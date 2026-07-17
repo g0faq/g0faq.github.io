@@ -2868,8 +2868,9 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
   }
 
   .hero {
-    min-height: calc(100svh - var(--header-height));
-    padding: 44px var(--page-padding) 24px;
+    min-height: 0;
+    align-items: flex-start;
+    padding: 42px var(--page-padding) 24px;
   }
 
   .hero__inner::before {
@@ -2898,7 +2899,7 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
   }
 
   .hero-flow {
-    top: 12%;
+    top: -4%;
     right: -510px;
     width: 720px;
     height: 520px;
@@ -3007,7 +3008,7 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
   }
 
   .case-number {
-    top: 222px;
+    top: 320px;
     left: 14px;
     font-size: min(38vw, 150px);
   }
@@ -3043,7 +3044,7 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
   }
 
   .case-number {
-    top: 222px;
+    top: 320px;
     font-size: min(38vw, 150px);
   }
 
