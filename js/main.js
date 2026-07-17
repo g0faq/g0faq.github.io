@@ -430,6 +430,47 @@ async function initCases() {
   }
 }
 
+function initHeroFlow() {
+  const hero = document.querySelector('.hero');
+  const flow = hero?.querySelector('[data-hero-flow]');
+  if (!hero || !flow || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  let targetX = 0;
+  let targetY = 0;
+  let currentX = 0;
+  let currentY = 0;
+  let frame = 0;
+
+  const render = () => {
+    currentX += (targetX - currentX) * 0.09;
+    currentY += (targetY - currentY) * 0.09;
+    flow.style.setProperty('--hero-flow-x', `${currentX.toFixed(2)}px`);
+    flow.style.setProperty('--hero-flow-y', `${currentY.toFixed(2)}px`);
+    if (Math.abs(targetX - currentX) > 0.08 || Math.abs(targetY - currentY) > 0.08) {
+      frame = window.requestAnimationFrame(render);
+    } else {
+      frame = 0;
+    }
+  };
+
+  const requestRender = () => {
+    if (!frame) frame = window.requestAnimationFrame(render);
+  };
+
+  hero.addEventListener('pointermove', (event) => {
+    const rect = hero.getBoundingClientRect();
+    targetX = ((event.clientX - rect.left) / rect.width - 0.5) * 30;
+    targetY = ((event.clientY - rect.top) / rect.height - 0.5) * 20;
+    requestRender();
+  }, { passive: true });
+
+  hero.addEventListener('pointerleave', () => {
+    targetX = 0;
+    targetY = 0;
+    requestRender();
+  });
+}
+
 function initSectionAssembly() {
   const sections = Array.from(document.querySelectorAll('.section-assembly'));
   if (sections.length === 0) return;
@@ -872,6 +913,7 @@ function initContactForm() {
 document.addEventListener('DOMContentLoaded', () => {
   initSiteParticles();
   initCases();
+  initHeroFlow();
   initSectionAssembly();
   initPageSlider();
   initContentVisuals();

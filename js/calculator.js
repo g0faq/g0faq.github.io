@@ -232,12 +232,51 @@
       ].join('\n');
     };
 
+    const leadChannels = {
+      Telegram: { label: 'Ваш Telegram', placeholder: '@username', phone: false },
+      VK: { label: 'Ссылка или ID во VK', placeholder: 'vk.com/username', phone: false },
+      MAX: { label: 'Номер в MAX', placeholder: '+7(999)-999-99-99', phone: true },
+      'Телефон': { label: 'Номер телефона', placeholder: '+7(999)-999-99-99', phone: true }
+    };
+
+    const formatRussianPhone = (value) => {
+      let digits = String(value || '').replace(/\D/g, '');
+      if (digits.startsWith('7') || digits.startsWith('8')) digits = digits.slice(1);
+      digits = digits.slice(0, 10);
+      let formatted = '+7';
+      if (digits.length > 0) formatted += `(${digits.slice(0, 3)}`;
+      if (digits.length >= 3) formatted += ')';
+      if (digits.length > 3) formatted += `-${digits.slice(3, 6)}`;
+      if (digits.length > 6) formatted += `-${digits.slice(6, 8)}`;
+      if (digits.length > 8) formatted += `-${digits.slice(8, 10)}`;
+      return formatted;
+    };
+
+    const updateLeadContactField = (form, resetValue = false) => {
+      const channel = form.querySelector('[data-calculator-lead-channel]');
+      const contact = form.querySelector('[data-calculator-lead-contact]');
+      const label = form.querySelector('[data-calculator-lead-contact-label]');
+      if (!channel || !contact || !label) return;
+      const field = leadChannels[channel.value] || leadChannels.Telegram;
+      label.textContent = field.label;
+      contact.placeholder = field.placeholder;
+      contact.inputMode = field.phone ? 'tel' : 'text';
+      contact.autocomplete = field.phone ? 'tel' : 'off';
+      contact.maxLength = field.phone ? 17 : 200;
+      if (field.phone) {
+        contact.pattern = '\\+7\\(\\d{3}\\)-\\d{3}-\\d{2}-\\d{2}';
+        contact.value = resetValue ? '+7' : formatRussianPhone(contact.value);
+      } else {
+        contact.removeAttribute('pattern');
+        if (resetValue) contact.value = '';
+      }
+    };
+
     const renderResult = () => {
       const estimate = calculateEstimate(config, state.answers);
       const featureSummary = estimate.features.length
         ? estimate.features.map((item) => item.title).join(', ')
         : 'Ничего из перечисленного';
-      const telegramUrl = `https://t.me/g0_faq?text=${encodeURIComponent(resultText(estimate))}`;
       shell.classList.add('is-result');
       stage.classList.remove('is-choice-locked');
       stepLabel.textContent = 'ГОТОВО';
@@ -265,9 +304,31 @@
             <p>Без скрытых доплат: если требования не меняются, зафиксированная стоимость остаётся прежней.</p>
           </div>
           <div class="calculator-result__actions">
-            <a class="button calculator-result__telegram" href="${telegramUrl}" target="_blank" rel="noreferrer">Обсудить в Telegram ↗</a>
+            <button class="button button--primary calculator-result__discuss" type="button" data-calculator-discuss aria-expanded="false">Обсудить</button>
             <button class="button" type="button" data-calculator-copy>Скопировать расчёт</button>
-            <a class="button" href="#contacts">Оставить заявку</a>
+          </div>
+          <div class="calculator-lead" data-calculator-lead hidden>
+            <div class="calculator-lead__head">
+              <p class="eyebrow">ОТПРАВИТЬ РАСЧЁТ</p>
+              <h4>Куда ответить?</h4>
+              <p>Оставьте контакт — выбранные параметры и стоимость автоматически прикрепятся к заявке.</p>
+            </div>
+            <form class="calculator-lead__form" data-calculator-lead-form>
+              <label>Имя<input name="name" type="text" maxlength="100" autocomplete="name" required></label>
+              <label>Способ связи
+                <select name="channel" data-calculator-lead-channel required>
+                  <option value="Telegram">Telegram</option>
+                  <option value="VK">VK</option>
+                  <option value="MAX">MAX</option>
+                  <option value="Телефон">Телефон</option>
+                </select>
+              </label>
+              <label data-calculator-lead-contact-label>Ваш Telegram<input name="contact" type="text" maxlength="200" placeholder="@username" data-calculator-lead-contact required></label>
+              <label class="calculator-lead__comment">Комментарий<textarea name="comment" rows="3" maxlength="800" placeholder="Что ещё важно учесть?"></textarea></label>
+              <label class="calculator-lead__consent"><input name="consent" type="checkbox" required><span>Согласен на обработку персональных данных для ответа на заявку</span></label>
+              <button class="button" type="submit">Отправить расчёт</button>
+              <p class="calculator-lead__status" data-calculator-lead-status aria-live="polite"></p>
+            </form>
           </div>
           <div class="calculator-result__secondary">
             <button type="button" data-calculator-edit>Изменить ответы</button>
@@ -378,6 +439,19 @@
       }
 
       if (event.target.closest('[data-calculator-copy]')) copyResult();
+      const discussButton = event.target.closest('[data-calculator-discuss]');
+      if (discussButton) {
+        const lead = stage.querySelector('[data-calculator-lead]');
+        if (lead) {
+          lead.hidden = false;
+          discussButton.setAttribute('aria-expanded', 'true');
+          window.requestAnimationFrame(() => {
+            lead.classList.add('is-visible');
+            lead.querySelector('input[name="name"]')?.focus({ preventScroll: true });
+            lead.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'nearest' });
+          });
+        }
+      }
       if (event.target.closest('[data-calculator-edit]')) {
         state.result = false;
         state.step = 0;
@@ -385,6 +459,63 @@
         transitionTo(renderStep);
       }
       if (event.target.closest('[data-calculator-reset]')) reset();
+    });
+
+    stage.addEventListener('change', (event) => {
+      const channel = event.target.closest('[data-calculator-lead-channel]');
+      if (channel) updateLeadContactField(channel.form, true);
+    });
+
+    stage.addEventListener('input', (event) => {
+      const contact = event.target.closest('[data-calculator-lead-contact]');
+      if (!contact) return;
+      const form = contact.form;
+      const channel = form?.querySelector('[data-calculator-lead-channel]');
+      if (leadChannels[channel?.value]?.phone) contact.value = formatRussianPhone(contact.value);
+    });
+
+    stage.addEventListener('submit', async (event) => {
+      const form = event.target.closest('[data-calculator-lead-form]');
+      if (!form) return;
+      event.preventDefault();
+
+      const submit = form.querySelector('button[type="submit"]');
+      const status = form.querySelector('[data-calculator-lead-status]');
+      const data = new FormData(form);
+      const estimate = calculateEstimate(config, state.answers);
+      const comment = String(data.get('comment') || '').trim();
+      const payload = {
+        name: String(data.get('name') || '').trim(),
+        channel: String(data.get('channel') || '').trim(),
+        contact: String(data.get('contact') || '').trim(),
+        message: `${resultText(estimate)}${comment ? `\n\nКомментарий клиента: ${comment}` : ''}`,
+        consent: data.get('consent') === 'on'
+      };
+
+      submit.disabled = true;
+      submit.textContent = 'Отправляю…';
+      status.textContent = '';
+      status.removeAttribute('data-state');
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const responseData = await response.json();
+        if (!response.ok || !responseData.ok) throw new Error(responseData.error || 'Не удалось отправить расчёт');
+        form.reset();
+        updateLeadContactField(form, true);
+        status.dataset.state = 'success';
+        status.textContent = 'Расчёт отправлен — отвечу в течение дня';
+      } catch (error) {
+        status.dataset.state = 'error';
+        status.textContent = error.message || 'Не удалось отправить расчёт';
+      } finally {
+        submit.disabled = false;
+        submit.textContent = 'Отправить расчёт';
+      }
     });
 
     stage.addEventListener('keydown', (event) => {
