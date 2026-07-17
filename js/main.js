@@ -24,10 +24,6 @@ function initSiteParticles() {
   let resizeFrame = 0;
   let lastFrameTime = 0;
   let isVisible = !document.hidden;
-  let parallaxX = 0;
-  let parallaxY = 0;
-  let targetParallaxX = 0;
-  let targetParallaxY = 0;
   let pointerX = 0;
   let pointerY = 0;
   let pointerActive = false;
@@ -48,9 +44,8 @@ function initSiteParticles() {
   };
 
   const particleTarget = () => {
-    if (width < 768) return 1500;
-    if (width < 1600) return 1800;
-    return 2200;
+    if (width < 768) return 2000;
+    return 2500;
   };
 
   const rebuildParticles = () => {
@@ -89,7 +84,7 @@ function initSiteParticles() {
       nextParticles.push({
         x: normalizedX * width,
         y: normalizedY * height,
-        radius: 1 + Math.random(),
+        radius: 0.45 + (Math.random() * 0.65),
         alphaBucket: Math.min(5, Math.floor(((alpha - 0.15) / 0.75) * 6)),
         velocityX: (Math.random() - 0.5) * 0.032,
         velocityY: (Math.random() - 0.5) * 0.024,
@@ -104,7 +99,7 @@ function initSiteParticles() {
       nextParticles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        radius: 1 + Math.random(),
+        radius: 0.45 + (Math.random() * 0.65),
         alphaBucket: Math.floor(Math.random() * 6),
         velocityX: (Math.random() - 0.5) * 0.032,
         velocityY: (Math.random() - 0.5) * 0.024,
@@ -127,13 +122,8 @@ function initSiteParticles() {
       : 0;
     lastFrameTime = time;
 
-    parallaxX += (targetParallaxX - parallaxX) * 0.045;
-    parallaxY += (targetParallaxY - parallaxY) * 0.045;
-
     context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     context.clearRect(0, 0, width, height);
-    context.save();
-    context.translate(parallaxX, parallaxY);
     context.fillStyle = '#1f58f2';
 
     alphaBuckets.forEach((bucket, bucketIndex) => {
@@ -156,8 +146,8 @@ function initSiteParticles() {
         let interactionTargetY = 0;
 
         if (pointerActive && shouldMove) {
-          const dx = particle.x + parallaxX - pointerX;
-          const dy = particle.y + parallaxY - pointerY;
+          const dx = particle.x - pointerX;
+          const dy = particle.y - pointerY;
           const interactionRadius = 180;
 
           if (Math.abs(dx) < interactionRadius && Math.abs(dy) < interactionRadius) {
@@ -183,7 +173,6 @@ function initSiteParticles() {
       context.fill();
     });
 
-    context.restore();
     context.globalAlpha = 1;
   };
 
@@ -222,8 +211,6 @@ function initSiteParticles() {
 
   const clearPointer = () => {
     pointerActive = false;
-    targetParallaxX = 0;
-    targetParallaxY = 0;
     canvas.dataset.pointerActive = 'false';
   };
 
@@ -232,8 +219,6 @@ function initSiteParticles() {
     pointerX = event.clientX;
     pointerY = event.clientY;
     pointerActive = true;
-    targetParallaxX = ((pointerX / width) - 0.5) * 32;
-    targetParallaxY = ((pointerY / height) - 0.5) * 24;
     canvas.dataset.pointerActive = 'true';
   }, { passive: true });
 
@@ -251,10 +236,6 @@ function initSiteParticles() {
   const handleMotionPreference = () => {
     if (reducedMotion.matches) {
       clearPointer();
-      targetParallaxX = 0;
-      targetParallaxY = 0;
-      parallaxX = 0;
-      parallaxY = 0;
       particles.forEach((particle) => {
         particle.interactionX = 0;
         particle.interactionY = 0;
