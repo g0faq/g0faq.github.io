@@ -329,6 +329,12 @@ function createCasePanel(caseData, index) {
     content.append(link);
   }
 
+  [topline, media, content].forEach((element, pieceIndex) => {
+    element.dataset.assemblyPiece = '';
+    element.style.setProperty('--assembly-order', String(pieceIndex));
+    element.style.setProperty('--assembly-x', pieceIndex % 2 === 0 ? '-24px' : '24px');
+  });
+
   body.append(topline, number, media, content);
   panel.append(spine, body);
   return panel;
@@ -415,6 +421,168 @@ async function initCases() {
   }
 }
 
+function initSectionAssembly() {
+  const sections = Array.from(document.querySelectorAll('.section-assembly'));
+  if (sections.length === 0) return;
+
+  const pieceGroups = [
+    ['#top', '.hero__inner > *'],
+    ['#cases', '.cases-loading'],
+    ['#services', '.section-heading, .service-card'],
+    ['#process', '.section-heading, .process-list > li'],
+    ['#stack', '.section-heading, .tag-list > li'],
+    ['#faq', '.section-heading, .faq-list > details'],
+    ['#contacts', '.contact-card__intro > *, .contact-form > *']
+  ];
+
+  pieceGroups.forEach(([sectionSelector, pieceSelector]) => {
+    const section = document.querySelector(sectionSelector);
+    if (!section) return;
+
+    section.querySelectorAll(pieceSelector).forEach((element, index) => {
+      element.dataset.assemblyPiece = '';
+      element.style.setProperty('--assembly-order', String(index));
+      element.style.setProperty('--assembly-x', index % 2 === 0 ? '-24px' : '24px');
+    });
+  });
+
+  document.documentElement.classList.add('section-motion-ready');
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    sections.forEach((section) => section.classList.add('is-assembled'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      window.requestAnimationFrame(() => entry.target.classList.add('is-assembled'));
+      observer.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.05,
+    rootMargin: '0px 0px -12% 0px'
+  });
+
+  sections.forEach((section) => observer.observe(section));
+}
+
+function initPageSlider() {
+  const slider = document.querySelector('[data-page-slider]');
+  const track = slider?.querySelector('.page-slider__track');
+  const markersContainer = slider?.querySelector('.page-slider__markers');
+  const indexLabel = slider?.querySelector('.page-slider__index');
+  const percentLabel = slider?.querySelector('.page-slider__percent');
+  const sectionLabel = slider?.querySelector('.page-slider__section');
+  const sections = Array.from(document.querySelectorAll('main > section[data-section-name]'));
+  if (!slider || !track || !markersContainer || !indexLabel || !percentLabel || !sectionLabel || sections.length === 0) return;
+
+  const markers = sections.map(() => {
+    const marker = createElement('span', 'page-slider__marker');
+    markersContainer.append(marker);
+    return marker;
+  });
+  let frameRequested = false;
+  let dragging = false;
+
+  const getMaxScroll = () => Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+
+  const update = () => {
+    frameRequested = false;
+    const maxScroll = getMaxScroll();
+    const progress = clamp(window.scrollY / maxScroll, 0, 1);
+    const activePoint = window.scrollY + (window.innerHeight * 0.42);
+    let activeIndex = 0;
+
+    sections.forEach((section, index) => {
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+      const markerProgress = clamp(sectionTop / maxScroll, 0, 1);
+      markers[index].style.top = `${markerProgress * 100}%`;
+      if (sectionTop <= activePoint) activeIndex = index;
+    });
+
+    const activeSection = sections[activeIndex];
+    const accent = getComputedStyle(activeSection).getPropertyValue('--section-accent').trim() || '#1f58f2';
+    const percent = Math.round(progress * 100);
+
+    slider.style.setProperty('--slider-progress', String(progress));
+    slider.style.setProperty('--slider-color', accent);
+    indexLabel.textContent = String(activeIndex + 1).padStart(2, '0');
+    percentLabel.textContent = `${String(percent).padStart(3, '0')}%`;
+    sectionLabel.textContent = activeSection.dataset.sectionName;
+    track.setAttribute('aria-valuenow', String(percent));
+    track.setAttribute('aria-valuetext', `${percent}% · ${activeSection.dataset.sectionName}`);
+    markers.forEach((marker, index) => marker.classList.toggle('is-active', index === activeIndex));
+  };
+
+  const requestUpdate = () => {
+    if (frameRequested) return;
+    frameRequested = true;
+    window.requestAnimationFrame(update);
+  };
+
+  const scrollToProgress = (progress, behavior = 'auto') => {
+    const top = clamp(progress, 0, 1) * getMaxScroll();
+    window.scrollTo({ top, behavior });
+  };
+
+  const scrollFromPointer = (clientY) => {
+    const rect = track.getBoundingClientRect();
+    scrollToProgress((clientY - rect.top) / rect.height);
+  };
+
+  track.addEventListener('pointerdown', (event) => {
+    event.preventDefault();
+    dragging = true;
+    document.documentElement.classList.add('slider-dragging');
+    slider.classList.add('is-dragging');
+    track.setPointerCapture(event.pointerId);
+    scrollFromPointer(event.clientY);
+  });
+
+  track.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+    scrollFromPointer(event.clientY);
+  });
+
+  const stopDragging = (event) => {
+    if (!dragging) return;
+    dragging = false;
+    document.documentElement.classList.remove('slider-dragging');
+    slider.classList.remove('is-dragging');
+    if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
+  };
+
+  track.addEventListener('pointerup', stopDragging);
+  track.addEventListener('pointercancel', stopDragging);
+
+  track.addEventListener('keydown', (event) => {
+    const current = clamp(window.scrollY / getMaxScroll(), 0, 1);
+    const stepByKey = {
+      ArrowUp: -0.025,
+      ArrowDown: 0.025,
+      PageUp: -0.1,
+      PageDown: 0.1
+    };
+
+    if (event.key === 'Home' || event.key === 'End') {
+      event.preventDefault();
+      scrollToProgress(event.key === 'Home' ? 0 : 1, 'smooth');
+      return;
+    }
+
+    if (!(event.key in stepByKey)) return;
+    event.preventDefault();
+    scrollToProgress(current + stepByKey[event.key], 'smooth');
+  });
+
+  const resizeObserver = new ResizeObserver(requestUpdate);
+  resizeObserver.observe(document.body);
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', requestUpdate);
+  update();
+}
+
 function initContactForm() {
   const form = document.querySelector('#contact-form');
   const status = document.querySelector('#form-status');
@@ -464,5 +632,7 @@ function initContactForm() {
 document.addEventListener('DOMContentLoaded', () => {
   initSiteParticles();
   initCases();
+  initSectionAssembly();
+  initPageSlider();
   initContactForm();
 });

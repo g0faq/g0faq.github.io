@@ -13,6 +13,27 @@
   </head>
   <body>
     <canvas class="site-particles" aria-hidden="true"></canvas>
+    <aside class="page-slider" data-page-slider aria-label="Навигация по странице">
+      <span class="page-slider__index" aria-hidden="true">01</span>
+      <button
+        class="page-slider__track"
+        type="button"
+        role="slider"
+        aria-label="Положение на странице"
+        aria-orientation="vertical"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+      >
+        <span class="page-slider__rail" aria-hidden="true">
+          <span class="page-slider__markers"></span>
+          <span class="page-slider__fill"></span>
+          <span class="page-slider__thumb"></span>
+        </span>
+      </button>
+      <span class="page-slider__percent" aria-hidden="true">000%</span>
+      <span class="page-slider__section" aria-hidden="true">ГЛАВНАЯ</span>
+    </aside>
     <header class="site-header">
       <a class="logo" href="#top" aria-label="В начало страницы">FEDOR</a>
       <nav class="site-nav" aria-label="Основная навигация">
@@ -26,7 +47,7 @@
     </header>
 
     <main>
-      <section class="hero" id="top">
+      <section class="hero section-tone section-assembly section-tone--hero" id="top" data-section-name="Главная">
         <div class="hero__inner">
           <p class="eyebrow">DEVELOPMENT · AUTOMATION · 2026</p>
           <h1>Сайты, боты и CRM <span>под ключ</span></h1>
@@ -36,14 +57,14 @@
         </div>
       </section>
 
-      <section class="cases-section" id="cases" aria-labelledby="cases-title">
+      <section class="cases-section section-tone section-assembly section-tone--cases" id="cases" data-section-name="Кейсы" aria-labelledby="cases-title">
         <h2 class="visually-hidden" id="cases-title">Кейсы</h2>
         <div class="cases-sticky" id="cases-stack" aria-live="polite">
           <p class="cases-loading">ЗАГРУЖАЮ КЕЙСЫ…</p>
         </div>
       </section>
 
-      <section class="content-section" id="services" aria-labelledby="services-title">
+      <section class="content-section section-tone section-assembly section-tone--services" id="services" data-section-name="Услуги" aria-labelledby="services-title">
         <div class="section-heading">
           <p class="eyebrow">01 / УСЛУГИ</p>
           <h2 id="services-title">Что я делаю</h2>
@@ -88,7 +109,7 @@
         </div>
       </section>
 
-      <section class="content-section process-section" id="process" aria-labelledby="process-title">
+      <section class="content-section process-section section-tone section-assembly section-tone--process" id="process" data-section-name="Процесс" aria-labelledby="process-title">
         <div class="section-heading">
           <p class="eyebrow">02 / ПРОЦЕСС</p>
           <h2 id="process-title">От задачи до запуска</h2>
@@ -117,7 +138,7 @@
         </ol>
       </section>
 
-      <section class="content-section stack-section" aria-labelledby="stack-title">
+      <section class="content-section stack-section section-tone section-assembly section-tone--stack" id="stack" data-section-name="Стек" aria-labelledby="stack-title">
         <div class="section-heading section-heading--compact">
           <p class="eyebrow">03 / СТЕК</p>
           <h2 id="stack-title">Инструменты</h2>
@@ -127,7 +148,7 @@
         </ul>
       </section>
 
-      <section class="content-section faq-section" id="faq" aria-labelledby="faq-title">
+      <section class="content-section faq-section section-tone section-assembly section-tone--faq" id="faq" data-section-name="FAQ" aria-labelledby="faq-title">
         <div class="section-heading">
           <p class="eyebrow">04 / FAQ</p>
           <h2 id="faq-title">Частые вопросы</h2>
@@ -160,22 +181,39 @@
         </div>
       </section>
 
-      <section class="content-section contacts-section" id="contacts" aria-labelledby="contacts-title">
+      <section class="content-section contacts-section section-tone section-assembly section-tone--contacts" id="contacts" data-section-name="Контакты" aria-labelledby="contacts-title">
         <div class="contact-card">
           <div class="contact-card__intro">
             <p class="eyebrow">05 / КОНТАКТЫ</p>
             <h2 id="contacts-title">Обсудим ваш проект</h2>
             <p>Расскажите о задаче — отвечу в течение дня и предложу следующий шаг.</p>
             <div class="contact-links">
-              <a class="button" href="https://t.me/g0_faq" target="_blank" rel="noreferrer">Написать в Telegram</a>
-              <a href="tel:+79779742510">+7 977 974-25-10</a>
-              <a href="https://github.com/g0faq" target="_blank" rel="noreferrer">github.com/g0faq</a>
+              <a class="contact-icon-link contact-icon-link--vk" href="https://vk.com/g0_faq" target="_blank" rel="noreferrer" aria-label="VK — g0_faq">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6c.2-.6 0-1-.8-1H20c-.7 0-1 .4-1.2.8 0 0-1.3 3.2-3.2 5.3-.6.6-.9.8-1.2.8-.2 0-.4-.2-.4-.8V6c0-.7-.2-1-.8-1H9.1c-.4 0-.7.3-.7.6 0 .6.9.8 1 2.6V12c0 .8-.1 1-.5 1-.9 0-3-3.3-4.3-7-.2-.7-.5-1-1.2-1H.9c-.8 0-.9.4-.9.8 0 .7.9 4.1 4.1 8.7 2.2 3.1 5.2 4.8 8 4.8 1.7 0 1.9-.4 1.9-1v-2.4c0-.7.2-.9.7-.9.4 0 1.1.2 2.6 1.7 1.8 1.8 2.1 2.6 3.1 2.6H23c.8 0 1.1-.4.9-1.1-.2-.7-1.1-1.8-2.2-3.1-.6-.7-1.5-1.5-1.8-1.9-.4-.5-.3-.7 0-1.2 0 0 3.2-4.5 3.6-6Z"/></svg>
+                <span>VK</span>
+              </a>
+              <a class="contact-icon-link contact-icon-link--github" href="https://github.com/g0faq" target="_blank" rel="noreferrer" aria-label="GitHub — g0faq">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z"/></svg>
+                <span>GITHUB</span>
+              </a>
+              <a class="contact-icon-link contact-icon-link--telegram" href="https://t.me/g0_faq" target="_blank" rel="noreferrer" aria-label="Telegram — g0_faq">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.9 3.8 20.3 20.9c-.3 1.2-1 1.5-2 .9l-5.5-4.1-2.7 2.6c-.3.3-.5.5-1.1.5l.4-5.7 10.3-9.3c.4-.4-.1-.6-.7-.2L6.3 13.6.8 11.9c-1.2-.4-1.2-1.2.3-1.8l21.4-8.2c1-.4 1.9.2 1.4 1.9Z"/></svg>
+                <span>TELEGRAM</span>
+              </a>
+              <a class="contact-icon-link contact-icon-link--max" href="https://web.max.ru/" target="_blank" rel="noreferrer" aria-label="MAX по номеру +7 977 974-25-10">
+                <svg class="max-wordmark" viewBox="0 0 44 24" aria-hidden="true"><defs><linearGradient id="max-contact-gradient" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#00bfff"/><stop offset=".5" stop-color="#6e1aff"/><stop offset="1" stop-color="#9500ff"/></linearGradient></defs><text x="22" y="17" text-anchor="middle">MAX</text></svg>
+                <span>MAX</span><small>+7 977 974-25-10</small>
+              </a>
+              <a class="contact-icon-link contact-icon-link--phone" href="tel:+79779742510" aria-label="Позвонить +7 977 974-25-10">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1l-2.3 2.2Z"/></svg>
+                <span>+7 977 974-25-10</span>
+              </a>
             </div>
           </div>
           <form class="contact-form" id="contact-form">
             <label for="name">Имя</label>
             <input id="name" name="name" type="text" autocomplete="name" required>
-            <label for="contact">Telegram или телефон</label>
+            <label for="contact">VK, MAX или телефон</label>
             <input id="contact" name="contact" type="text" autocomplete="tel" required>
             <label for="message">Описание задачи</label>
             <textarea id="message" name="message" rows="6" maxlength="2000" required></textarea>
@@ -187,7 +225,7 @@
     </main>
 
     <footer class="site-footer">
-      <div><a href="https://t.me/g0_faq" target="_blank" rel="noreferrer">TELEGRAM</a><a href="tel:+79779742510">+7 977 974-25-10</a><a href="https://github.com/g0faq" target="_blank" rel="noreferrer">GITHUB</a></div>
+      <div><a href="https://vk.com/g0_faq" target="_blank" rel="noreferrer">VK</a><a href="https://t.me/g0_faq" target="_blank" rel="noreferrer">TELEGRAM</a><a href="https://web.max.ru/" target="_blank" rel="noreferrer">MAX</a><a href="tel:+79779742510">+7 977 974-25-10</a><a href="https://github.com/g0faq" target="_blank" rel="noreferrer">GITHUB</a></div>
       <p>© 2026</p>
     </footer>
   </body>
