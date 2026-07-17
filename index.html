@@ -37,7 +37,7 @@
       <span class="page-slider__section" aria-hidden="true">ГЛАВНАЯ</span>
     </aside>
     <header class="site-header">
-      <a class="logo" href="#top" aria-label="В начало страницы">FEDOR</a>
+      <a class="logo" href="#top" aria-label="В начало страницы">g0_faq</a>
       <nav class="site-nav" aria-label="Основная навигация">
         <a href="#cases">Кейсы</a>
         <a href="#services">Услуги</a>
@@ -157,9 +157,16 @@
           <p class="eyebrow">03 / СТЕК</p>
           <h2 id="stack-title">Инструменты</h2>
         </div>
-        <ul class="tag-list" aria-label="Технологии">
-          <li>Node.js</li><li>Express</li><li>SQLite</li><li>PostgreSQL</li><li>Telegram Bot API</li><li>ЮKassa</li><li>GitHub</li><li>Vercel</li><li>Timeweb</li>
-        </ul>
+        <div class="stack-layout">
+          <aside class="stack-readout" aria-hidden="true">
+            <span>AI TOOLCHAIN / READY</span>
+            <strong data-stack-active>Node.js</strong>
+            <small><span data-stack-index>01</span> / 23 · SELECT TOOL</small>
+          </aside>
+          <ul class="tag-list" aria-label="Технологии и инструменты разработки">
+            <li>Node.js</li><li>Express</li><li>JavaScript</li><li>TypeScript</li><li>React</li><li>Next.js</li><li>HTML5</li><li>CSS3</li><li>Python</li><li>FastAPI</li><li>SQLite</li><li>PostgreSQL</li><li>Supabase</li><li>Redis</li><li>REST API</li><li>Webhooks</li><li>Telegram Bot API</li><li>OpenAI API</li><li>ЮKassa</li><li>Docker</li><li>GitHub Actions</li><li>Vercel</li><li>Timeweb</li>
+          </ul>
+        </div>
       </section>
 
       <section class="content-section faq-section section-tone section-assembly section-tone--faq" id="faq" data-section-name="FAQ" aria-labelledby="faq-title">
@@ -262,9 +269,19 @@
           </div>
           <form class="contact-form" id="contact-form">
             <label for="name">Имя</label>
-            <input id="name" name="name" type="text" autocomplete="name" required>
-            <label for="contact">VK, Telegram, MAX или телефон</label>
-            <input id="contact" name="contact" type="text" autocomplete="tel" required>
+            <input id="name" name="name" type="text" autocomplete="name" maxlength="100" required>
+            <label for="contact-channel">Предпочтительный способ связи</label>
+            <div class="contact-select">
+              <select id="contact-channel" name="channel" required>
+                <option value="Telegram">Telegram</option>
+                <option value="VK">VK</option>
+                <option value="MAX">MAX</option>
+                <option value="Телефон">Телефон</option>
+              </select>
+              <span aria-hidden="true">↓</span>
+            </div>
+            <label for="contact" data-contact-label>Ваш Telegram</label>
+            <input id="contact" name="contact" type="text" autocomplete="off" maxlength="200" placeholder="@username" required>
             <label for="message">Описание задачи</label>
             <textarea id="message" name="message" rows="6" maxlength="2000" required></textarea>
             <button class="button" type="submit">Отправить</button>

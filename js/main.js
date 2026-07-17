@@ -431,7 +431,7 @@ function initSectionAssembly() {
     ['#services', '.section-heading, .service-card'],
     ['#calculator', '.section-heading, .calculator-shell'],
     ['#process', '.section-heading, .process-visual, .process-list > li'],
-    ['#stack', '.section-heading, .tag-list > li'],
+    ['#stack', '.section-heading, .stack-readout, .tag-list > li'],
     ['#faq', '.section-heading, .faq-visual, .faq-list > details'],
     ['#contacts', '.contact-card__intro > *, .contact-form > *']
   ];
@@ -478,8 +478,11 @@ function initPageSlider() {
   const sections = Array.from(document.querySelectorAll('main > section[data-section-name]'));
   if (!slider || !track || !markersContainer || !indexLabel || !percentLabel || !sectionLabel || sections.length === 0) return;
 
-  const markers = sections.map(() => {
+  slider.style.setProperty('--section-count', String(sections.length));
+  const markers = sections.map((section, index) => {
     const marker = createElement('span', 'page-slider__marker');
+    marker.dataset.index = String(index + 1).padStart(2, '0');
+    marker.title = section.dataset.sectionName;
     markersContainer.append(marker);
     return marker;
   });
@@ -487,6 +490,9 @@ function initPageSlider() {
   let dragging = false;
 
   const getMaxScroll = () => Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  const getSectionTops = () => sections.map((section) => (
+    section.getBoundingClientRect().top + window.scrollY
+  ));
 
   const update = () => {
     frameRequested = false;
@@ -495,18 +501,20 @@ function initPageSlider() {
     const activePoint = window.scrollY + (window.innerHeight * 0.42);
     let activeIndex = 0;
 
-    sections.forEach((section, index) => {
-      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-      const markerProgress = clamp(sectionTop / maxScroll, 0, 1);
-      markers[index].style.top = `${markerProgress * 100}%`;
+    const sectionTops = getSectionTops();
+    sectionTops.forEach((sectionTop, index) => {
       if (sectionTop <= activePoint) activeIndex = index;
     });
 
     const activeSection = sections[activeIndex];
+    const sectionStart = sectionTops[activeIndex];
+    const sectionEnd = sectionTops[activeIndex + 1] || (maxScroll + window.innerHeight);
+    const sectionProgress = clamp((activePoint - sectionStart) / Math.max(1, sectionEnd - sectionStart), 0, 1);
+    const segmentedProgress = (activeIndex + sectionProgress) / sections.length;
     const accent = getComputedStyle(activeSection).getPropertyValue('--section-accent').trim() || '#1f58f2';
     const percent = Math.round(progress * 100);
 
-    slider.style.setProperty('--slider-progress', String(progress));
+    slider.style.setProperty('--slider-progress', String(segmentedProgress));
     slider.style.setProperty('--slider-color', accent);
     indexLabel.textContent = String(activeIndex + 1).padStart(2, '0');
     percentLabel.textContent = `${String(percent).padStart(3, '0')}%`;
@@ -524,8 +532,17 @@ function initPageSlider() {
   };
 
   const scrollToProgress = (progress, behavior = 'auto') => {
-    const top = clamp(progress, 0, 1) * getMaxScroll();
-    window.scrollTo({ top, behavior });
+    const normalized = clamp(progress, 0, 0.999999);
+    const scaled = normalized * sections.length;
+    const index = Math.min(Math.floor(scaled), sections.length - 1);
+    const localProgress = scaled - index;
+    const maxScroll = getMaxScroll();
+    const sectionTops = getSectionTops();
+    const start = Math.min(sectionTops[index], maxScroll);
+    const end = index < sections.length - 1
+      ? Math.min(sectionTops[index + 1], maxScroll)
+      : maxScroll;
+    window.scrollTo({ top: start + ((end - start) * localProgress), behavior });
   };
 
   const scrollFromPointer = (clientY) => {
@@ -559,7 +576,7 @@ function initPageSlider() {
   track.addEventListener('pointercancel', stopDragging);
 
   track.addEventListener('keydown', (event) => {
-    const current = clamp(window.scrollY / getMaxScroll(), 0, 1);
+    const current = clamp(Number(slider.style.getPropertyValue('--slider-progress')) || 0, 0, 1);
     const stepByKey = {
       ArrowUp: -0.025,
       ArrowDown: 0.025,
@@ -583,6 +600,44 @@ function initPageSlider() {
   window.addEventListener('scroll', requestUpdate, { passive: true });
   window.addEventListener('resize', requestUpdate);
   update();
+}
+
+function initStackVisualizer() {
+  const section = document.querySelector('#stack');
+  const readout = section?.querySelector('.stack-readout');
+  const activeLabel = readout?.querySelector('[data-stack-active]');
+  const indexLabel = readout?.querySelector('[data-stack-index]');
+  const tools = Array.from(section?.querySelectorAll('.tag-list > li') || []);
+  if (!section || !readout || !activeLabel || !indexLabel || tools.length === 0) return;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let activeIndex = 0;
+  let switchTimer = 0;
+  let cycleTimer = 0;
+
+  const activate = (index) => {
+    activeIndex = (index + tools.length) % tools.length;
+    window.clearTimeout(switchTimer);
+    readout.classList.add('is-switching');
+    switchTimer = window.setTimeout(() => {
+      activeLabel.textContent = tools[activeIndex].textContent;
+      indexLabel.textContent = String(activeIndex + 1).padStart(2, '0');
+      tools.forEach((tool, toolIndex) => tool.classList.toggle('is-active', toolIndex === activeIndex));
+      readout.classList.remove('is-switching');
+    }, reducedMotion ? 0 : 140);
+  };
+
+  tools.forEach((tool, index) => tool.addEventListener('pointerenter', () => activate(index)));
+  activate(0);
+
+  if (!reducedMotion) {
+    const observer = new IntersectionObserver(([entry]) => {
+      window.clearInterval(cycleTimer);
+      if (!entry.isIntersecting) return;
+      cycleTimer = window.setInterval(() => activate(activeIndex + 1), 1800);
+    }, { threshold: 0.35 });
+    observer.observe(section);
+  }
 }
 
 function initContentVisuals() {
@@ -642,6 +697,27 @@ function initContactForm() {
   const status = document.querySelector('#form-status');
   if (!form || !status) return;
 
+  const channelSelect = form.querySelector('#contact-channel');
+  const contactInput = form.querySelector('#contact');
+  const contactLabel = form.querySelector('[data-contact-label]');
+  const channelFields = {
+    Telegram: { label: 'Ваш Telegram', placeholder: '@username', autocomplete: 'off', inputMode: 'text' },
+    VK: { label: 'Ссылка или ID во VK', placeholder: 'vk.com/username', autocomplete: 'url', inputMode: 'url' },
+    MAX: { label: 'Номер в MAX', placeholder: '+7 999 000-00-00', autocomplete: 'tel', inputMode: 'tel' },
+    'Телефон': { label: 'Номер телефона', placeholder: '+7 999 000-00-00', autocomplete: 'tel', inputMode: 'tel' }
+  };
+
+  const updateContactField = () => {
+    const field = channelFields[channelSelect.value] || channelFields.Telegram;
+    contactLabel.textContent = field.label;
+    contactInput.placeholder = field.placeholder;
+    contactInput.autocomplete = field.autocomplete;
+    contactInput.inputMode = field.inputMode;
+  };
+
+  channelSelect.addEventListener('change', updateContactField);
+  updateContactField();
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -649,6 +725,7 @@ function initContactForm() {
     const formData = new FormData(form);
     const payload = {
       name: String(formData.get('name') || '').trim(),
+      channel: String(formData.get('channel') || '').trim(),
       contact: String(formData.get('contact') || '').trim(),
       message: String(formData.get('message') || '').trim()
     };
@@ -671,6 +748,7 @@ function initContactForm() {
       }
 
       form.reset();
+      updateContactField();
       status.dataset.state = 'success';
       status.textContent = 'Заявка отправлена, отвечу в течение дня';
     } catch (error) {
@@ -689,5 +767,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initSectionAssembly();
   initPageSlider();
   initContentVisuals();
+  initStackVisualizer();
   initContactForm();
 });

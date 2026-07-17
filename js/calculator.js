@@ -168,6 +168,12 @@
 
     const isStepValid = (step) => !step.required || selectedIds(step).length > 0;
 
+    const animateProgress = () => {
+      progress.classList.remove('is-advancing');
+      void progress.offsetWidth;
+      progress.classList.add('is-advancing');
+    };
+
     const renderOption = (step, option, index) => {
       const selected = selectedIds(step).includes(option.id);
       const role = step.multiple ? 'checkbox' : 'radio';
@@ -211,6 +217,7 @@
       progress.style.setProperty('--calculator-progress', String((state.step + 1) / steps.length));
       progress.setAttribute('aria-valuenow', String(percent));
       progressText.textContent = `${percent}%`;
+      animateProgress();
       stage.innerHTML = `
         <div class="calculator-stage__heading">
           <p class="eyebrow">${step.eyebrow}</p>
@@ -256,6 +263,7 @@
       progress.style.setProperty('--calculator-progress', '1');
       progress.setAttribute('aria-valuenow', '100');
       progressText.textContent = '100%';
+      animateProgress();
       hint.textContent = '';
       stage.innerHTML = `
         <div class="calculator-result">
@@ -290,10 +298,10 @@
     };
 
     const scrollQuestionToTop = () => {
-      const target = stage.querySelector('.calculator-stage__heading, .calculator-result');
+      const target = shell.querySelector('.calculator-head');
       if (!target) return;
       const headerHeight = document.querySelector('.site-header')?.getBoundingClientRect().height || 0;
-      const top = window.scrollY + target.getBoundingClientRect().top - headerHeight - 20;
+      const top = window.scrollY + target.getBoundingClientRect().top - headerHeight - 16;
       window.scrollTo({
         top: Math.max(0, top),
         behavior: reducedMotion.matches ? 'auto' : 'smooth'
