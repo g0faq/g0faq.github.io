@@ -430,9 +430,9 @@ function initSectionAssembly() {
     ['#cases', '.cases-loading'],
     ['#services', '.section-heading, .service-card'],
     ['#calculator', '.section-heading, .calculator-shell'],
-    ['#process', '.section-heading, .process-list > li'],
+    ['#process', '.section-heading, .process-visual, .process-list > li'],
     ['#stack', '.section-heading, .tag-list > li'],
-    ['#faq', '.section-heading, .faq-list > details'],
+    ['#faq', '.section-heading, .faq-visual, .faq-list > details'],
     ['#contacts', '.contact-card__intro > *, .contact-form > *']
   ];
 
@@ -585,36 +585,56 @@ function initPageSlider() {
   update();
 }
 
-function initAmbientInteractive() {
-  if (window.matchMedia('(pointer: coarse)').matches) return;
-  const sections = document.querySelectorAll('.content-section:not(.contacts-section)');
+function initContentVisuals() {
+  const updateVisual = (visual, index, label) => {
+    if (!visual) return;
+    window.clearTimeout(visual.updateTimer);
+    visual.classList.add('is-updating');
+    visual.updateTimer = window.setTimeout(() => {
+      visual.querySelector('[data-process-current], [data-faq-current]').textContent = String(index + 1).padStart(2, '0');
+      visual.querySelector('[data-process-label], [data-faq-label]').textContent = label;
+      visual.querySelectorAll('.process-visual__track span, .faq-visual__signal span').forEach((marker, markerIndex) => {
+        marker.classList.toggle('is-active', markerIndex === index);
+      });
+      visual.classList.remove('is-updating');
+    }, 130);
+  };
 
-  sections.forEach((section) => {
-    const field = createElement('div', 'ambient-field');
-    field.setAttribute('aria-hidden', 'true');
-    field.innerHTML = `
-      <span class="ambient-field__axis ambient-field__axis--x"></span>
-      <span class="ambient-field__axis ambient-field__axis--y"></span>
-      <span class="ambient-field__ring"></span>
-      <span class="ambient-field__readout">X 000 · Y 000</span>
-      <span class="ambient-field__node ambient-field__node--a"></span>
-      <span class="ambient-field__node ambient-field__node--b"></span>
-      <span class="ambient-field__node ambient-field__node--c"></span>
-    `;
-    section.append(field);
+  const processVisual = document.querySelector('.process-visual');
+  const processItems = Array.from(document.querySelectorAll('.process-list > li'));
+  const activateProcess = (index) => {
+    processItems.forEach((item, itemIndex) => item.classList.toggle('is-active', itemIndex === index));
+    updateVisual(processVisual, index, processItems[index]?.querySelector('h3')?.textContent || '');
+  };
 
-    section.addEventListener('pointermove', (event) => {
-      const rect = section.getBoundingClientRect();
-      const x = clamp(event.clientX - rect.left, 0, rect.width);
-      const y = clamp(event.clientY - rect.top, 0, rect.height);
-      field.style.setProperty('--ambient-x', `${x}px`);
-      field.style.setProperty('--ambient-y', `${y}px`);
-      field.querySelector('.ambient-field__readout').textContent = `X ${String(Math.round(x)).padStart(3, '0')} · Y ${String(Math.round(y)).padStart(3, '0')}`;
-      field.classList.add('is-active');
-    }, { passive: true });
+  processItems.forEach((item, index) => item.addEventListener('pointerenter', () => activateProcess(index)));
+  if (processItems.length) {
+    activateProcess(0);
+    const processObserver = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) activateProcess(processItems.indexOf(visible.target));
+    }, { threshold: [0.35, 0.6], rootMargin: '-28% 0px -28% 0px' });
+    processItems.forEach((item) => processObserver.observe(item));
+  }
 
-    section.addEventListener('pointerleave', () => field.classList.remove('is-active'));
+  const faqVisual = document.querySelector('.faq-visual');
+  const faqItems = Array.from(document.querySelectorAll('.faq-list > details'));
+  const activateFaq = (index) => updateVisual(
+    faqVisual,
+    index,
+    faqItems[index]?.querySelector('summary')?.childNodes[0]?.textContent?.trim() || ''
+  );
+
+  faqItems.forEach((details, index) => {
+    details.addEventListener('pointerenter', () => activateFaq(index));
+    details.querySelector('summary')?.addEventListener('focus', () => activateFaq(index));
+    details.addEventListener('toggle', () => {
+      if (details.open) activateFaq(index);
+    });
   });
+  if (faqItems.length) activateFaq(0);
 }
 
 function initContactForm() {
@@ -668,6 +688,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initCases();
   initSectionAssembly();
   initPageSlider();
-  initAmbientInteractive();
+  initContentVisuals();
   initContactForm();
 });

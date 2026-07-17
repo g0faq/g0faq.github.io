@@ -41,9 +41,9 @@
       <nav class="site-nav" aria-label="Основная навигация">
         <a href="#cases">Кейсы</a>
         <a href="#services">Услуги</a>
-        <a href="#calculator">Стоимость</a>
         <a href="#process">Процесс</a>
         <a href="#faq">FAQ</a>
+        <a href="#calculator">Стоимость</a>
         <a href="#contacts">Контакты</a>
       </nav>
       <a class="header-chip" href="#contacts">ОБСУДИТЬ ПРОЕКТ ↗</a>
@@ -112,66 +112,49 @@
         </div>
       </section>
 
-      <section class="content-section calculator-section section-tone section-assembly section-tone--calculator" id="calculator" data-section-name="Стоимость" aria-labelledby="calculator-title">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">02 / РАСЧЁТ СТОИМОСТИ</p>
-            <p class="calculator-duration">≈ 1–2 МИНУТЫ</p>
-          </div>
-          <div>
-            <h2 id="calculator-title">Рассчитайте стоимость проекта</h2>
-            <p class="section-heading__lead">Ответьте на несколько вопросов и получите предварительную вилку стоимости разработки.</p>
-          </div>
-        </div>
-        <div class="calculator-shell" data-calculator>
-          <div class="calculator-head">
-            <span data-calculator-step>01 / 05</span>
-            <div class="calculator-progress" role="progressbar" aria-label="Прогресс расчёта" aria-valuemin="0" aria-valuemax="100" aria-valuenow="20" data-calculator-progress>
-              <span></span>
-            </div>
-            <span data-calculator-progress-text>20%</span>
-          </div>
-          <div class="calculator-stage" data-calculator-stage aria-live="polite"></div>
-          <div class="calculator-controls">
-            <button class="button" type="button" data-calculator-back>← Назад</button>
-            <p data-calculator-hint aria-live="polite"></p>
-            <button class="button" type="button" data-calculator-next>Далее →</button>
-          </div>
-        </div>
-      </section>
-
       <section class="content-section process-section section-tone section-assembly section-tone--process" id="process" data-section-name="Процесс" aria-labelledby="process-title">
         <div class="section-heading">
-          <p class="eyebrow">03 / ПРОЦЕСС</p>
+          <p class="eyebrow">02 / ПРОЦЕСС</p>
           <h2 id="process-title">От задачи до запуска</h2>
         </div>
-        <ol class="process-list">
-          <li>
-            <span>01 →</span>
-            <div><h3>Созвон и разбор задачи</h3><p>Обсуждаем цель, аудиторию и ограничения. Определяем, какой результат нужен бизнесу.</p></div>
-          </li>
-          <li>
-            <span>02 →</span>
-            <div><h3>ТЗ и фиксация цены</h3><p>Собираю требования в понятный документ, согласовываем сроки и фиксированную стоимость.</p></div>
-          </li>
-          <li>
-            <span>03 →</span>
-            <div><h3>Разработка с промежуточными демо</h3><p>Показываю результат по этапам, чтобы важные решения принимались до финальной сборки.</p></div>
-          </li>
-          <li>
-            <span>04 →</span>
-            <div><h3>Запуск и проверка</h3><p>Разворачиваю проект, проверяю основные сценарии и передаю все доступы.</p></div>
-          </li>
-          <li>
-            <span>05 →</span>
-            <div><h3>Поддержка</h3><p>Остаюсь на связи после релиза, исправляю найденное и помогаю с развитием.</p></div>
-          </li>
-        </ol>
+        <div class="process-layout">
+          <aside class="process-visual" aria-hidden="true">
+            <p class="process-visual__kicker">PROJECT ROUTE</p>
+            <p class="process-visual__counter"><span data-process-current>01</span><small>/ 05</small></p>
+            <p class="process-visual__label" data-process-label>Созвон и разбор задачи</p>
+            <div class="process-visual__track">
+              <span class="is-active"></span><span></span><span></span><span></span><span></span>
+            </div>
+            <p class="process-visual__footer">ЗАДАЧА → ЗАПУСК</p>
+          </aside>
+          <ol class="process-list">
+            <li>
+              <span>01 →</span>
+              <div><h3>Созвон и разбор задачи</h3><p>Обсуждаем цель, аудиторию и ограничения. Определяем, какой результат нужен бизнесу.</p></div>
+            </li>
+            <li>
+              <span>02 →</span>
+              <div><h3>ТЗ и фиксация цены</h3><p>Собираю требования в понятный документ, согласовываем сроки и фиксированную стоимость.</p></div>
+            </li>
+            <li>
+              <span>03 →</span>
+              <div><h3>Разработка с промежуточными демо</h3><p>Показываю результат по этапам, чтобы важные решения принимались до финальной сборки.</p></div>
+            </li>
+            <li>
+              <span>04 →</span>
+              <div><h3>Запуск и проверка</h3><p>Разворачиваю проект, проверяю основные сценарии и передаю все доступы.</p></div>
+            </li>
+            <li>
+              <span>05 →</span>
+              <div><h3>Поддержка</h3><p>Остаюсь на связи после релиза, исправляю найденное и помогаю с развитием.</p></div>
+            </li>
+          </ol>
+        </div>
       </section>
 
       <section class="content-section stack-section section-tone section-assembly section-tone--stack" id="stack" data-section-name="Стек" aria-labelledby="stack-title">
         <div class="section-heading section-heading--compact">
-          <p class="eyebrow">04 / СТЕК</p>
+          <p class="eyebrow">03 / СТЕК</p>
           <h2 id="stack-title">Инструменты</h2>
         </div>
         <ul class="tag-list" aria-label="Технологии">
@@ -181,10 +164,17 @@
 
       <section class="content-section faq-section section-tone section-assembly section-tone--faq" id="faq" data-section-name="FAQ" aria-labelledby="faq-title">
         <div class="section-heading">
-          <p class="eyebrow">05 / FAQ</p>
+          <p class="eyebrow">04 / FAQ</p>
           <h2 id="faq-title">Частые вопросы</h2>
         </div>
-        <div class="faq-list">
+        <div class="faq-layout">
+          <aside class="faq-visual" aria-hidden="true">
+            <p class="faq-visual__kicker">FAQ INDEX</p>
+            <p class="faq-visual__counter"><span data-faq-current>01</span><small>/ 06</small></p>
+            <p class="faq-visual__label" data-faq-label>Сколько стоит сайт?</p>
+            <div class="faq-visual__signal"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          </aside>
+          <div class="faq-list">
           <details>
             <summary>Сколько стоит сайт?<span aria-hidden="true">+</span></summary>
             <p>Стоимость зависит от объёма и сложности задачи. После короткого созвона я подготовлю оценку и зафиксирую её в ТЗ до начала работ.</p>
@@ -209,6 +199,35 @@
             <summary>Как проходит оплата?<span aria-hidden="true">+</span></summary>
             <p>Оплата привязана к согласованным этапам проекта. Порядок и суммы заранее фиксируются, поэтому в процессе не появляется неожиданных расходов.</p>
           </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section calculator-section section-tone section-assembly section-tone--calculator" id="calculator" data-section-name="Стоимость" aria-labelledby="calculator-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">05 / РАСЧЁТ СТОИМОСТИ</p>
+            <p class="calculator-duration">≈ 1–2 МИНУТЫ</p>
+          </div>
+          <div>
+            <h2 id="calculator-title">Рассчитайте стоимость проекта</h2>
+            <p class="section-heading__lead">Ответьте на несколько вопросов и получите предварительную вилку стоимости разработки.</p>
+          </div>
+        </div>
+        <div class="calculator-shell" data-calculator>
+          <div class="calculator-head">
+            <span data-calculator-step>01 / 05</span>
+            <div class="calculator-progress" role="progressbar" aria-label="Прогресс расчёта" aria-valuemin="0" aria-valuemax="100" aria-valuenow="20" data-calculator-progress>
+              <span></span>
+            </div>
+            <span data-calculator-progress-text>20%</span>
+          </div>
+          <div class="calculator-stage" data-calculator-stage aria-live="polite"></div>
+          <div class="calculator-controls">
+            <button class="button" type="button" data-calculator-back>← Назад</button>
+            <p data-calculator-hint aria-live="polite"></p>
+            <button class="button" type="button" data-calculator-next>Далее →</button>
+          </div>
         </div>
       </section>
 

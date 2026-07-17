@@ -151,6 +151,7 @@
     const hint = shell.querySelector('[data-calculator-hint]');
     const state = loadState();
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let advanceTimer = 0;
 
     const saveState = () => {
       try {
@@ -205,6 +206,7 @@
       const step = steps[state.step];
       const percent = Math.round(((state.step + 1) / steps.length) * 100);
       shell.classList.remove('is-result');
+      stage.classList.remove('is-choice-locked');
       stepLabel.textContent = `${String(state.step + 1).padStart(2, '0')} / ${String(steps.length).padStart(2, '0')}`;
       progress.style.setProperty('--calculator-progress', String((state.step + 1) / steps.length));
       progress.setAttribute('aria-valuenow', String(percent));
@@ -249,6 +251,7 @@
         : 'Ничего из перечисленного';
       const telegramUrl = `https://t.me/g0_faq?text=${encodeURIComponent(resultText(estimate))}`;
       shell.classList.add('is-result');
+      stage.classList.remove('is-choice-locked');
       stepLabel.textContent = 'ГОТОВО';
       progress.style.setProperty('--calculator-progress', '1');
       progress.setAttribute('aria-valuenow', '100');
@@ -286,6 +289,17 @@
       `;
     };
 
+    const scrollQuestionToTop = () => {
+      const target = stage.querySelector('.calculator-stage__heading, .calculator-result');
+      if (!target) return;
+      const headerHeight = document.querySelector('.site-header')?.getBoundingClientRect().height || 0;
+      const top = window.scrollY + target.getBoundingClientRect().top - headerHeight - 20;
+      window.scrollTo({
+        top: Math.max(0, top),
+        behavior: reducedMotion.matches ? 'auto' : 'smooth'
+      });
+    };
+
     const transitionTo = (render) => {
       const delay = reducedMotion.matches ? 0 : 170;
       stage.classList.add('is-changing');
@@ -294,8 +308,23 @@
         window.requestAnimationFrame(() => {
           stage.classList.remove('is-changing');
           stage.querySelector('h3, .calculator-result__price')?.focus?.({ preventScroll: true });
+          scrollQuestionToTop();
         });
       }, delay);
+    };
+
+    const goForward = () => {
+      const step = steps[state.step];
+      if (!isStepValid(step)) return;
+      if (state.step < steps.length - 1) {
+        state.step += 1;
+        saveState();
+        transitionTo(renderStep);
+        return;
+      }
+      state.result = true;
+      saveState();
+      transitionTo(renderResult);
     };
 
     const reset = () => {
@@ -350,6 +379,12 @@
         }
         saveState();
         updateSelectionUI();
+        if (!step.multiple) {
+          window.clearTimeout(advanceTimer);
+          stage.classList.add('is-choice-locked');
+          nextButton.disabled = true;
+          advanceTimer = window.setTimeout(goForward, reducedMotion.matches ? 0 : 130);
+        }
         return;
       }
 
@@ -377,24 +412,13 @@
 
     backButton.addEventListener('click', () => {
       if (state.step === 0) return;
+      window.clearTimeout(advanceTimer);
       state.step -= 1;
       saveState();
       transitionTo(renderStep);
     });
 
-    nextButton.addEventListener('click', () => {
-      const step = steps[state.step];
-      if (!isStepValid(step)) return;
-      if (state.step < steps.length - 1) {
-        state.step += 1;
-        saveState();
-        transitionTo(renderStep);
-        return;
-      }
-      state.result = true;
-      saveState();
-      transitionTo(renderResult);
-    });
+    nextButton.addEventListener('click', goForward);
 
     if (state.result) renderResult();
     else renderStep();
