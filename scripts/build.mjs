@@ -12,13 +12,15 @@ await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
 await Promise.all([
   cp(resolve(root, 'assets'), resolve(output, 'assets'), { recursive: true }),
-  cp(resolve(root, 'data'), resolve(output, 'data'), { recursive: true })
+  cp(resolve(root, 'data'), resolve(output, 'data'), { recursive: true }),
+  cp(resolve(root, 'css'), resolve(output, 'css'), { recursive: true }),
+  mkdir(resolve(output, 'js'), { recursive: true })
 ]);
 
 let html = await read('index.html');
-const css = await read('css/main.css');
-const scripts = await Promise.all([
+const [calculatorConfig, casesData, ...appScripts] = await Promise.all([
   read('js/calculator-config.js'),
+  read('data/cases.json'),
   read('js/calculator.js'),
   read('js/main.js')
 ]);
@@ -32,17 +34,23 @@ if (!stylesheetPattern.test(html) || !recoveryPattern.test(html)) {
 }
 
 html = html
-  .replace(stylesheetPattern, `\n    <style id="main-styles">\n${css}\n    </style>`)
+  .replace(
+    stylesheetPattern,
+    '\n    <link id="main-styles" rel="stylesheet" href="https://www.g0faq.ru/css/main.css" fetchpriority="high">'
+  )
   .replace(recoveryPattern, '')
   .replace(externalScriptPattern, '');
 
-const inlineScripts = scripts
-  .map((source) => `<script>\n${escapeInlineScript(source)}\n</script>`)
-  .join('\n');
+const bootstrap = `${calculatorConfig}\nwindow.CASES_DATA = ${casesData.trim()};`;
+const scripts = [
+  `<script>\n${escapeInlineScript(bootstrap)}\n</script>`,
+  '<script src="https://portfolio-ten-umber-3z9vgkulzy.vercel.app/js/app.js" fetchpriority="high"></script>'
+].join('\n');
 
 if (!html.includes('</body>')) {
   throw new Error('Не удалось найти закрывающий тег body');
 }
 
-html = html.replace('</body>', `  ${inlineScripts}\n  </body>`);
+html = html.replace('</body>', `  ${scripts}\n  </body>`);
 await writeFile(resolve(output, 'index.html'), html);
+await writeFile(resolve(output, 'js/app.js'), appScripts.join('\n'));

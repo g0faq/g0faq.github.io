@@ -355,10 +355,12 @@ async function initCases() {
   if (!section || !stack) return;
 
   try {
-    const response = await fetch('/data/cases.json');
-    if (!response.ok) throw new Error('Cases request failed');
-
-    const cases = await response.json();
+    let cases = window.CASES_DATA;
+    if (!Array.isArray(cases)) {
+      const response = await fetch('/data/cases.json');
+      if (!response.ok) throw new Error('Cases request failed');
+      cases = await response.json();
+    }
     if (!Array.isArray(cases) || cases.length === 0) throw new Error('Cases data is empty');
 
     section.style.setProperty('--case-count', String(cases.length));
