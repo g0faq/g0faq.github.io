@@ -454,6 +454,42 @@ async function initCases() {
 
     const panels = Array.from(stack.querySelectorAll('.case-panel'));
     let frameRequested = false;
+    let numberLayoutWidth = 0;
+    let numberLayoutIndex = -1;
+
+    const updateCaseNumberLayout = (targetIndex = null) => {
+      const targets = targetIndex === null
+        ? panels.map((panel, index) => ({ panel, index }))
+        : [{ panel: panels[targetIndex], index: targetIndex }];
+
+      targets.forEach(({ panel, index }) => {
+        const body = panel.querySelector('.case-panel__body');
+        const media = panel.querySelector('.case-media');
+        const number = panel.querySelector('.case-number');
+        if (!body || !media || !number) return;
+
+        panel.classList.remove('is-number-compact');
+
+        const sequenceSize = Math.max(36, 260 - (index * 28));
+        number.style.setProperty('--case-number-size', `${sequenceSize}px`);
+
+        const mediaLeft = media.getBoundingClientRect().left;
+        const numberLeft = number.getBoundingClientRect().left;
+        const availableWidth = mediaLeft - numberLeft - 20;
+        const fittedSize = number.offsetWidth > availableWidth
+          ? Math.floor(sequenceSize * (availableWidth / number.offsetWidth))
+          : sequenceSize;
+        const compact = availableWidth < 72 || fittedSize < 52;
+
+        if (compact) {
+          const compactSize = Math.max(32, 92 - (index * 8));
+          number.style.setProperty('--case-number-size', `${Math.min(sequenceSize, compactSize)}px`);
+          panel.classList.add('is-number-compact');
+        } else {
+          number.style.setProperty('--case-number-size', `${Math.min(sequenceSize, fittedSize)}px`);
+        }
+      });
+    };
 
     const updatePanels = () => {
       frameRequested = false;
@@ -463,7 +499,11 @@ async function initCases() {
           panel.style.removeProperty('width');
           panel.style.removeProperty('transform');
           panel.classList.remove('is-active');
+          panel.classList.remove('is-number-compact');
+          panel.querySelector('.case-number')?.style.removeProperty('--case-number-size');
         });
+        numberLayoutWidth = 0;
+        numberLayoutIndex = -1;
         return;
       }
 
@@ -489,6 +529,15 @@ async function initCases() {
         panel.style.transform = `translate3d(${translateX}px, 0, 0)`;
         panel.classList.toggle('is-active', index === activeIndex);
       });
+
+      if (numberLayoutWidth !== viewportWidth) {
+        numberLayoutWidth = viewportWidth;
+        numberLayoutIndex = activeIndex;
+        updateCaseNumberLayout();
+      } else if (numberLayoutIndex !== activeIndex) {
+        numberLayoutIndex = activeIndex;
+        updateCaseNumberLayout(activeIndex);
+      }
     };
 
     const requestUpdate = () => {

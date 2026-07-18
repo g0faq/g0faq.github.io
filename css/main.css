@@ -1200,17 +1200,30 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
 
 @media (min-width: 761px) {
   .case-number {
-    top: calc(var(--header-height) + 18px);
-    left: 0;
-    z-index: 2;
-    font-size: 48px;
-    line-height: 0.7;
+    top: 54%;
+    left: clamp(24px, 4vw, 68px);
+    z-index: 0;
+    font-size: var(--case-number-size, 48px);
     opacity: 0.22;
-    transform: translateY(-8px);
+    transform: translateY(-50%) scale(0.94);
     transition: opacity 500ms ease, transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .case-panel.is-active .case-number {
+    opacity: 0.32;
+    transform: translateY(-50%) scale(1);
+  }
+
+  .case-panel.is-number-compact .case-number {
+    top: calc(var(--header-height) + 18px);
+    left: 0;
+    z-index: 2;
+    line-height: 0.7;
+    opacity: 0.22;
+    transform: translateY(-8px);
+  }
+
+  .case-panel.is-number-compact.is-active .case-number {
     opacity: 0.45;
     transform: translateY(0);
   }
