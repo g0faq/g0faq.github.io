@@ -456,6 +456,40 @@ async function initCases() {
     let frameRequested = false;
     let numberLayoutWidth = 0;
     let numberLayoutIndex = -1;
+    let casesInView = false;
+    let mobileMotionFrame = 0;
+
+    const updateMobileCardMotion = () => {
+      mobileMotionFrame = 0;
+
+      if (window.innerWidth > CASES_BREAKPOINT) return;
+
+      if (!casesInView) {
+        panels.forEach((panel) => panel.classList.remove('is-card-motion'));
+        return;
+      }
+
+      const stackRect = stack.getBoundingClientRect();
+      const stackCenter = stackRect.left + (stackRect.width / 2);
+      let closestPanel = panels[0];
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      panels.forEach((panel) => {
+        const rect = panel.getBoundingClientRect();
+        const distance = Math.abs((rect.left + (rect.width / 2)) - stackCenter);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestPanel = panel;
+        }
+      });
+
+      panels.forEach((panel) => panel.classList.toggle('is-card-motion', panel === closestPanel));
+    };
+
+    const requestMobileCardMotion = () => {
+      if (mobileMotionFrame) return;
+      mobileMotionFrame = window.requestAnimationFrame(updateMobileCardMotion);
+    };
 
     const updateCaseNumberLayout = (targetIndex = null) => {
       const targets = targetIndex === null
@@ -504,6 +538,7 @@ async function initCases() {
         });
         numberLayoutWidth = 0;
         numberLayoutIndex = -1;
+        requestMobileCardMotion();
         return;
       }
 
@@ -528,6 +563,7 @@ async function initCases() {
         panel.style.width = `${Math.max(viewportWidth - offset, spineWidth)}px`;
         panel.style.transform = `translate3d(${translateX}px, 0, 0)`;
         panel.classList.toggle('is-active', index === activeIndex);
+        panel.classList.toggle('is-card-motion', casesInView && index === activeIndex);
       });
 
       if (numberLayoutWidth !== viewportWidth) {
@@ -559,8 +595,22 @@ async function initCases() {
       });
     });
 
+    stack.addEventListener('scroll', requestMobileCardMotion, { passive: true });
     window.addEventListener('scroll', requestUpdate, { passive: true });
     window.addEventListener('resize', requestUpdate);
+    window.addEventListener('resize', requestMobileCardMotion);
+
+    if ('IntersectionObserver' in window) {
+      const visibilityObserver = new IntersectionObserver(([entry]) => {
+        casesInView = entry.isIntersecting;
+        requestUpdate();
+        requestMobileCardMotion();
+      }, { rootMargin: '-10% 0px -10%', threshold: 0 });
+      visibilityObserver.observe(stack);
+    } else {
+      casesInView = true;
+    }
+
     updatePanels();
   } catch {
     stack.replaceChildren(createElement('p', 'cases-loading', 'Не удалось загрузить кейсы.'));
