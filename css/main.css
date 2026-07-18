@@ -1,4 +1,5 @@
 :root {
+  --app-css-ready: 1;
   --bg: #000000;
   --surface-1: #0d0d0f;
   --surface-2: #232529;
@@ -543,7 +544,7 @@ h3 {
 
 .section-tone::after {
   position: absolute;
-  inset: 0 calc(50% - 50vw);
+  inset: -30px calc(50% - 50vw) -1px;
   z-index: -1;
   background: linear-gradient(
     180deg,
@@ -2955,7 +2956,7 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
 
   .cases-section {
     height: auto;
-    padding: 28px 0;
+    padding: 0;
     overflow: hidden;
   }
 
@@ -2964,7 +2965,7 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
     display: flex;
     height: clamp(560px, 86svh, 640px);
     gap: 10px;
-    padding: 0 var(--page-padding) 8px;
+    padding: 0 var(--page-padding);
     overflow-x: auto;
     overflow-y: hidden;
     background: transparent;

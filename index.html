@@ -5,10 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Разработка сайтов, Telegram-сервисов, CRM и AI-автоматизаций с фиксированной сметой и работой по договору.">
     <title>g0_faq — сайты, Telegram, CRM и AI под ключ</title>
+    <style>
+      html,body{min-width:320px;margin:0;background:#000;color:#d8eaff}
+      .site-particles{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+      main,.site-header,.site-footer{position:relative;z-index:1}
+    </style>
+    <link id="main-styles" rel="stylesheet" href="/css/main.css" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet">
-    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet"></noscript>
+    <script>
+      (() => {
+        const link = document.querySelector('#main-styles');
+        let attempts = 0;
+        const isReady = () => getComputedStyle(document.documentElement).getPropertyValue('--app-css-ready').trim() === '1';
+        const retry = () => {
+          if (isReady() || attempts >= 2) return;
+          attempts += 1;
+          const url = new URL('/css/main.css', location.origin);
+          url.searchParams.set('retry', `${Date.now()}-${attempts}`);
+          link.href = url.href;
+          window.setTimeout(retry, 3500);
+        };
+        link.addEventListener('error', retry);
+        window.setTimeout(retry, 2500);
+      })();
+    </script>
     <script src="/js/calculator-config.js" defer></script>
     <script src="/js/calculator.js" defer></script>
     <script src="/js/main.js" defer></script>

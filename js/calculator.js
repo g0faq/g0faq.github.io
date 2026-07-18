@@ -255,10 +255,10 @@
     const updateLeadContactField = (form, resetValue = false) => {
       const channel = form.querySelector('[data-calculator-lead-channel]');
       const contact = form.querySelector('[data-calculator-lead-contact]');
-      const label = form.querySelector('[data-calculator-lead-contact-label]');
-      if (!channel || !contact || !label) return;
+      const labelText = form.querySelector('[data-calculator-lead-contact-label-text]');
+      if (!channel || !contact || !labelText) return;
       const field = leadChannels[channel.value] || leadChannels.Telegram;
-      label.textContent = field.label;
+      labelText.textContent = field.label;
       contact.placeholder = field.placeholder;
       contact.inputMode = field.phone ? 'tel' : 'text';
       contact.autocomplete = field.phone ? 'tel' : 'off';
@@ -323,7 +323,7 @@
                   <option value="Телефон">Телефон</option>
                 </select>
               </label>
-              <label data-calculator-lead-contact-label>Ваш Telegram<input name="contact" type="text" maxlength="200" placeholder="@username" data-calculator-lead-contact required></label>
+              <label><span data-calculator-lead-contact-label-text>Ваш Telegram</span><input name="contact" type="text" maxlength="200" placeholder="@username" data-calculator-lead-contact required></label>
               <label class="calculator-lead__comment">Комментарий<textarea name="comment" rows="3" maxlength="800" placeholder="Что ещё важно учесть?"></textarea></label>
               <label class="calculator-lead__consent"><input name="consent" type="checkbox" required><span>Согласен на обработку персональных данных для ответа на заявку</span></label>
               <button class="button" type="submit">Отправить расчёт</button>
