@@ -8,7 +8,13 @@
     "stack": ["Node.js", "SQLite", "Vercel"],
     "url": "https://bliss-home.ru",
     "accent": "blue",
-    "image": "/assets/cases/bliss-home.jpg"
+    "image": "/assets/cases/bliss-home.jpg",
+    "imageWidth": 1600,
+    "imageHeight": 912,
+    "imageWebp": {
+      "640": "/assets/cases/bliss-home-640.webp",
+      "1280": "/assets/cases/bliss-home-1280.webp"
+    }
   },
   {
     "id": "provibe",
@@ -19,7 +25,13 @@
     "stack": ["JavaScript", "Node.js", "Telegram Bot API"],
     "url": "https://provibemsk.ru",
     "accent": "orange",
-    "image": "/assets/cases/provibe.jpg"
+    "image": "/assets/cases/provibe.jpg",
+    "imageWidth": 1600,
+    "imageHeight": 912,
+    "imageWebp": {
+      "640": "/assets/cases/provibe-640.webp",
+      "1280": "/assets/cases/provibe-1280.webp"
+    }
   },
   {
     "id": "studforma",
@@ -30,7 +42,13 @@
     "stack": ["Next.js 14", "TypeScript", "Tailwind CSS"],
     "url": "https://studforma.ru",
     "accent": "blue",
-    "image": "/assets/cases/studforma.jpg"
+    "image": "/assets/cases/studforma.jpg",
+    "imageWidth": 1280,
+    "imageHeight": 853,
+    "imageWebp": {
+      "640": "/assets/cases/studforma-640.webp",
+      "1280": "/assets/cases/studforma-1280.webp"
+    }
   },
   {
     "id": "botai-crm",
@@ -41,7 +59,13 @@
     "stack": ["Next.js 15", "React 19", "TypeScript"],
     "url": "https://botaicrm.ru",
     "accent": "orange",
-    "image": "/assets/cases/botai.jpg"
+    "image": "/assets/cases/botai.jpg",
+    "imageWidth": 1600,
+    "imageHeight": 904,
+    "imageWebp": {
+      "640": "/assets/cases/botai-640.webp",
+      "1280": "/assets/cases/botai-1280.webp"
+    }
   },
   {
     "id": "soon-05",

@@ -1,4 +1,5 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -7,23 +8,42 @@ const output = resolve(root, 'public');
 
 const read = (path) => readFile(resolve(root, path), 'utf8');
 const escapeInlineScript = (source) => source.replaceAll('</script', '<\\/script');
+const fingerprint = (source) => createHash('sha256').update(source).digest('hex').slice(0, 10);
+const mediaOrigins = [
+  'https://g0faq.ru.',
+  'https://www.g0faq.ru.',
+  'https://portfolio-ten-umber-3z9vgkulzy.vercel.app.',
+  'https://portfolio-ten-umber-3z9vgkulzy.vercel.app',
+  'https://g0faq.ru',
+  'https://www.g0faq.ru'
+];
 
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
 await Promise.all([
   cp(resolve(root, 'assets'), resolve(output, 'assets'), { recursive: true }),
   cp(resolve(root, 'data'), resolve(output, 'data'), { recursive: true }),
-  cp(resolve(root, 'css'), resolve(output, 'css'), { recursive: true }),
+  mkdir(resolve(output, 'css'), { recursive: true }),
   mkdir(resolve(output, 'js'), { recursive: true })
 ]);
 
 let html = await read('index.html');
-const [calculatorConfig, casesData, ...appScripts] = await Promise.all([
+const [css, calculatorConfig, casesData, ...appScripts] = await Promise.all([
+  read('css/main.css'),
   read('js/calculator-config.js'),
   read('data/cases.json'),
   read('js/calculator.js'),
   read('js/main.js')
 ]);
+const parsedCases = JSON.parse(casesData);
+const appSource = appScripts.join('\n');
+const cssName = `main.${fingerprint(css)}.css`;
+const appName = `app.${fingerprint(appSource)}.js`;
+const imagePaths = parsedCases.flatMap((item) => Object.values(item.imageWebp || {}));
+const imageBuffers = await Promise.all(
+  imagePaths.map((path) => readFile(resolve(root, path.replace(/^\//, ''))))
+);
+const imageVersion = fingerprint(Buffer.concat(imageBuffers));
 
 const stylesheetPattern = /\s*<link id="main-styles"[^>]*>\s*<noscript><link rel="stylesheet" href="\/css\/main\.css"><\/noscript>/;
 const recoveryPattern = /\s*<script id="style-recovery">[\s\S]*?<\/script>/;
@@ -36,21 +56,30 @@ if (!stylesheetPattern.test(html) || !recoveryPattern.test(html)) {
 html = html
   .replace(
     stylesheetPattern,
-    '\n    <link id="main-styles" rel="stylesheet" href="https://www.g0faq.ru/css/main.css" fetchpriority="high">'
+    `\n    <link rel="preconnect" href="https://www.g0faq.ru">\n` +
+    `    <link rel="preconnect" href="https://portfolio-ten-umber-3z9vgkulzy.vercel.app">\n` +
+    `    <link rel="preconnect" href="https://g0faq.ru.">\n` +
+    `    <link id="main-styles" rel="stylesheet" href="https://www.g0faq.ru/css/${cssName}" fetchpriority="high">\n` +
+    `    <link rel="preload" as="image" type="image/webp" href="${mediaOrigins[0]}${parsedCases[0].imageWebp['640']}?v=${imageVersion}" ` +
+    `imagesrcset="${mediaOrigins[0]}${parsedCases[0].imageWebp['640']}?v=${imageVersion} 640w, ${mediaOrigins[0]}${parsedCases[0].imageWebp['1280']}?v=${imageVersion} 1280w" ` +
+    `imagesizes="(max-width: 760px) 320px, min(42vw, 620px)" fetchpriority="high">`
   )
   .replace(recoveryPattern, '')
   .replace(externalScriptPattern, '');
 
-const bootstrap = `${calculatorConfig}\nwindow.CASES_DATA = ${casesData.trim()};`;
+const bootstrap = `${calculatorConfig}\nwindow.CASES_DATA = ${casesData.trim()};\nwindow.CASE_MEDIA_ORIGINS = ${JSON.stringify(mediaOrigins)};\nwindow.CASE_ASSET_VERSION = '${imageVersion}';`;
 const scripts = [
   `<script>\n${escapeInlineScript(bootstrap)}\n</script>`,
-  '<script src="https://portfolio-ten-umber-3z9vgkulzy.vercel.app/js/app.js" fetchpriority="high"></script>'
+  `<script src="https://portfolio-ten-umber-3z9vgkulzy.vercel.app/js/${appName}" fetchpriority="high" defer></script>`
 ].join('\n');
 
-if (!html.includes('</body>')) {
-  throw new Error('Не удалось найти закрывающий тег body');
+if (!html.includes('</head>')) {
+  throw new Error('Не удалось найти закрывающий тег head');
 }
 
-html = html.replace('</body>', `  ${scripts}\n  </body>`);
+html = html.replace('</head>', `    ${scripts}\n  </head>`);
 await writeFile(resolve(output, 'index.html'), html);
-await writeFile(resolve(output, 'js/app.js'), appScripts.join('\n'));
+await Promise.all([
+  writeFile(resolve(output, 'css', cssName), css),
+  writeFile(resolve(output, 'js', appName), appSource)
+]);

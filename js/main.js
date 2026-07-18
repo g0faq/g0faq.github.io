@@ -24,6 +24,7 @@ function initSiteParticles() {
   let resizeFrame = 0;
   let scrollFrame = 0;
   let lastFrameTime = 0;
+  let lastRenderedAt = 0;
   let isVisible = !document.hidden;
   let scrollOffset = window.scrollY;
   let pointerX = 0;
@@ -196,13 +197,17 @@ function initSiteParticles() {
       return;
     }
 
-    drawParticles(time, true);
+    if ((time - lastRenderedAt) >= (1000 / 30)) {
+      lastRenderedAt = time;
+      drawParticles(time, true);
+    }
     animationFrame = window.requestAnimationFrame(animate);
   };
 
   const startAnimation = () => {
     if (animationFrame || !isVisible || reducedMotion.matches) return;
     lastFrameTime = performance.now();
+    lastRenderedAt = 0;
     canvas.dataset.animationState = 'running';
     animationFrame = window.requestAnimationFrame(animate);
   };
@@ -210,7 +215,7 @@ function initSiteParticles() {
   const resizeCanvas = () => {
     width = Math.max(1, Math.round(window.innerWidth));
     height = Math.max(1, Math.round(window.innerHeight));
-    pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    pixelRatio = Math.min(window.devicePixelRatio || 1, width < 768 ? 1.5 : 2);
     canvas.width = Math.round(width * pixelRatio);
     canvas.height = Math.round(height * pixelRatio);
     rebuildParticles();
@@ -277,6 +282,89 @@ function initSiteParticles() {
   startAnimation();
 }
 
+function caseAssetUrl(origin, path) {
+  const version = window.CASE_ASSET_VERSION;
+  const url = `${origin || ''}${path}`;
+  return version ? `${url}?v=${encodeURIComponent(version)}` : url;
+}
+
+function setupCaseImage(media, caseData, index) {
+  const image = createElement('img', 'case-media__image');
+  const picture = document.createElement('picture');
+  const webp = document.createElement('source');
+  const configuredOrigins = Array.isArray(window.CASE_MEDIA_ORIGINS)
+    ? window.CASE_MEDIA_ORIGINS.filter((origin) => typeof origin === 'string')
+    : [];
+  const origins = configuredOrigins.length ? configuredOrigins : [''];
+  const orderedOrigins = origins.map((_, offset) => origins[(index + offset) % origins.length]);
+  let attempt = 0;
+  let retryTimer = 0;
+  let isNearViewport = index === 0;
+
+  webp.type = 'image/webp';
+  webp.sizes = '(max-width: 760px) 320px, min(42vw, 620px)';
+  image.alt = '';
+  image.decoding = 'async';
+  image.loading = index === 0 ? 'eager' : 'lazy';
+  image.fetchPriority = index === 0 ? 'high' : 'low';
+  image.width = Number(caseData.imageWidth) || 1280;
+  image.height = Number(caseData.imageHeight) || 720;
+
+  const clearRetry = () => {
+    window.clearTimeout(retryTimer);
+    retryTimer = 0;
+  };
+
+  const scheduleRetry = () => {
+    clearRetry();
+    if (!isNearViewport || attempt >= orderedOrigins.length - 1) return;
+    retryTimer = window.setTimeout(() => {
+      if (!image.complete || image.naturalWidth === 0) {
+        attempt += 1;
+        applyOrigin();
+      }
+    }, index === 0 ? 2400 : 3200);
+  };
+
+  const applyOrigin = () => {
+    const origin = orderedOrigins[attempt] || '';
+    const variants = caseData.imageWebp;
+    if (variants?.['640'] && variants?.['1280']) {
+      webp.srcset = `${caseAssetUrl(origin, variants['640'])} 640w, ${caseAssetUrl(origin, variants['1280'])} 1280w`;
+    }
+    image.src = caseAssetUrl(origin, caseData.image);
+    scheduleRetry();
+  };
+
+  image.addEventListener('load', () => {
+    clearRetry();
+    media.classList.add('is-image-loaded');
+  });
+  image.addEventListener('error', () => {
+    clearRetry();
+    if (attempt >= orderedOrigins.length - 1) return;
+    attempt += 1;
+    applyOrigin();
+  });
+
+  picture.append(webp, image);
+  media.append(picture);
+  applyOrigin();
+
+  if (!isNearViewport && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      isNearViewport = true;
+      observer.disconnect();
+      scheduleRetry();
+    }, { rootMargin: '500px' });
+    observer.observe(media);
+  } else {
+    isNearViewport = true;
+    scheduleRetry();
+  }
+}
+
 function createCasePanel(caseData, index) {
   const panel = createElement('article', 'case-panel');
   panel.id = `case-${caseData.id}`;
@@ -309,12 +397,7 @@ function createCasePanel(caseData, index) {
   media.dataset.image = caseData.image;
   media.setAttribute('aria-hidden', 'true');
   if (caseData.image) {
-    const image = createElement('img', 'case-media__image');
-    image.src = caseData.image;
-    image.alt = '';
-    image.decoding = 'async';
-    image.loading = index === 0 ? 'eager' : 'lazy';
-    media.append(image);
+    setupCaseImage(media, caseData, index);
     media.classList.add('case-media--image');
   }
 
