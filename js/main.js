@@ -392,6 +392,8 @@ function createCasePanel(caseData, index) {
 
   const number = createElement('p', 'case-number', caseData.num);
   number.setAttribute('aria-hidden', 'true');
+  number.dataset.caseNumber = caseData.num;
+  number.style.setProperty('--case-number-delay', `${index * -0.55}s`);
 
   const media = createElement('div', 'case-media');
   media.dataset.image = caseData.image;

@@ -1199,6 +1199,20 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
   user-select: none;
 }
 
+.case-number::after {
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  content: attr(data-case-number);
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  pointer-events: none;
+  -webkit-text-stroke: 1px var(--case-accent);
+  animation: case-number-scan 4.8s linear var(--case-number-delay, 0s) infinite;
+  will-change: clip-path;
+}
+
 @media (min-width: 761px) {
   .case-number {
     --case-number-motion-opacity: 0.32;
@@ -1471,6 +1485,15 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
     opacity: var(--case-number-motion-opacity);
     letter-spacing: -0.03em;
     -webkit-text-stroke-width: 1px;
+  }
+}
+
+@keyframes case-number-scan {
+  from {
+    clip-path: polygon(-24% 0, -8% 0, 4% 100%, -12% 100%);
+  }
+  to {
+    clip-path: polygon(108% 0, 124% 0, 112% 100%, 96% 100%);
   }
 }
 
@@ -3860,6 +3883,7 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
   .calculator-progress span,
   .calculator-progress span::after,
   .stack-readout::after,
+  .case-number::after,
   .case-panel.is-card-motion .case-number,
   .case-panel.is-card-motion .case-media,
   .case-panel.is-card-motion .case-media::after,
