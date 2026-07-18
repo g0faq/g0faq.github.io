@@ -305,8 +305,8 @@ function setupCaseImage(media, caseData, index) {
   webp.sizes = '(max-width: 760px) 320px, min(42vw, 620px)';
   image.alt = '';
   image.decoding = 'async';
-  image.loading = index === 0 ? 'eager' : 'lazy';
-  image.fetchPriority = index === 0 ? 'high' : 'low';
+  image.loading = 'lazy';
+  image.fetchPriority = 'low';
   image.width = Number(caseData.imageWidth) || 1280;
   image.height = Number(caseData.imageHeight) || 720;
 
@@ -402,8 +402,11 @@ function createCasePanel(caseData, index) {
   }
 
   const content = createElement('div', 'case-content');
+  const meta = createElement('div', 'case-content__meta');
+  meta.append(createElement('p', 'case-content__category', caseData.category));
+  if (caseData.demo) meta.append(createElement('span', 'case-content__demo', 'ДЕМО'));
   content.append(
-    createElement('p', 'case-content__category', caseData.category),
+    meta,
     createElement('h3', '', caseData.title),
     createElement('p', 'case-content__description', caseData.description)
   );

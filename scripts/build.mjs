@@ -24,6 +24,7 @@ await mkdir(output, { recursive: true });
 await Promise.all([
   cp(resolve(root, 'assets'), resolve(output, 'assets'), { recursive: true }),
   cp(resolve(root, 'data'), resolve(output, 'data'), { recursive: true }),
+  cp(resolve(root, 'img'), resolve(output, 'img'), { recursive: true }),
   mkdir(resolve(output, 'css'), { recursive: true }),
   mkdir(resolve(output, 'js'), { recursive: true })
 ]);

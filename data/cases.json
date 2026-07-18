@@ -3,123 +3,108 @@
     "id": "bliss-home",
     "num": "01",
     "title": "Bliss Home",
-    "category": "Сайт компании по ремонту",
-    "description": "Сайт Bliss Home о ремонте квартир, домов и коммерческой недвижимости бизнес- и премиум-класса. Показывает подход команды, прозрачность этапов, технадзор, реализованные объекты и отзывы клиентов.",
-    "stack": ["Node.js", "SQLite", "Vercel"],
+    "category": "Каталог мебели",
+    "demo": false,
+    "description": "Интернет-каталог мебели и товаров для дома. Структура разделов под большой ассортимент, карточки товаров, быстрая навигация от знакомства с брендом до выбора конкретной позиции.",
+    "stack": ["Node.js", "Express", "Vercel"],
     "url": "https://bliss-home.ru",
     "accent": "blue",
-    "image": "/assets/cases/bliss-home.jpg",
-    "imageWidth": 1600,
-    "imageHeight": 912,
-    "imageWebp": {
-      "640": "/assets/cases/bliss-home-640.webp",
-      "1280": "/assets/cases/bliss-home-1280.webp"
-    }
+    "image": "/img/cases/01-bliss.png"
   },
   {
     "id": "provibe",
     "num": "02",
     "title": "ProVibe",
-    "category": "Лендинг строительной компании",
-    "description": "Одностраничный сайт ProVibe о ремонте под ключ в Москве и области. Портфолио автоматически собирается из папки с объектами, фотографии открываются в lightbox, а заявки отправляются в Telegram.",
-    "stack": ["JavaScript", "Node.js", "Telegram Bot API"],
+    "category": "Сайт-визитка",
+    "demo": false,
+    "description": "Премиальный сайт-визитка для строительной компании из Москвы. Анимированный логотип, портфолио объектов, форма обращения с доставкой заявок напрямую в Telegram.",
+    "stack": ["Node.js", "Express", "Telegram Bot API"],
     "url": "https://provibemsk.ru",
     "accent": "orange",
-    "image": "/assets/cases/provibe.jpg",
-    "imageWidth": 1600,
-    "imageHeight": 912,
-    "imageWebp": {
-      "640": "/assets/cases/provibe-640.webp",
-      "1280": "/assets/cases/provibe-1280.webp"
-    }
+    "image": "/img/cases/02-provibe.png"
   },
   {
     "id": "studforma",
     "num": "03",
     "title": "СтудФорма",
-    "category": "AI-сервис · MVP",
-    "description": "Рабочий frontend-MVP сервиса подготовки учебных материалов: тарифы, примеры, юридические документы и анкета заказа из десяти шагов. Архитектура подготовлена к подключению AI-модуля и внешних интеграций.",
-    "stack": ["Next.js 14", "TypeScript", "Tailwind CSS"],
+    "category": "Сервис",
+    "demo": false,
+    "description": "Веб-сервис для студентов: оформление работ по требованиям вузов. Понятный сценарий от загрузки документа до готового результата.",
+    "stack": ["Node.js", "Express"],
     "url": "https://studforma.ru",
     "accent": "blue",
-    "image": "/assets/cases/studforma.jpg",
-    "imageWidth": 1280,
-    "imageHeight": 853,
-    "imageWebp": {
-      "640": "/assets/cases/studforma-640.webp",
-      "1280": "/assets/cases/studforma-1280.webp"
-    }
+    "image": "/img/cases/03-studforma.png"
   },
   {
     "id": "botai-crm",
     "num": "04",
     "title": "BOTai CRM",
-    "category": "SaaS · Demo",
-    "description": "SaaS-платформа с отдельными кабинетами репетитора, ученика, родителя и онлайн-школы. Объединяет CRM, расписание, оплаты, домашние задания, прогресс, материалы и AI-агентов; интерфейс подготовлен к подключению backend.",
-    "stack": ["Next.js 15", "React 19", "TypeScript"],
+    "category": "SaaS · В разработке",
+    "demo": false,
+    "description": "CRM-платформа для репетиторов и онлайн-школ: расписание, баланс занятий, домашние задания, роли для учеников и родителей, вход через Telegram. Собственный продукт, в активной разработке.",
+    "stack": ["Node.js", "SQLite", "JWT", "Telegram"],
     "url": "https://botaicrm.ru",
     "accent": "orange",
-    "image": "/assets/cases/botai.jpg",
-    "imageWidth": 1600,
-    "imageHeight": 904,
-    "imageWebp": {
-      "640": "/assets/cases/botai-640.webp",
-      "1280": "/assets/cases/botai-1280.webp"
-    }
+    "image": "/img/cases/04-botai.png"
   },
   {
-    "id": "soon-05",
+    "id": "gran",
     "num": "05",
-    "title": "Скоро",
-    "category": "Новый кейс",
-    "description": "Здесь появится новый проект с описанием задачи и результата. Детали и рабочая ссылка будут добавлены после публикации.",
-    "stack": ["Node.js", "Vercel"],
-    "url": "",
+    "title": "ГРАН",
+    "category": "QR-меню",
+    "demo": true,
+    "description": "Электронное меню кофейни, открывается по QR со столика. Категории, пересчёт цен для формата с собой, премиальная тёмная подача.",
+    "stack": ["HTML/CSS/JS", "Vercel"],
+    "url": "https://demo-menu-rho.vercel.app",
     "accent": "blue",
-    "image": ""
+    "image": "/img/cases/05-menu.png"
   },
   {
-    "id": "soon-06",
+    "id": "vector",
     "num": "06",
-    "title": "Скоро",
-    "category": "Новый кейс",
-    "description": "Здесь появится новый проект с описанием задачи и результата. Детали и рабочая ссылка будут добавлены после публикации.",
-    "stack": ["Telegram Bot API", "SQLite"],
-    "url": "",
+    "title": "Вектор",
+    "category": "Лендинг курса",
+    "demo": true,
+    "description": "Продающий лендинг онлайн-курса подготовки к ЕГЭ: программа, тарифы, FAQ и форма заявки с валидацией.",
+    "stack": ["HTML/CSS/JS", "Serverless"],
+    "url": "https://demo-edu-g0-faqs-projects.vercel.app",
     "accent": "orange",
-    "image": ""
+    "image": "/img/cases/06-edu.png"
   },
   {
-    "id": "soon-07",
+    "id": "atelie-sveta",
     "num": "07",
-    "title": "Скоро",
-    "category": "Новый кейс",
-    "description": "Здесь появится новый проект с описанием задачи и результата. Детали и рабочая ссылка будут добавлены после публикации.",
-    "stack": ["PostgreSQL", "GitHub"],
-    "url": "",
+    "title": "Ателье света",
+    "category": "Каталог",
+    "demo": true,
+    "description": "Каталог дизайнерских светильников: комбинируемые фильтры, карточки товара, запрос цены по конкретной модели.",
+    "stack": ["HTML/CSS/JS", "Vercel"],
+    "url": "https://demo-light-git-main-g0-faqs-projects.vercel.app/",
     "accent": "blue",
-    "image": ""
+    "image": "/img/cases/07-light.png"
   },
   {
-    "id": "soon-08",
+    "id": "potok",
     "num": "08",
-    "title": "Скоро",
-    "category": "Новый кейс",
-    "description": "Здесь появится новый проект с описанием задачи и результата. Детали и рабочая ссылка будут добавлены после публикации.",
-    "stack": ["Node.js", "ЮKassa"],
-    "url": "",
+    "title": "Поток",
+    "category": "Мини-CRM",
+    "demo": true,
+    "description": "Дашборд заявок: KPI и графики, считающиеся из данных, канбан с перетаскиванием, карточка клиента с историей статусов.",
+    "stack": ["HTML/CSS/JS", "SVG-графики"],
+    "url": "https://demo-crm-pi-five.vercel.app",
     "accent": "orange",
-    "image": ""
+    "image": "/img/cases/08-crm.png"
   },
   {
-    "id": "soon-09",
+    "id": "britva",
     "num": "09",
-    "title": "Скоро",
-    "category": "Новый кейс",
-    "description": "Здесь появится новый проект с описанием задачи и результата. Детали и рабочая ссылка будут добавлены после публикации.",
-    "stack": ["JavaScript", "Timeweb"],
-    "url": "",
+    "title": "БРИТВА",
+    "category": "Telegram Mini App",
+    "demo": true,
+    "description": "Онлайн-запись в барбершоп в формате Telegram Mini App: услуга, мастер, свободные слоты, подтверждение — с поддержкой темы Telegram.",
+    "stack": ["HTML/CSS/JS", "Telegram WebApp"],
+    "url": "https://demo-booking-sage.vercel.app",
     "accent": "blue",
-    "image": ""
+    "image": "/img/cases/09-booking.png"
   }
 ]
