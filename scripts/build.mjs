@@ -47,9 +47,9 @@ const imageBuffers = await Promise.all(
 );
 const imageVersion = fingerprint(Buffer.concat(imageBuffers));
 
-const stylesheetPattern = /\s*<link id="main-styles"[^>]*>\s*<noscript><link rel="stylesheet" href="\/css\/main\.css"><\/noscript>/;
+const stylesheetPattern = /\s*<link id="main-styles"[^>]*>\s*<noscript><link rel="stylesheet" href="\.\/css\/main\.css"><\/noscript>/;
 const recoveryPattern = /\s*<script id="style-recovery">[\s\S]*?<\/script>/;
-const externalScriptPattern = /\s*<script src="\/js\/(?:calculator-config|calculator|main)\.js" defer><\/script>/g;
+const externalScriptPattern = /\s*<script src="\.\/js\/(?:calculator-config|calculator|main)\.js" defer><\/script>/g;
 
 if (!stylesheetPattern.test(html) || !recoveryPattern.test(html)) {
   throw new Error('Не удалось найти подключения стилей для production-сборки');

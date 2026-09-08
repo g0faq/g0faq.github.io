@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="build-commit" content="">
     <meta name="description" content="Разработка сайтов, Telegram-сервисов, CRM и AI-автоматизаций с фиксированной сметой и работой по договору.">
     <title>g0_faq — сайты, Telegram, CRM и AI под ключ</title>
     <style>
@@ -10,8 +11,8 @@
       .site-particles{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
       main,.site-header,.site-footer{position:relative;z-index:1}
     </style>
-    <link id="main-styles" rel="stylesheet" href="/css/main.css" fetchpriority="high" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="/css/main.css"></noscript>
+    <link id="main-styles" rel="stylesheet" href="./css/main.css" fetchpriority="high" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="./css/main.css"></noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet" media="print" onload="this.media='all'">
@@ -24,7 +25,7 @@
         const retry = () => {
           if (isReady() || attempts >= 2) return;
           attempts += 1;
-          const url = new URL('/css/main.css', location.origin);
+          const url = new URL('./css/main.css', location.href);
           url.searchParams.set('retry', `${Date.now()}-${attempts}`);
           link.href = url.href;
           window.setTimeout(retry, 3500);
@@ -33,9 +34,9 @@
         window.setTimeout(retry, 2500);
       })();
     </script>
-    <script src="/js/calculator-config.js" defer></script>
-    <script src="/js/calculator.js" defer></script>
-    <script src="/js/main.js" defer></script>
+    <script src="./js/calculator-config.js" defer></script>
+    <script src="./js/calculator.js" defer></script>
+    <script src="./js/main.js" defer></script>
   </head>
   <body>
     <canvas class="site-particles" aria-hidden="true"></canvas>
@@ -281,7 +282,7 @@
           </details>
           <details>
             <summary>Работаете по договору?<span aria-hidden="true">+</span></summary>
-            <div class="faq-answer"><div class="faq-answer__inner"><p>Да. В договоре фиксируются задача, этапы оплаты, сроки, порядок приёмки и гарантия. <a href="/assets/docs/dogovor-primer.pdf" target="_blank" rel="noreferrer">Посмотреть пример договора ↗</a></p></div></div>
+            <div class="faq-answer"><div class="faq-answer__inner"><p>Да. В договоре фиксируются задача, этапы оплаты, сроки, порядок приёмки и гарантия. <a href="./assets/docs/dogovor-primer.pdf" target="_blank" rel="noreferrer">Посмотреть пример договора ↗</a></p></div></div>
           </details>
           </div>
         </div>
@@ -316,11 +317,12 @@
       </section>
 
       <section class="content-section contacts-section section-tone section-assembly section-tone--contacts" id="contacts" data-section-name="Контакты" aria-labelledby="contacts-title">
-        <div class="contact-card">
+        <div class="contact-card contact-card--single">
           <div class="contact-card__intro">
             <p class="eyebrow">06 / КОНТАКТЫ</p>
             <h2 id="contacts-title">Обсудим ваш проект</h2>
             <p>Расскажите о задаче — отвечу в течение дня и предложу следующий шаг.</p>
+            <a class="button contact-cta" href="https://t.me/g0_faq" target="_blank" rel="noreferrer">Написать в Telegram ↗</a>
             <div class="contact-links">
               <a class="contact-icon-link contact-icon-link--vk" href="https://vk.com/g0_faq" target="_blank" rel="noreferrer" aria-label="VK — g0_faq">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6c.2-.6 0-1-.8-1H20c-.7 0-1 .4-1.2.8 0 0-1.3 3.2-3.2 5.3-.6.6-.9.8-1.2.8-.2 0-.4-.2-.4-.8V6c0-.7-.2-1-.8-1H9.1c-.4 0-.7.3-.7.6 0 .6.9.8 1 2.6V12c0 .8-.1 1-.5 1-.9 0-3-3.3-4.3-7-.2-.7-.5-1-1.2-1H.9c-.8 0-.9.4-.9.8 0 .7.9 4.1 4.1 8.7 2.2 3.1 5.2 4.8 8 4.8 1.7 0 1.9-.4 1.9-1v-2.4c0-.7.2-.9.7-.9.4 0 1.1.2 2.6 1.7 1.8 1.8 2.1 2.6 3.1 2.6H23c.8 0 1.1-.4.9-1.1-.2-.7-1.1-1.8-2.2-3.1-.6-.7-1.5-1.5-1.8-1.9-.4-.5-.3-.7 0-1.2 0 0 3.2-4.5 3.6-6Z"/></svg>
@@ -344,7 +346,9 @@
               </a>
             </div>
           </div>
-          <form class="contact-form" id="contact-form">
+          <!-- включить после подключения эндпоинта: снять класс contact-form--disabled
+               здесь и в форме калькулятора, задать CONTACT_ENDPOINT в js/main.js и js/calculator.js -->
+          <form class="contact-form contact-form--disabled" id="contact-form">
             <label for="name">Имя</label>
             <input id="name" name="name" type="text" autocomplete="name" maxlength="100" required>
             <label for="contact-channel">Предпочтительный способ связи</label>
@@ -396,7 +400,7 @@
       <div class="site-footer__column site-footer__column--docs">
         <strong>ДОКУМЕНТЫ</strong>
         <span>Работа по договору</span>
-        <a href="/assets/docs/dogovor-primer.pdf" target="_blank" rel="noreferrer">Пример договора ↗</a>
+        <a href="./assets/docs/dogovor-primer.pdf" target="_blank" rel="noreferrer">Пример договора ↗</a>
         <p>© 2026</p>
       </div>
     </footer>

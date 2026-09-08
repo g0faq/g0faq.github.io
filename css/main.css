@@ -3898,3 +3898,35 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
     animation: none !important;
   }
 }
+
+/* ── Контакты без серверного приёмника ──────────────────────────────────────
+   Сайт хостится статикой (GitHub Pages), эндпоинт /api/contact удалён вместе
+   с serverless-функциями. Формы остаются в разметке и в JS, но скрыты;
+   включить после подключения эндпоинта — снять класс .contact-form--disabled
+   и задать CONTACT_ENDPOINT в js/main.js и js/calculator.js. */
+
+.contact-form--disabled {
+  display: none;
+}
+
+/* Пока форма скрыта, карточка контактов занимает одну колонку, иначе половина
+   блока остаётся пустой. */
+.contact-card--single {
+  grid-template-columns: 1fr;
+}
+
+/* Главный элемент блока контактов — переход в Telegram. */
+.contact-cta {
+  min-height: 64px;
+  margin-top: 32px;
+  padding: 18px 34px;
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+}
+
+.contact-cta:hover {
+  border-color: var(--text);
+  color: var(--text);
+}

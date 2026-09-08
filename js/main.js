@@ -1,3 +1,8 @@
+/* Приём заявок отключён: сайт хостится статикой, serverless-эндпоинт
+   /api/contact удалён. Вписать сюда адрес приёмника, когда он появится, —
+   разметка и обработчики форм для этого уже готовы. */
+window.CONTACT_ENDPOINT = window.CONTACT_ENDPOINT || '';
+
 const CASES_BREAKPOINT = 760;
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
@@ -445,7 +450,7 @@ async function initCases() {
   try {
     let cases = window.CASES_DATA;
     if (!Array.isArray(cases)) {
-      const response = await fetch('/data/cases.json');
+      const response = await fetch('./data/cases.json');
       if (!response.ok) throw new Error('Cases request failed');
       cases = await response.json();
     }
@@ -1074,7 +1079,10 @@ function initContactForm() {
     status.removeAttribute('data-state');
 
     try {
-      const response = await fetch('/api/contact', {
+      if (!window.CONTACT_ENDPOINT) {
+        throw new Error('Форма временно отключена — напишите в Telegram @g0_faq');
+      }
+      const response = await fetch(window.CONTACT_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
