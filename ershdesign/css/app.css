@@ -1,0 +1,4352 @@
+/* ershdesign — единственный стилевой файл проекта.
+   Шрифты локальные, из public/fonts. Google Fonts не подключаем. */
+
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Bad Script';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./../fonts/bad-script-400-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Bad Script';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./../fonts/bad-script-400-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Bad Script';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./../fonts/bad-script-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Bad Script';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./../fonts/bad-script-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Onest';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./../fonts/onest-300-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Onest';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./../fonts/onest-300-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Onest';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./../fonts/onest-300-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Onest';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./../fonts/onest-300-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Onest';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./../fonts/onest-400-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Onest';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./../fonts/onest-400-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Onest';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./../fonts/onest-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Onest';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./../fonts/onest-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Onest';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./../fonts/onest-500-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Onest';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./../fonts/onest-500-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Onest';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./../fonts/onest-500-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Onest';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./../fonts/onest-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url('./../fonts/unbounded-200-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url('./../fonts/unbounded-200-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url('./../fonts/unbounded-200-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url('./../fonts/unbounded-200-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./../fonts/unbounded-300-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./../fonts/unbounded-300-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./../fonts/unbounded-300-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./../fonts/unbounded-300-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./../fonts/unbounded-400-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./../fonts/unbounded-400-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./../fonts/unbounded-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./../fonts/unbounded-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* ═══════════════════════════════════════════════════════════
+   ershdesign — токены и компоненты.
+   Значения перенесены из макета «ershdesign — сайт и кабинет».
+   Новых цветов и размеров не заводим, только используем эти.
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  /* Поверхности */
+  --bg: #0d0d0c;
+  --surface: #111110;
+  --deep: #0a0a09;
+
+  /* Текст */
+  --ink: #f4f2ee;
+  --muted: rgba(244, 242, 238, 0.6);
+  --faint: rgba(244, 242, 238, 0.4);
+  --line: rgba(244, 242, 238, 0.14);
+
+  /* Акценты */
+  --gold: #c9a87c;
+  --gold-soft: #e6d3b4;
+  /* Фон собственной реплики: золото приглушено до тёмного, чтобы текст
+     оставался светлым и читаемым. --gold-soft здесь не годится — он светлый
+     и предназначен для ховера кнопок. */
+  --bubble-own: #241f18;
+  --olive: #7d8f6a;
+  --rust: #b05f42;
+  --on-gold: #14140f;
+
+  /* Служебные */
+  --field-bg: rgba(244, 242, 238, 0.03);
+  --hover-line: rgba(201, 168, 124, 0.5);
+  --hatch: repeating-linear-gradient(135deg, #131311 0 10px, #171714 10px 20px);
+
+  /* Шрифты */
+  --font-display: 'Unbounded', sans-serif;
+  --font-text: 'Onest', sans-serif;
+  /* В стеке только то, что сайт реально отдаёт. Брендовый Disruptors Script
+     мы не раздаём — он живёт в PNG-масках логотипа, файла шрифта у нас нет.
+     Пока он стоял в стеке живого текста, акцентное слово рисовалось по-разному:
+     у кого шрифт установлен локально — им, у остальных — Bad Script. */
+  --font-script: 'Bad Script', cursive;
+
+  --radius: 6px;
+
+  /* Горизонтальные поля: сайт и кабинет отбиты по-разному */
+  --pad-site: 20px;
+  --pad-cab: 20px;
+}
+
+@media (min-width: 900px) {
+  :root {
+    --pad-site: 40px;
+    --pad-cab: 32px;
+  }
+}
+
+/* ─── Чаты ─── */
+
+.chat-shell {
+  min-height: calc(100vh - 72px);
+  background: var(--deep);
+}
+
+/* ─── Открытый чат: шапка сверху, ввод снизу, листается только лента ─── */
+
+/* Высоту берём цепочкой flex от body, а не вычитанием пикселей: шапка
+   кабинета меняет высоту от выреза и ширины экрана, и любое magic number
+   разъезжалось бы. 100dvh, а не 100vh — иначе панель браузера на телефоне
+   срезает низ. */
+body.chat-open {
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+body.chat-open main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+body.chat-open .chat-shell {
+  flex: 1;
+  min-height: 0;
+}
+
+body.chat-open .chat-thread {
+  min-height: 0;
+}
+
+/* На узких экранах оболочка — обычный блок, поэтому колонку задаём здесь.
+   На широких она грид, и переопределять display нельзя. */
+@media (max-width: 799.98px) {
+  body.chat-open .chat-shell {
+    display: flex;
+    flex-direction: column;
+  }
+
+  body.chat-open .chat-thread {
+    flex: 1;
+  }
+}
+
+@media (min-width: 800px) {
+  /* Список чатов получает собственную прокрутку, иначе он растягивал бы
+     грид и лента снова листалась бы всей страницей. */
+  body.chat-open .chat-list {
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+
+body.chat-open .chat-thread__head {
+  flex: none;
+}
+
+body.chat-open .chat-messages {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Внутри ограниченной по высоте ленты форма и так стоит внизу — sticky и
+   смещение под меню больше не нужны. */
+body.chat-open .chat-composer {
+  flex: none;
+  position: static;
+  bottom: auto;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+}
+
+.chat-list,
+.chat-thread {
+  min-width: 0;
+}
+
+.chat-list {
+  padding: 24px var(--pad-cab);
+  background: var(--surface);
+}
+
+.chat-list__head,
+.chat-thread__head,
+.chat-message__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.chat-list__title {
+  margin-top: 10px;
+  font-size: 30px;
+}
+
+.chat-list__items {
+  margin-top: 24px;
+  display: grid;
+  gap: 8px;
+}
+
+.chat-list__item {
+  position: relative;
+  padding: 16px;
+  display: grid;
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+}
+
+.chat-list__unread,
+.cab-nav__count {
+  min-width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--deep);
+  font-size: 11px;
+  line-height: 1;
+}
+
+.chat-list__unread {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+}
+
+.cab-nav__count {
+  margin-left: 7px;
+}
+
+.chat-list__item:hover,
+.chat-list__item.is-active {
+  border-color: var(--gold);
+  color: var(--ink);
+}
+
+.chat-list__item strong,
+.chat-thread__title,
+.chat-message__meta strong {
+  font-weight: 400;
+}
+
+.chat-list__kind,
+.chat-list__meta,
+.chat-message__meta,
+.chat-message__forwarded {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.chat-direct {
+  margin-top: 28px;
+  padding-top: 20px;
+  display: grid;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.chat-direct form {
+  margin: 0;
+}
+
+.chat-direct__person {
+  width: 100%;
+  padding: 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.chat-thread {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 72px);
+}
+
+.chat-thread__head {
+  min-height: 84px;
+  padding: 18px var(--pad-cab);
+  justify-content: flex-start;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.chat-thread__title {
+  margin-top: 5px;
+  font-size: 18px;
+}
+
+.chat-thread__back {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--ink);
+}
+
+.chat-messages {
+  padding: 18px var(--pad-cab);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+}
+
+/* Прижимает переписку к низу, пока она короче экрана, и схлопывается, когда
+   сообщений много. Прямой justify-content: flex-end в прокручиваемом
+   контейнере отрезает верхние сообщения — до них нельзя долистать. */
+.chat-messages::before {
+  content: '';
+  margin-top: auto;
+}
+
+.chat-message {
+  position: relative;
+  width: fit-content;
+  max-width: min(540px, 82%);
+  align-self: flex-start;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  /* Скруглённый угол «хвоста» со стороны отправителя — привычная форма реплики. */
+  border-radius: 14px 14px 14px 4px;
+  background: var(--surface);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.chat-message.is-own {
+  align-self: flex-end;
+  border-color: transparent;
+  border-radius: 14px 14px 4px 14px;
+  background: var(--bubble-own);
+}
+
+/* Подряд идущие сообщения одного автора жмутся друг к другу и теряют «хвост». */
+.chat-message.is-grouped {
+  margin-top: -4px;
+  border-top-left-radius: 6px;
+}
+
+.chat-message.is-grouped.is-own {
+  border-top-left-radius: 14px;
+  border-top-right-radius: 6px;
+}
+
+.chat-message__meta {
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+/* Своё авторство и так очевидно, повтор подписи — визуальный шум. */
+.chat-message.is-own .chat-message__meta strong,
+.chat-message.is-grouped .chat-message__meta strong {
+  display: none;
+}
+
+/* Когда подписи нет, метаданные сводятся ко времени и уходят под текст. */
+.chat-message.is-own .chat-message__meta,
+.chat-message.is-grouped .chat-message__meta {
+  order: 2;
+  justify-content: flex-end;
+  margin-top: 2px;
+}
+
+.chat-message.is-own,
+.chat-message.is-grouped {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-message__meta time {
+  white-space: nowrap;
+}
+
+.chat-message__body,
+.chat-message__deleted {
+  margin-top: 4px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.chat-message__deleted {
+  color: var(--faint);
+  font-style: italic;
+}
+
+.chat-message__forwarded {
+  margin-top: 4px;
+  color: var(--gold);
+}
+
+.chat-attachment {
+  margin-top: 6px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+}
+
+.chat-message__delete {
+  margin: 0;
+  text-align: right;
+}
+
+.chat-message__delete button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Действия скрыты за неприметной кнопкой: в ленте видны только сообщения. */
+.chat-menu {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+}
+
+.chat-menu__toggle {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1;
+  list-style: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.chat-menu__toggle::-webkit-details-marker {
+  display: none;
+}
+
+/* На тач-экранах наведения нет, поэтому кнопка там видна всегда. */
+@media (hover: none) {
+  .chat-menu__toggle {
+    opacity: 0.55;
+  }
+}
+
+.chat-message:hover .chat-menu__toggle,
+.chat-menu__toggle:focus-visible,
+.chat-menu[open] .chat-menu__toggle {
+  opacity: 1;
+  color: var(--gold);
+  outline: none;
+}
+
+.chat-menu__panel {
+  position: absolute;
+  z-index: 6;
+  top: 28px;
+  right: 0;
+  min-width: 240px;
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--deep);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.chat-forward__form {
+  /* В одну колонку: рядом с кнопкой список сжимался до «Переслат». */
+  display: grid;
+  gap: 6px;
+}
+
+.chat-forward__form select {
+  min-width: 0;
+  width: 100%;
+  min-height: 34px;
+  padding: 6px 26px 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 12px;
+}
+
+.chat-forward__submit,
+.chat-message__delete button {
+  width: 100%;
+  min-height: 34px;
+  padding: 6px 11px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.chat-message__delete button {
+  width: 100%;
+}
+
+.chat-forward__submit:hover,
+.chat-forward__submit:focus-visible,
+.chat-message__delete button:hover,
+.chat-message__delete button:focus-visible {
+  border-color: var(--gold);
+  color: var(--gold);
+  outline: none;
+}
+
+.chat-composer {
+  padding: 16px var(--pad-cab);
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  /* Строка ввода не листается вместе с перепиской. Раньше .chat-thread
+     перерастал экран, и форма уезжала вверх вместе со страницей.
+     Смещение снизу — высота нижнего меню, иначе форма спрячется под ним. */
+  position: sticky;
+  bottom: calc(52px + env(safe-area-inset-bottom, 0px));
+  z-index: 5;
+}
+
+/* Одна строка: скрепка — поле — стрелка, как в мессенджерах. */
+.chat-composer__row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.chat-composer textarea {
+  flex: 1;
+  min-width: 0;
+  /* Начинается в одну строку и подрастает под текст до предела (chat.js). */
+  min-height: 40px;
+  max-height: 120px;
+  padding: 9px 14px;
+  resize: none;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--deep);
+  color: var(--ink);
+  /* 16px — иначе iOS зумит страницу при фокусе в поле. */
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.chat-icon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.chat-file,
+.chat-send {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.chat-file {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.chat-file:hover,
+.chat-file:focus-within {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.chat-send {
+  border: 0;
+  background: var(--gold);
+  color: var(--deep);
+}
+
+.chat-send:hover,
+.chat-send:focus-visible {
+  background: var(--gold-soft);
+  outline: none;
+}
+
+/* Имя прикреплённого файла: с иконкой вместо подписи иначе непонятно,
+   что вложение выбрано. */
+.chat-composer__file {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.chat-composer__file button {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.chat-composer__file button:hover {
+  color: var(--gold);
+}
+
+.chat-file input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.chat-thread__placeholder,
+.chat-empty {
+  padding: 32px var(--pad-cab);
+  color: var(--muted);
+}
+
+.chat-thread__placeholder {
+  margin: auto;
+  text-align: center;
+}
+
+@media (max-width: 799px) {
+  .chat-shell:not(.has-selected):not(.is-client-single) .chat-thread,
+  .chat-shell.has-selected .chat-list {
+    display: none;
+  }
+}
+
+@media (min-width: 800px) {
+  .chat-shell {
+    display: grid;
+    grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
+  }
+
+  .chat-shell.is-client-single {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .chat-list {
+    min-height: calc(100vh - 88px);
+    border-right: 1px solid var(--line);
+  }
+}
+
+/* Кнопку «назад» убираем только там, где появляется навигация в шапке.
+   Раньше порог был 800px, и в промежутке 800–899px в открытом чате
+   не оставалось ни её, ни меню, ни навигации. */
+@media (min-width: 900px) {
+  .chat-thread__back {
+    display: none;
+  }
+}
+
+/* ─── База ─── */
+
+* {
+  box-sizing: border-box;
+}
+
+/* Выпадающий список нативного select рисует операционная система: цвета
+   с самого элемента на пункты не наследуются. На Windows список брал системную
+   тему, и на тёмном фоне текст сливался с фоном. Задаём явно из токенов —
+   правило общее для всех select, потому что проблема не только у выбора проекта. */
+select option {
+  background-color: var(--surface);
+  color: var(--ink);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--gold-soft);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: var(--font-text);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--faint);
+}
+
+:focus-visible {
+  outline: 1px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+}
+
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+  z-index: 10;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  color: var(--ink);
+}
+
+/* ─── Типографика ─── */
+
+/* Рубрика секции: «01 — Архитектура и интерьер» */
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* Подпись/мета: приглушённый капслок 11px */
+.label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.label--faint {
+  color: var(--faint);
+}
+
+.label--ink {
+  color: var(--ink);
+}
+
+.label--gold {
+  color: var(--gold);
+}
+
+/* Заголовочная гарнитура. Размер задаёт контекстный класс. */
+.display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.script {
+  font-family: var(--font-script);
+  color: var(--gold);
+  line-height: 1;
+}
+
+/* Оригинальный brush-lettering хранится как прозрачные PNG-маски: цвет
+   остаётся управляемым токеном, а исходный шрифт посетителям не раздаётся. */
+.brand-lettering {
+  display: inline-block;
+  flex: none;
+  background-color: currentColor;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.brand-lettering {
+  width: 4em;
+  height: 1.45em;
+  -webkit-mask-image: url('/images/branding/ershdesign-lettering.png');
+  mask-image: url('/images/branding/ershdesign-lettering.png');
+  -webkit-mask-size: 100% auto;
+  mask-size: 100% auto;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.text-sm {
+  font-size: 15px;
+}
+
+.text-xs {
+  font-size: 13px;
+}
+
+.error-text {
+  font-size: 13px;
+  color: var(--rust);
+}
+
+/* ─── Кнопки ─── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 24px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn--gold {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--on-gold);
+}
+
+.btn--gold:hover {
+  background: var(--gold-soft);
+  border-color: var(--gold-soft);
+  color: var(--on-gold);
+}
+
+/* Прозрачная с золотой обводкой — CTA в шапке */
+.btn--gold-outline {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn--gold-outline:hover {
+  background: var(--gold);
+  color: var(--on-gold);
+}
+
+.btn--outline {
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.btn--outline:hover {
+  border-color: var(--faint);
+  color: var(--ink);
+}
+
+.btn--lg {
+  height: 52px;
+  padding: 0 28px;
+  font-size: 12px;
+}
+
+.btn--sm {
+  height: 40px;
+  padding: 0 18px;
+}
+
+.btn--xs {
+  height: 36px;
+  padding: 0 16px;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+/* Бургер: две линии, как в мобильном макете */
+.btn--burger {
+  width: 44px;
+  padding: 0;
+  flex-direction: column;
+  gap: 5px;
+  border-color: var(--line);
+}
+
+.btn--burger span {
+  width: 16px;
+  height: 1px;
+  background: var(--ink);
+  display: block;
+}
+
+/* ─── Чипы: фильтры объектов, типы объекта, вкладки файлов ─── */
+
+.chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 14px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.chip:hover {
+  border-color: var(--hover-line);
+}
+
+.chip.is-active {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.chip--tall {
+  height: 44px;
+  padding: 0 16px;
+}
+
+@media (min-width: 900px) {
+  .chip {
+    padding: 0 18px;
+  }
+}
+
+/* ─── Поля ─── */
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field-label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.field {
+  height: 52px;
+  padding: 0 16px;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  background: var(--field-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  font-size: 16px;
+  outline: none;
+}
+
+/* iOS задаёт date-input собственную минимальную ширину и центрирует значение. */
+.field[type='date'] {
+  display: block;
+  min-width: 0;
+  width: 100%;
+  color-scheme: dark;
+  text-align: left;
+}
+
+.field[type='date']::-webkit-date-and-time-value {
+  min-width: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.admin-date {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.admin-date__surface {
+  display: none;
+}
+
+/* JS оставляет нативный date-input кликабельным, но отдаёт отрисовку оболочке. */
+.admin-date.is-enhanced {
+  height: 54px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--field-bg);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.admin-date.is-enhanced:hover {
+  border-color: var(--hover-line);
+}
+
+.admin-date.is-enhanced:focus-within {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold);
+}
+
+.admin-date.is-enhanced .admin-date__input {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  opacity: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.admin-date.is-enhanced .admin-date__surface {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  pointer-events: none;
+}
+
+.admin-date__value {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-date.has-value .admin-date__value {
+  padding-right: 30px;
+  color: var(--ink);
+}
+
+.admin-date__icon {
+  position: relative;
+  width: 18px;
+  height: 17px;
+  flex: none;
+  border: 1.5px solid var(--gold);
+  border-radius: 3px;
+  color: var(--gold);
+}
+
+.admin-date__icon::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: -1.5px;
+  width: 18px;
+  border-top: 1.5px solid currentColor;
+}
+
+.admin-date__icon::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 4px;
+  width: 1.5px;
+  height: 5px;
+  border-radius: 1px;
+  background: currentColor;
+  box-shadow: 7px 0 0 currentColor;
+}
+
+.admin-date__clear {
+  position: absolute;
+  top: 50%;
+  right: 43px;
+  z-index: 3;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.admin-date__clear[hidden] {
+  display: none;
+}
+
+.admin-date__clear::before,
+.admin-date__clear::after {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 9px;
+  width: 12px;
+  border-top: 1px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.admin-date__clear::after {
+  transform: rotate(-45deg);
+}
+
+.admin-date__clear:hover,
+.admin-date__clear:focus-visible {
+  color: var(--ink);
+  background: var(--surface);
+  outline: none;
+}
+
+.field:focus {
+  border-color: var(--gold);
+}
+
+textarea.field {
+  height: auto;
+  padding: 14px 16px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.field.is-error,
+.field-label.is-error {
+  border-color: var(--rust);
+  color: var(--ink);
+}
+
+.field-label.is-error {
+  border: 0;
+  color: var(--rust);
+}
+
+.field:disabled {
+  color: var(--ink);
+}
+
+.checkbox {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 13px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.checkbox__box {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  flex: none;
+  margin-top: 3px;
+}
+
+/* ─── Бейджи статусов ─── */
+
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: 1px solid var(--muted);
+  border-radius: var(--radius);
+  padding: 5px 9px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.badge--done {
+  color: var(--olive);
+  border-color: var(--olive);
+}
+
+.badge--work {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.badge--review {
+  color: var(--gold-soft);
+  border-color: var(--gold-soft);
+}
+
+.badge--wait {
+  color: var(--muted);
+  border-color: var(--muted);
+}
+
+.badge--blocked {
+  color: var(--rust);
+  border-color: var(--rust);
+}
+
+.badge--lg {
+  padding: 7px 12px;
+}
+
+.badge--stage {
+  color: var(--gold);
+  border-color: var(--gold);
+  padding: 7px 11px;
+}
+
+/* Тип файла: PDF / XLS / JPG — обводка по линии, текст золотой */
+.badge--kind {
+  color: var(--gold);
+  border-color: var(--line);
+  padding: 8px 10px;
+  text-align: center;
+  flex: none;
+}
+
+/* ─── Полоса прогресса ─── */
+
+.progress {
+  height: 1px;
+  background: var(--line);
+}
+
+.progress__bar {
+  height: 1px;
+  background: var(--gold);
+}
+
+.progress--thick,
+.progress--thick .progress__bar {
+  height: 2px;
+}
+
+/* Состояния стадии. Ширины 100/45/0 — ровно те, что заданы в макете.
+   Инлайновых style-атрибутов не держим, CSP их всё равно режет. */
+.progress__bar--done {
+  width: 100%;
+  background: var(--olive);
+}
+
+.progress__bar--active {
+  width: 45%;
+  background: var(--gold);
+}
+
+.progress__bar--wait {
+  width: 0;
+  background: var(--line);
+}
+
+/* ─── Заглушка фотографии ─── */
+
+.photo {
+  background: var(--hatch);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: flex-end;
+  padding: 14px;
+}
+
+/* ─── Каркас страницы ─── */
+
+.container {
+  padding-inline: var(--pad-site);
+}
+
+.section {
+  padding-block: 56px;
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 900px) {
+  .section {
+    padding-block: 96px;
+  }
+}
+
+.section__title {
+  font-size: 34px;
+  margin-top: 18px;
+}
+
+@media (min-width: 900px) {
+  .section__title {
+    font-size: 52px;
+    margin-top: 24px;
+  }
+}
+
+.section__head {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (min-width: 900px) {
+  .section__head {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+  }
+}
+
+/* ─── Шапка публичного сайта ─── */
+
+.site-header {
+  /* Якорь для выпадающего меню: оно позиционируется от шапки, а не от окна. */
+  position: relative;
+  /* Вставку выреза добавляем и к min-height: при box-sizing: border-box
+     один только padding-top съел бы высоту содержимого, и шапка осталась бы
+     под часами. При нулевых вставках вид прежний — те же 64px. */
+  min-height: calc(64px + env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-inline:
+    calc(var(--pad-site) + env(safe-area-inset-left, 0px))
+    calc(var(--pad-site) + env(safe-area-inset-right, 0px));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+}
+
+.site-header__logo {
+  font-size: 34px;
+  transform-origin: left center;
+  animation: brand-reveal 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: transform 240ms ease, opacity 240ms ease;
+}
+
+.site-header__logo:hover {
+  opacity: 0.9;
+  transform: translateY(-1px) scale(1.015);
+}
+
+@keyframes brand-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header__logo {
+    animation: none;
+    transition: none;
+  }
+}
+
+.site-nav {
+  display: none;
+  gap: 40px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.site-nav a {
+  color: var(--muted);
+}
+
+.site-nav a.is-active,
+.site-nav a:hover {
+  color: var(--ink);
+}
+
+.site-header__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.site-header__cta-short {
+  padding: 0 14px;
+}
+
+/* На 375 в шапке короткий CTA и бургер, на 1280 — полный CTA и меню */
+.site-header__cta-full {
+  display: none;
+}
+
+@media (max-width: 899px) {
+  .site-header {
+    position: relative;
+  }
+
+  .site-nav.is-open {
+    position: absolute;
+    z-index: 10;
+    /* Ровно под шапкой. Раньше здесь было 64px — на iPhone шапка выше на
+       величину выреза, меню наезжало на неё и закрывало саму кнопку бургера,
+       из-за чего его нельзя было закрыть. */
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: var(--deep);
+    border-bottom: 1px solid var(--line);
+    /* Длинное меню не должно уходить за экран без возможности прокрутки. */
+    max-height: calc(100vh - 100%);
+    overflow-y: auto;
+  }
+
+  .site-nav.is-open a {
+    padding: 18px var(--pad-site);
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (min-width: 900px) {
+  .site-header {
+    height: 88px;
+  }
+
+  .site-header__logo {
+    font-size: 44px;
+  }
+
+  .site-nav {
+    display: flex;
+  }
+
+  .btn--burger,
+  .site-header__cta-short {
+    display: none;
+  }
+
+  .site-header__cta-full {
+    display: inline-flex;
+  }
+}
+
+/* ─── Герой ─── */
+
+/* Высота из макета задана как min-height: на 375 в герой сведён
+   полный набор тезисов с 1280, и жёсткие 560px его обрезали бы. */
+.hero {
+  position: relative;
+  min-height: 560px;
+  display: flex;
+  background: var(--hatch);
+  border-bottom: 1px solid var(--line);
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(13, 13, 12, 0.97) 0%,
+    rgba(13, 13, 12, 0.6) 50%,
+    rgba(13, 13, 12, 0.2) 100%
+  );
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 24px var(--pad-site);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.hero__title {
+  font-size: 36px;
+  margin-top: 18px;
+  max-width: 940px;
+}
+
+.hero__title .script {
+  font-size: 40px;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.hero__title br {
+  display: none;
+}
+
+.hero__points {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 24px;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.hero__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.hero__stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+  margin-top: 24px;
+}
+
+.stat__value {
+  /* Цифры — вспомогательная информация, а не заголовок: намеренно мельче. */
+  font-size: 17px;
+}
+
+.stat__caption {
+  margin-top: 8px;
+}
+
+@media (min-width: 900px) {
+  .hero {
+    min-height: 720px;
+  }
+
+  .hero__scrim {
+    background: linear-gradient(
+      to top,
+      rgba(13, 13, 12, 0.96) 0%,
+      rgba(13, 13, 12, 0.55) 45%,
+      rgba(13, 13, 12, 0.25) 100%
+    );
+  }
+
+  .hero__inner {
+    padding: 64px var(--pad-site) 40px;
+  }
+
+  .hero__title {
+    font-size: 82px;
+    margin-top: 28px;
+  }
+
+  .hero__title .script {
+    font-size: 88px;
+    line-height: 1.3;
+  }
+
+  .hero__title br {
+    display: inline;
+  }
+
+  .hero__points {
+    flex-direction: row;
+    gap: 40px;
+    margin-top: 36px;
+    max-width: 900px;
+  }
+
+  .hero__actions {
+    flex-direction: row;
+    gap: 12px;
+    margin-top: 40px;
+  }
+
+  .hero__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 200px);
+    gap: 40px;
+    justify-content: start;
+    padding-top: 28px;
+    margin-top: 56px;
+  }
+
+  .stat__value {
+    font-size: 24px;
+  }
+
+  .stat__caption {
+    margin-top: 12px;
+  }
+}
+
+/* ─── Объекты ─── */
+
+.objects {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 32px;
+}
+
+@media (min-width: 900px) {
+  .objects {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px 32px;
+    margin-top: 56px;
+  }
+}
+
+.object__photo {
+  height: 280px;
+}
+
+.object__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.object__name {
+  font-size: 20px;
+}
+
+.object__year {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+}
+
+.object__meta {
+  display: flex;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+/* На 375 тип объекта в подписи не показываем — как в макете */
+.object__meta .object__type {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .object__photo {
+    height: 300px;
+  }
+
+  .object__head {
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .object__name {
+    font-size: 22px;
+  }
+
+  .object__meta {
+    gap: 16px;
+    margin-top: 14px;
+  }
+
+  .object__meta .object__type {
+    display: inline;
+  }
+
+  .object__photo {
+    padding: 16px;
+  }
+}
+
+/* ─── Процесс: семь стадий ─── */
+
+/* 375 — список строк, 1280 — семь колонок */
+.process {
+  border-top: 1px solid var(--line);
+  margin-top: 28px;
+}
+
+.process__item {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.process__num {
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  color: var(--gold);
+  flex: none;
+}
+
+.process__name {
+  flex: 1;
+  font-size: 17px;
+  line-height: 1.1;
+}
+
+.process__bar {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .process {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 16px;
+    border-top: 0;
+    margin-top: 56px;
+  }
+
+  .process__item {
+    display: block;
+    padding: 0;
+    border-bottom: 0;
+  }
+
+  .process__bar {
+    display: block;
+  }
+
+  .process__num {
+    display: block;
+    margin-top: 18px;
+  }
+
+  .process__name {
+    display: block;
+    font-size: 15px;
+    margin-top: 14px;
+  }
+
+  .process__weeks {
+    display: block;
+    margin-top: 12px;
+  }
+}
+
+/* ─── Форма заявки ─── */
+
+.lead {
+  display: grid;
+  gap: 24px;
+}
+
+@media (min-width: 900px) {
+  .lead {
+    grid-template-columns: 380px 1fr;
+    gap: 80px;
+  }
+}
+
+.lead__title {
+  font-size: 34px;
+  margin: 18px 0 24px;
+}
+
+/* Перенос в заголовке — только на 1280, как в макете */
+.lead__title br {
+  display: none;
+}
+
+.lead__note {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .lead__title {
+    font-size: 44px;
+    margin: 24px 0 20px;
+  }
+
+  .lead__title br {
+    display: inline;
+  }
+
+  .lead__note {
+    display: block;
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 320px;
+  }
+}
+
+.lead__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.lead__pair {
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 900px) {
+  .lead__form {
+    gap: 20px;
+  }
+
+  .lead__pair {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+}
+
+.lead__submit {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 900px) {
+  .lead__submit {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+  }
+
+  .lead__submit .checkbox {
+    max-width: 420px;
+  }
+
+  .lead__submit .btn {
+    padding: 0 32px;
+  }
+}
+
+/* ─── Подвал сайта ─── */
+
+.site-footer {
+  background: var(--deep);
+  padding: 32px var(--pad-site);
+  display: grid;
+  gap: 20px;
+}
+
+@media (min-width: 900px) {
+  .site-footer {
+    /* Три колонки: бренд, контакты, копирайт. Разделы «Студия» и «Документы» убраны. */
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 40px;
+    padding-block: 64px;
+  }
+}
+
+.site-footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.site-footer__brand {
+  gap: 18px;
+}
+
+.site-footer__logo {
+  font-size: 26px;
+}
+
+.site-footer__about {
+  color: var(--muted);
+  font-size: 15px;
+  max-width: 300px;
+}
+
+.site-footer__col a,
+.site-footer__col div {
+  font-size: 15px;
+}
+
+.site-footer__link-ink {
+  color: var(--ink);
+}
+
+.site-footer__copy {
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+
+@media (min-width: 900px) {
+  .site-footer__logo {
+    font-size: 30px;
+  }
+
+  .site-footer__copy {
+    border-top: 0;
+    padding-top: 0;
+  }
+}
+
+
+/* ─── Портфолио ─── */
+
+.object__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.portfolio-shots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+  margin-block: 14px;
+}
+
+.portfolio-shot {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.portfolio-shot img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: block;
+}
+
+.portfolio-upload {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 8px;
+}
+
+.portfolio-upload .field {
+  flex: 1 1 200px;
+}
+
+
+/* ─── Подсказка витрины ─── */
+
+.demo-hint {
+  margin-top: 20px;
+  padding: 14px 16px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  text-align: left;
+}
+
+.demo-hint__mark {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--gold);
+  color: var(--deep);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+}
+
+.demo-hint__text {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.demo-hint__list {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.demo-hint__list div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.demo-hint__list dt {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.demo-hint__list dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 13px;
+}
+
+
+/* Ловушка для ботов: убрана с экрана, но остаётся в DOM и в отправке формы.
+   display:none не годится — часть ботов такие поля игнорирует. */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+.admin-lead-filter {
+  margin-bottom: 16px;
+}
+
+.admin-lead__reason {
+  margin: 0 0 8px;
+  color: var(--gold);
+  font-size: 13px;
+}
+
+/* ═══ Кабинет ═══ */
+
+/* Кабинет и экран входа идут на светлой поверхности, а не на фоне сайта */
+body.page-project {
+  background: var(--surface);
+}
+
+.cab {
+  padding: 24px var(--pad-cab);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+@media (min-width: 900px) {
+  .cab {
+    display: block;
+    padding: 0;
+  }
+}
+
+/* Блок кабинета: на 1280 это полоса с разделителем, на 375 — просто секция */
+@media (min-width: 900px) {
+  .cab__block {
+    padding: 40px var(--pad-cab);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .cab__block:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* ─── Шапка кабинета ─── */
+
+.cab-header {
+  /* Вставка идёт и в min-height, иначе border-box отдаст её за счёт содержимого. */
+  min-height: calc(60px + env(safe-area-inset-top, 0px));
+  padding-inline:
+    calc(var(--pad-cab) + env(safe-area-inset-left, 0px))
+    calc(var(--pad-cab) + env(safe-area-inset-right, 0px));
+  /* Верхняя вставка идёт внутрь шапки, чтобы полосу статус-бара
+     закрашивал её собственный фон, а не фон страницы. */
+  padding-block: calc(10px + env(safe-area-inset-top, 0px)) 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  background: var(--deep);
+}
+
+.cab-header__logo {
+  font-size: 22px;
+}
+
+.cab-header__left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.cab-project-switch {
+  width: 100%;
+  display: flex;
+  order: 3;
+  align-items: center;
+  gap: 8px;
+}
+
+.cab-project-switch__select {
+  min-width: 0;
+  width: 100%;
+  height: 38px;
+  padding: 0 34px 0 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--field-bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+  text-overflow: ellipsis;
+}
+
+.cab-project-switch__select:focus-visible {
+  border-color: var(--gold);
+  outline: 1px solid var(--gold);
+  outline-offset: 1px;
+}
+
+.cab-nav {
+  display: none;
+  gap: 28px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.cab-nav a {
+  color: var(--muted);
+}
+
+.cab-nav a.is-active,
+.cab-nav a:hover {
+  color: var(--ink);
+}
+
+.cab-header__right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.cab-header__role {
+  display: none;
+}
+
+/* ─── Нижнее меню кабинета (узкие экраны) ─── */
+
+/* На мобильном .cab-nav в шапке скрыта, поэтому разделы живут здесь.
+   Без этого блока чаты и управление были недоступны с телефона. */
+.cab-tabbar {
+  position: fixed;
+  z-index: 20;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  background: var(--deep);
+  border-top: 1px solid var(--line);
+  /* Индикатор жеста на iPhone не должен перекрывать пункты. */
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+.cab-tabbar__item {
+  position: relative;
+  /* Иконки одинаковой ширины, поэтому пункты просто делят полосу поровну
+     и ничего не приходится прокручивать даже при шести разделах. */
+  flex: 1 1 0;
+  min-width: 0;
+  /* 52px + вставка — палец попадает без прицеливания. */
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 4px;
+  color: var(--muted);
+  border-top: 2px solid transparent;
+}
+
+.cab-tabbar__icon {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cab-tabbar__item.is-active {
+  color: var(--ink);
+  border-top-color: var(--gold);
+}
+
+.cab-tabbar__count {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  margin-left: 4px;
+  min-width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--deep);
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0;
+  padding-inline: 5px;
+}
+
+/* Контент не должен уезжать под панель. Класс ставит layout только тем
+   страницам, где панель действительно отрисована. */
+body.has-tabbar {
+  padding-bottom: calc(52px + env(safe-area-inset-bottom, 0px));
+}
+
+@media (min-width: 900px) {
+  .chat-composer {
+    bottom: 0;
+  }
+
+  .cab-tabbar {
+    display: none;
+  }
+
+  body.has-tabbar {
+    padding-bottom: 0;
+  }
+
+  .cab-header {
+    height: 72px;
+    min-height: 72px;
+    padding-block: 0;
+    flex-wrap: nowrap;
+    gap: 20px;
+  }
+
+  .cab-header__role {
+    display: inline;
+  }
+
+  .cab-header__logo {
+    font-size: 26px;
+  }
+
+  .cab-header__left {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .cab-project-switch {
+    width: min(25vw, 290px);
+    order: initial;
+  }
+
+  .cab-nav {
+    display: flex;
+  }
+
+  .cab-header__exit {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1319px) {
+  .cab-header__left {
+    gap: 20px;
+  }
+
+  .cab-nav {
+    gap: 16px;
+    font-size: 10px;
+  }
+
+  .cab-header__right > .label {
+    display: none;
+  }
+}
+
+/* ─── Экран входа ─── */
+
+.login {
+  padding: 40px var(--pad-cab);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.login__logo {
+  font-size: 26px;
+}
+
+.login__title {
+  font-size: 24px;
+  text-align: center;
+}
+
+.login__hint {
+  text-align: center;
+}
+
+.login__demo {
+  width: 100%;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  text-align: center;
+  font-size: 15px;
+}
+
+.login__demo strong {
+  font-size: 20px;
+  letter-spacing: 0.12em;
+}
+
+.login__access {
+  width: 100%;
+  max-width: 430px;
+  padding: 18px 20px;
+  display: grid;
+  gap: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.field-optional {
+  margin-left: 6px;
+  color: var(--faint);
+  letter-spacing: 0.08em;
+}
+
+.login__pin {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 6px;
+  width: 100%;
+}
+
+.pin-cell {
+  width: 100%;
+  height: 56px;
+  text-align: center;
+  background: var(--field-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 20px;
+  outline: none;
+}
+
+.pin-cell:focus {
+  border-color: var(--gold);
+}
+
+.pin-cell.is-filled {
+  border-color: var(--gold);
+}
+
+.login__attempt {
+  grid-column: 1 / -1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login__attempt .field {
+  height: 56px;
+  text-align: center;
+  letter-spacing: 0.3em;
+}
+
+.login__attempt .error-text {
+  text-align: center;
+}
+
+.login__submit {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .login {
+    padding: 80px var(--pad-site);
+    gap: 24px;
+  }
+
+  .login__logo {
+    font-size: 30px;
+  }
+
+  .login__title {
+    font-size: 34px;
+  }
+
+  .login__demo {
+    width: 386px;
+    padding: 20px;
+  }
+
+  .login__pin {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .pin-cell {
+    width: 100%;
+    height: 64px;
+    font-size: 24px;
+  }
+
+  .login__attempt {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .login__attempt .field {
+    width: 352px;
+    height: 52px;
+  }
+
+  .login__submit {
+    width: 100%;
+    padding: 0 32px;
+    margin-top: 8px;
+  }
+}
+
+/* ─── Дашборд ─── */
+
+.dash__head {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Развёрнутый бейдж стадии — только на 1280; на 375 его заменяет .dash__status */
+.dash__head .badge--stage {
+  display: none;
+}
+
+.dash__title {
+  font-size: 26px;
+}
+
+.dash__status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.dash__progress {
+  margin-top: 18px;
+}
+
+@media (min-width: 900px) {
+  .dash__head {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+  }
+
+  .dash__title {
+    font-size: 40px;
+    margin-top: 20px;
+  }
+
+  .dash__head .badge--stage {
+    display: inline-block;
+  }
+
+  .dash__status,
+  .dash__progress {
+    display: none;
+  }
+}
+
+/* Сводка: на 375 — список пар, на 1280 — четыре плитки в рамке */
+.metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 15px;
+}
+
+.metric__label {
+  color: var(--muted);
+}
+
+.metric__value {
+  font-size: 15px;
+}
+
+/* На 375 «прогресс» показан отдельной полосой над сводкой,
+   а команда — обычными строками, поэтому плитки скрыты. */
+.metric__extra,
+.metric__progress,
+.metric__team,
+.metric--desktop,
+.metric--team {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    margin-top: 32px;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .metric,
+  .metric--desktop,
+  .metric--team {
+    display: block;
+    background: var(--surface);
+    padding: 24px;
+  }
+
+  .metric--mobile {
+    display: none;
+  }
+
+  .metric__label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .metric__value {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: 34px;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-top: 16px;
+  }
+
+  .metric__extra {
+    display: block;
+    font-size: 13px;
+    margin-top: 18px;
+  }
+
+  .metric__extra--gold {
+    color: var(--gold);
+  }
+
+  .metric__extra--muted {
+    color: var(--muted);
+  }
+
+  .metric__progress {
+    display: block;
+    margin-top: 18px;
+  }
+
+  .metric__team {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+    font-size: 15px;
+  }
+
+  .metric__team span + span {
+    color: var(--muted);
+  }
+}
+
+/* ─── Шкала стадий в кабинете ─── */
+
+.stage-scale {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-top: 16px;
+}
+
+.stage {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.stage:last-child {
+  border-bottom: 0;
+}
+
+.stage__bar {
+  display: none;
+}
+
+.stage__num {
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  flex: none;
+  color: var(--muted);
+}
+
+.stage__name {
+  flex: 1;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 15px;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.stage__state {
+  white-space: nowrap;
+}
+
+.stage.is-done .stage__num {
+  color: var(--olive);
+}
+
+.stage.is-active .stage__num {
+  color: var(--gold);
+}
+
+.stage.is-done .stage__name,
+.stage.is-active .stage__name {
+  color: var(--ink);
+}
+
+@media (min-width: 900px) {
+  .stage-scale {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 14px;
+    border: 0;
+    border-radius: 0;
+    margin-top: 32px;
+  }
+
+  .stage {
+    display: block;
+    padding: 0;
+    border-bottom: 0;
+  }
+
+  .stage__bar {
+    display: block;
+  }
+
+  .stage__num {
+    display: block;
+    margin-top: 16px;
+  }
+
+  .stage__name {
+    display: block;
+    margin-top: 12px;
+  }
+
+  .stage__state {
+    display: block;
+    margin-top: 10px;
+  }
+}
+
+/* На 375 рубрика и вкладки стоят друг под другом, на 1280 — по краям строки */
+.cab__block-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.cab__block-head .label {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .cab__block-head {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+  }
+
+  .cab__block-head .label {
+    display: block;
+  }
+}
+
+/* ─── Строки: задачи и файлы ─── */
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+@media (min-width: 900px) {
+  .rows {
+    margin-top: 28px;
+  }
+}
+
+.row {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  transition: border-color 0.15s ease;
+}
+
+.row:hover {
+  border-color: var(--hover-line);
+}
+
+@media (min-width: 900px) {
+  .row {
+    padding: 20px 24px;
+  }
+}
+
+/* Задача */
+.task {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.task__title {
+  font-size: 16px;
+}
+
+.task__meta {
+  display: flex;
+  gap: 14px;
+}
+
+.task__n {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .task {
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .task__n {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--faint);
+    width: 24px;
+    flex: none;
+  }
+
+  /* На 1280 строка задачи разворачивается в один ряд:
+     № · название · исполнитель · срок · статус. Обёртки схлопываем
+     через display:contents, статус уводим в конец через order. */
+  .task__top,
+  .task__meta {
+    display: contents;
+  }
+
+  .task__title {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .task__owner {
+    width: 200px;
+    font-size: 15px;
+    color: var(--muted);
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
+  .task__due {
+    width: 120px;
+    font-size: 15px;
+    color: var(--muted);
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
+  .task__badge {
+    order: 3;
+  }
+}
+
+/* Файл. На 375 тип файла занимает обе строки слева,
+   справа — название с мета и под ними статус со ссылкой. */
+.file {
+  background: var(--bg);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px 14px;
+  align-items: start;
+}
+
+.file > .badge--kind {
+  grid-row: 1 / span 2;
+}
+
+.file__body {
+  min-width: 0;
+}
+
+.file__name {
+  font-size: 15px;
+  word-break: break-word;
+}
+
+.file__meta {
+  margin-top: 8px;
+}
+
+.file__actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.file__action {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (min-width: 900px) {
+  .file {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .file__body {
+    flex: 1;
+  }
+
+  .file .badge--kind {
+    min-width: 64px;
+    padding: 10px 12px;
+  }
+
+  .file__name {
+    font-size: 16px;
+  }
+
+  .file__actions {
+    display: contents;
+  }
+
+  .file__badge {
+    padding: 7px 12px;
+  }
+}
+
+/* ─── Пустое состояние ─── */
+
+.empty {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  margin-top: 16px;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.empty__mark {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+}
+
+.empty__title {
+  font-size: 21px;
+}
+
+.empty__text {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.empty__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.empty__actions .btn {
+  width: 100%;
+}
+
+/* На 375 в макете в пустом состоянии только «Загрузить файл» */
+.empty__actions .btn--outline {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .empty {
+    margin-top: 28px;
+    padding: 80px 40px;
+    gap: 20px;
+  }
+
+  .empty__mark {
+    width: 34px;
+    height: 34px;
+  }
+
+  .empty__title {
+    font-size: 28px;
+  }
+
+  .empty__text {
+    font-size: 17px;
+    max-width: 440px;
+  }
+
+  .empty__actions {
+    flex-direction: row;
+    gap: 12px;
+    width: auto;
+    margin-top: 8px;
+  }
+
+  .empty__actions .btn {
+    width: auto;
+    height: 48px;
+    padding: 0 24px;
+  }
+
+  .empty__actions .btn--outline {
+    display: inline-flex;
+  }
+}
+
+/* ─── Таблица рабочей документации ─── */
+
+.sheets {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 16px;
+}
+
+.sheets__head {
+  background: var(--deep);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.sheets__head-cell {
+  display: none;
+}
+
+.sheet {
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sheet:last-child {
+  border-bottom: 0;
+}
+
+.sheet__top {
+  display: flex;
+  gap: 10px;
+  min-width: 0;
+}
+
+.sheet__no {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--faint);
+  flex: none;
+}
+
+.sheet__name {
+  font-size: 15px;
+  flex: 1;
+  min-width: 0;
+}
+
+.sheet__meta {
+  display: flex;
+  gap: 14px;
+}
+
+@media (min-width: 900px) {
+  .sheets {
+    margin-top: 28px;
+  }
+
+  .sheets__head {
+    display: grid;
+    grid-template-columns: 80px 1fr 190px 140px 170px;
+    padding: 0;
+  }
+
+  .sheets__head-mobile {
+    display: none;
+  }
+
+  .sheets__head-cell {
+    display: block;
+    padding: 16px 20px;
+  }
+
+  .sheet {
+    display: grid;
+    grid-template-columns: 80px 1fr 190px 140px 170px;
+    align-items: center;
+    padding: 0;
+    gap: 0;
+    font-size: 15px;
+    transition: background-color 0.15s ease;
+  }
+
+  .sheet:hover {
+    background: var(--bg);
+  }
+
+  .sheet:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sheet__top {
+    display: contents;
+  }
+
+  .sheet__meta {
+    display: contents;
+  }
+
+  .sheet__no,
+  .sheet__name,
+  .sheet__author,
+  .sheet__ver,
+  .sheet__status {
+    padding: 18px 20px;
+    letter-spacing: normal;
+    text-transform: none;
+    font-size: 15px;
+  }
+
+  .sheet__no {
+    color: var(--faint);
+    font-size: 15px;
+  }
+
+  /* В разметке статус идёт вторым (так он читается на 375),
+     а в таблице на 1280 он последняя колонка. */
+  .sheet__status {
+    order: 1;
+  }
+
+  .sheet__author,
+  .sheet__ver {
+    color: var(--muted);
+  }
+
+  .sheets--compact .sheet__no,
+  .sheets--compact .sheet__name,
+  .sheets--compact .sheet__author,
+  .sheets--compact .sheet__ver,
+  .sheets--compact .sheet__status {
+    padding: 12px 20px;
+  }
+}
+
+/* ─── Страница ошибки ─── */
+
+.error-page {
+  padding: 80px var(--pad-site);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.error-page__code {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 56px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--gold);
+}
+
+.error-page__title {
+  font-size: 28px;
+}
+
+/* Шкала прогресса в процентах. Значение приходит из данных,
+   поэтому класс подбирается по числу — инлайновых стилей не держим. */
+.progress__bar--p0 { width: 0%; }
+.progress__bar--p1 { width: 1%; }
+.progress__bar--p2 { width: 2%; }
+.progress__bar--p3 { width: 3%; }
+.progress__bar--p4 { width: 4%; }
+.progress__bar--p5 { width: 5%; }
+.progress__bar--p6 { width: 6%; }
+.progress__bar--p7 { width: 7%; }
+.progress__bar--p8 { width: 8%; }
+.progress__bar--p9 { width: 9%; }
+.progress__bar--p10 { width: 10%; }
+.progress__bar--p11 { width: 11%; }
+.progress__bar--p12 { width: 12%; }
+.progress__bar--p13 { width: 13%; }
+.progress__bar--p14 { width: 14%; }
+.progress__bar--p15 { width: 15%; }
+.progress__bar--p16 { width: 16%; }
+.progress__bar--p17 { width: 17%; }
+.progress__bar--p18 { width: 18%; }
+.progress__bar--p19 { width: 19%; }
+.progress__bar--p20 { width: 20%; }
+.progress__bar--p21 { width: 21%; }
+.progress__bar--p22 { width: 22%; }
+.progress__bar--p23 { width: 23%; }
+.progress__bar--p24 { width: 24%; }
+.progress__bar--p25 { width: 25%; }
+.progress__bar--p26 { width: 26%; }
+.progress__bar--p27 { width: 27%; }
+.progress__bar--p28 { width: 28%; }
+.progress__bar--p29 { width: 29%; }
+.progress__bar--p30 { width: 30%; }
+.progress__bar--p31 { width: 31%; }
+.progress__bar--p32 { width: 32%; }
+.progress__bar--p33 { width: 33%; }
+.progress__bar--p34 { width: 34%; }
+.progress__bar--p35 { width: 35%; }
+.progress__bar--p36 { width: 36%; }
+.progress__bar--p37 { width: 37%; }
+.progress__bar--p38 { width: 38%; }
+.progress__bar--p39 { width: 39%; }
+.progress__bar--p40 { width: 40%; }
+.progress__bar--p41 { width: 41%; }
+.progress__bar--p42 { width: 42%; }
+.progress__bar--p43 { width: 43%; }
+.progress__bar--p44 { width: 44%; }
+.progress__bar--p45 { width: 45%; }
+.progress__bar--p46 { width: 46%; }
+.progress__bar--p47 { width: 47%; }
+.progress__bar--p48 { width: 48%; }
+.progress__bar--p49 { width: 49%; }
+.progress__bar--p50 { width: 50%; }
+.progress__bar--p51 { width: 51%; }
+.progress__bar--p52 { width: 52%; }
+.progress__bar--p53 { width: 53%; }
+.progress__bar--p54 { width: 54%; }
+.progress__bar--p55 { width: 55%; }
+.progress__bar--p56 { width: 56%; }
+.progress__bar--p57 { width: 57%; }
+.progress__bar--p58 { width: 58%; }
+.progress__bar--p59 { width: 59%; }
+.progress__bar--p60 { width: 60%; }
+.progress__bar--p61 { width: 61%; }
+.progress__bar--p62 { width: 62%; }
+.progress__bar--p63 { width: 63%; }
+.progress__bar--p64 { width: 64%; }
+.progress__bar--p65 { width: 65%; }
+.progress__bar--p66 { width: 66%; }
+.progress__bar--p67 { width: 67%; }
+.progress__bar--p68 { width: 68%; }
+.progress__bar--p69 { width: 69%; }
+.progress__bar--p70 { width: 70%; }
+.progress__bar--p71 { width: 71%; }
+.progress__bar--p72 { width: 72%; }
+.progress__bar--p73 { width: 73%; }
+.progress__bar--p74 { width: 74%; }
+.progress__bar--p75 { width: 75%; }
+.progress__bar--p76 { width: 76%; }
+.progress__bar--p77 { width: 77%; }
+.progress__bar--p78 { width: 78%; }
+.progress__bar--p79 { width: 79%; }
+.progress__bar--p80 { width: 80%; }
+.progress__bar--p81 { width: 81%; }
+.progress__bar--p82 { width: 82%; }
+.progress__bar--p83 { width: 83%; }
+.progress__bar--p84 { width: 84%; }
+.progress__bar--p85 { width: 85%; }
+.progress__bar--p86 { width: 86%; }
+.progress__bar--p87 { width: 87%; }
+.progress__bar--p88 { width: 88%; }
+.progress__bar--p89 { width: 89%; }
+.progress__bar--p90 { width: 90%; }
+.progress__bar--p91 { width: 91%; }
+.progress__bar--p92 { width: 92%; }
+.progress__bar--p93 { width: 93%; }
+.progress__bar--p94 { width: 94%; }
+.progress__bar--p95 { width: 95%; }
+.progress__bar--p96 { width: 96%; }
+.progress__bar--p97 { width: 97%; }
+.progress__bar--p98 { width: 98%; }
+.progress__bar--p99 { width: 99%; }
+.progress__bar--p100 { width: 100%; }
+
+/* ═══ Админ-панель ═══ */
+
+.admin-workspace {
+  min-height: calc(100vh - 60px);
+  background: var(--surface);
+}
+
+.admin-hero {
+  padding: 24px var(--pad-cab);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.admin-hero__title {
+  max-width: 820px;
+  margin: 10px 0 0;
+  font-size: 27px;
+}
+
+.admin-hero__meta {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.admin-hero__meta span:not(:last-child)::after {
+  content: '·';
+  margin-left: 20px;
+  color: var(--faint);
+}
+
+.admin-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.admin-layout,
+.admin-content {
+  min-width: 0;
+}
+
+.admin-sidebar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background: var(--deep);
+}
+
+.admin-sidebar__label {
+  display: none;
+}
+
+.admin-tabs {
+  padding: 10px var(--pad-cab);
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.admin-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.admin-tab {
+  min-height: 42px;
+  padding: 0 13px;
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.admin-tab:hover {
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.admin-tab:focus-visible {
+  outline: 1px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.admin-tab.is-active {
+  border-color: var(--gold);
+  background: var(--field-bg);
+  color: var(--ink);
+}
+
+.admin-tab__index {
+  display: none;
+  color: var(--faint);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+}
+
+.admin-tab__count {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background: var(--field-bg);
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.admin-tab.is-active .admin-tab__count {
+  color: var(--gold);
+}
+
+.admin-demo {
+  margin: 20px var(--pad-cab) 0;
+  padding: 13px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  border: 1px solid var(--hover-line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.admin-demo__mark {
+  flex: none;
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+}
+
+.admin-panel {
+  padding: 28px var(--pad-cab) 48px;
+}
+
+.admin-panel[hidden] {
+  display: none;
+}
+
+.admin-workspace:not(.is-tabbed) .admin-panel + .admin-panel {
+  border-top: 1px solid var(--line);
+}
+
+.admin-panel__head {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.admin-panel__title {
+  margin: 10px 0 0;
+  font-size: 25px;
+}
+
+.admin-panel__intro {
+  max-width: 660px;
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.admin-panel__count,
+.admin-card__hint {
+  color: var(--faint);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.admin-kpis {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.admin-kpi {
+  min-height: 116px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.admin-kpi:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
+.admin-kpi.has-alert {
+  border-color: var(--hover-line);
+}
+
+.admin-kpi__value {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.admin-kpi__label {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.admin-overview-grid,
+.admin-card-grid {
+  margin-top: 20px;
+  display: grid;
+  gap: 16px;
+}
+
+.admin-card {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.admin-card--create {
+  margin-bottom: 24px;
+}
+
+.admin-card__head {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.admin-card__head a {
+  flex: none;
+  color: var(--gold);
+  font-size: 12px;
+}
+
+.admin-card__title {
+  margin: 7px 0 0;
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.admin-card__empty {
+  padding: 28px 18px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  color: var(--muted);
+  text-align: center;
+  font-size: 14px;
+}
+
+.admin-stage-summary,
+.admin-lead-summary {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-stage-summary__item,
+.admin-lead-summary__item {
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.admin-stage-summary__item:first-child,
+.admin-lead-summary__item:first-child {
+  border-top: 0;
+}
+
+.admin-stage-summary__index {
+  width: 26px;
+  flex: none;
+  color: var(--faint);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+
+.admin-stage-summary__title {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+}
+
+.admin-lead-summary__item {
+  justify-content: space-between;
+}
+
+.admin-lead-summary__name {
+  font-size: 14px;
+}
+
+.admin-section-label {
+  margin: 30px 0 14px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.admin-project-switch {
+  margin-bottom: 20px;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.admin-form {
+  display: grid;
+  gap: 16px;
+}
+
+.admin-form__actions {
+  padding-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.admin-form__actions .btn {
+  width: 100%;
+}
+
+.admin-file {
+  position: relative;
+  min-width: 0;
+}
+
+.admin-file__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.admin-file__control {
+  min-width: 0;
+  min-height: 52px;
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--field-bg);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.admin-file__control:hover {
+  border-color: var(--hover-line);
+}
+
+.admin-file__input:focus-visible + .admin-file__control {
+  border-color: var(--gold);
+  outline: 1px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.admin-file__button {
+  min-height: 36px;
+  padding: 0 14px;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--hover-line);
+  border-radius: var(--radius);
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.admin-file__name {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-records {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-record {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  transition: border-color 0.15s ease;
+}
+
+.admin-record:hover,
+.admin-record.is-current {
+  border-color: var(--hover-line);
+}
+
+.admin-record__head {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.admin-record__identity {
+  min-width: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.admin-record__identity strong {
+  overflow: hidden;
+  font-size: 15px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+}
+
+.admin-record__identity span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.admin-record > .admin-form {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.admin-record__actions {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.admin-record__actions form {
+  display: contents;
+}
+
+.admin-record__actions .btn {
+  width: 100%;
+}
+
+.admin-record--compact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-current {
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.admin-avatar,
+.admin-order {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--gold);
+  font-size: 12px;
+}
+
+.admin-order {
+  border-radius: var(--radius);
+  color: var(--faint);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.admin-check {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.admin-check input {
+  width: 18px;
+  height: 18px;
+}
+
+.admin-danger {
+  margin-top: 20px;
+  padding-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.admin-danger > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-danger strong {
+  color: var(--rust);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.admin-danger span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.admin-lead__message {
+  margin: 18px 0 0;
+  padding: 16px;
+  border-radius: var(--radius);
+  background: var(--field-bg);
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.admin-lead__footer {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.admin-lead__status {
+  display: grid;
+  gap: 8px;
+}
+
+@media (min-width: 900px) {
+  .admin-hero {
+    padding: 32px 40px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .admin-hero__title {
+    font-size: 34px;
+  }
+
+  .admin-layout {
+    display: grid;
+    grid-template-columns: 236px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .admin-sidebar {
+    top: 0;
+    height: 100vh;
+    padding: 28px 16px;
+    overflow-y: auto;
+    border-right: 1px solid var(--line);
+    border-bottom: 0;
+  }
+
+  .admin-sidebar__label {
+    padding: 0 12px 16px;
+    display: block;
+    color: var(--faint);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .admin-tabs {
+    padding: 0;
+    flex-direction: column;
+    gap: 6px;
+    overflow: visible;
+  }
+
+  .admin-tab {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 12px;
+  }
+
+  .admin-tab__index {
+    display: inline;
+  }
+
+  .admin-tab__label {
+    flex: 1;
+    text-align: left;
+  }
+
+  .admin-demo {
+    margin: 24px 40px 0;
+  }
+
+  .admin-panel {
+    padding: 40px;
+  }
+
+  .admin-panel__head {
+    margin-bottom: 30px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .admin-panel__title {
+    font-size: 30px;
+  }
+
+  .admin-project-switch {
+    grid-template-columns: minmax(260px, 460px) auto;
+    align-items: end;
+  }
+
+  .admin-kpis {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .admin-kpi {
+    min-height: 142px;
+    padding: 22px;
+  }
+
+  .admin-kpi__value {
+    font-size: 30px;
+  }
+
+  .admin-overview-grid,
+  .admin-card-grid--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-card {
+    padding: 24px;
+  }
+
+  .admin-form--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-form--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .admin-form__wide {
+    grid-column: 1 / -1;
+  }
+
+  .admin-form__span-two {
+    grid-column: span 2;
+  }
+
+  .admin-form__actions .btn,
+  .admin-record__actions .btn {
+    width: auto;
+  }
+
+  .admin-record {
+    padding: 22px 24px;
+  }
+
+  .admin-danger {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .admin-lead__footer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .admin-lead__status {
+    grid-template-columns: minmax(180px, 240px) auto;
+    align-items: end;
+  }
+
+  .admin-lead__status .field-label {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Установка приложения
+   Баннер создаёт public/js/pwa.js и только когда установка возможна.
+   ═══════════════════════════════════════════════════════════ */
+
+.install-banner {
+  position: fixed;
+  z-index: 50;
+  /* safe-area — чтобы на iPhone не уезжало под индикатор жеста и вырез */
+  left: calc(var(--pad-cab) + env(safe-area-inset-left, 0px));
+  right: calc(var(--pad-cab) + env(safe-area-inset-right, 0px));
+  bottom: calc(var(--pad-cab) + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 420px;
+  margin-inline: auto;
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+}
+
+.install-banner__text {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.install-banner__actions {
+  display: flex;
+  gap: 10px;
+}
+
+.install-banner__actions .btn {
+  flex: 1;
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+/* В установленном окне баннер не нужен: он там уже неактуален. */
+@media (display-mode: standalone), (display-mode: minimal-ui) {
+  .install-banner {
+    display: none;
+  }
+}

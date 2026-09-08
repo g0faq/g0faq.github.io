@@ -1,0 +1,150 @@
+/* Надстройка поверх стилей проекта: плашка демо, переключатель ролей и
+   мелкие правки, нужные из-за того, что демо — одна статическая страница. */
+
+.demo-bar {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 40px;
+  padding: 6px calc(var(--pad-cab) + env(safe-area-inset-left, 0px));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  background: var(--deep);
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.demo-bar__mark {
+  color: var(--gold);
+}
+
+.demo-bar__roles {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.demo-bar__roles-label {
+  color: var(--faint);
+}
+
+.demo-bar__role {
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.demo-bar__role:hover {
+  border-color: var(--hover-line);
+  color: var(--ink);
+}
+
+.demo-bar__role.is-active {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--on-gold);
+}
+
+.demo-bar__back {
+  color: var(--muted);
+}
+
+.demo-bar__back:hover {
+  color: var(--gold);
+}
+
+body {
+  padding-top: 52px;
+}
+
+@media (min-width: 900px) {
+  body {
+    padding-top: 40px;
+  }
+}
+
+/* Логотип: в исходнике это PNG-маска с фирменным леттерингом, в демо —
+   тот же скриптовый шрифт текстом. */
+.brand-lettering {
+  width: auto;
+  height: auto;
+  background-color: transparent;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* Все переходы в демо — на месте, поэтому ссылки заменены кнопками. */
+.cab-nav button,
+.chat-list__item,
+.chip {
+  font: inherit;
+  cursor: pointer;
+}
+
+.cab-nav button {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  letter-spacing: inherit;
+  text-transform: inherit;
+  padding: 0;
+}
+
+.cab-nav button.is-active,
+.cab-nav button:hover {
+  color: var(--ink);
+}
+
+.chat-list__item {
+  border: 1px solid var(--line);
+  background: transparent;
+  text-align: left;
+  width: 100%;
+}
+
+.chip {
+  border: 1px solid var(--line);
+}
+
+.demo-note {
+  margin-top: 14px;
+  color: var(--faint);
+  font-size: 12px;
+}
+
+.cab-tabbar__item {
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* На узких экранах плашка занимает несколько строк — фиксировать её значит
+   съесть треть экрана, поэтому она прокручивается вместе со страницей. */
+@media (max-width: 899.98px) {
+  .demo-bar {
+    position: static;
+  }
+
+  body {
+    padding-top: 0;
+  }
+
+  .demo-bar__roles {
+    margin-left: 0;
+  }
+}
