@@ -370,7 +370,7 @@ function setupCaseImage(media, caseData, index) {
   }
 }
 
-function createCasePanel(caseData, index) {
+function createCasePanel(caseData, index, allCases) {
   const panel = createElement('article', 'case-panel');
   panel.id = `case-${caseData.id}`;
   panel.dataset.accent = caseData.accent;
@@ -392,7 +392,12 @@ function createCasePanel(caseData, index) {
   const topline = createElement('div', 'case-panel__topline');
   topline.append(
     createElement('span', '', 'КЕЙСЫ'),
-    createElement('span', '', `${caseData.num} / 09`)
+    createElement(
+      'span',
+      '',
+      // Знаменатель берём из самих данных: число кейсов меняется.
+      `${caseData.num} / ${String(allCases?.length ?? 0).padStart(2, '0')}`
+    )
   );
 
   const number = createElement('p', 'case-number', caseData.num);

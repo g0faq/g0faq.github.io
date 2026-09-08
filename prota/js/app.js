@@ -186,7 +186,7 @@
       '<span class="hm-kpiNote">' + esc(d.kpi.note) + '</span></div>' +
       '<div class="hm-tiles">' +
       '<span class="hm-tile"><span>В работе</span><span class="hm-tileValue">' + esc(d.kpi.revenue) + '</span></span>' +
-      '<span class="hm-tile"><span>Внимание</span><span class="hm-tileValue">' + esc(d.kpi.overdue) + '</span></span>' +
+      '<span class="hm-tile"><span>Просрочки</span><span class="hm-tileValue">' + esc(d.kpi.overdue) + '</span></span>' +
       '</div></div>' +
 
       '<div class="hm-col"><div class="ov-cardTitle">Сегодня</div>' +

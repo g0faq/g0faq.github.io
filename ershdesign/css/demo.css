@@ -148,3 +148,12 @@ body {
     margin-left: 0;
   }
 }
+
+/* Логотип в шапке — кнопка (все переходы в демо локальные), поэтому у неё
+   надо снять оформление кнопки по умолчанию. */
+.cab-header__logo {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}

@@ -1,110 +1,100 @@
 [
   {
-    "id": "bliss-home",
+    "id": "prota",
     "num": "01",
-    "title": "Bliss Home",
-    "category": "Каталог мебели",
-    "demo": false,
-    "description": "Интернет-каталог мебели и товаров для дома. Структура разделов под большой ассортимент, карточки товаров, быстрая навигация от знакомства с брендом до выбора конкретной позиции.",
-    "stack": ["Node.js", "Express", "Vercel"],
-    "url": "https://bliss-home.ru",
+    "title": "PROTA",
+    "category": "Платформа управления проектами",
+    "demo": true,
+    "description": "Рабочее пространство дизайн-студии: картотека проектов в трёх представлениях, карточка проекта с восемью вкладками, таблица комплектации по помещениям с бюджетом и реакциями заказчика. Сквозной мессенджер связывает команду и клиента, не уводя со страницы.",
+    "stack": [
+      "Next.js",
+      "React",
+      "Prisma",
+      "SQLite"
+    ],
+    "url": "/prota/",
     "accent": "blue",
-    "image": "/img/cases/01-bliss.png"
+    "image": "/img/cases/prota.png"
+  },
+  {
+    "id": "studforma",
+    "num": "02",
+    "title": "СтудФорма",
+    "category": "Сервис",
+    "demo": false,
+    "description": "Веб-сервис для студентов: оформление работ по требованиям вузов. Понятный сценарий от загрузки документа до готового результата.",
+    "stack": [
+      "Node.js",
+      "Express"
+    ],
+    "url": "https://studforma.ru",
+    "accent": "orange",
+    "image": "/img/cases/03-studforma.png"
+  },
+  {
+    "id": "botai-crm",
+    "num": "03",
+    "title": "BOTai CRM",
+    "category": "SaaS · В разработке",
+    "demo": false,
+    "description": "CRM-платформа для репетиторов и онлайн-школ: расписание, баланс занятий, домашние задания, роли для учеников и родителей, вход через Telegram. Собственный продукт, в активной разработке.",
+    "stack": [
+      "Node.js",
+      "SQLite",
+      "JWT",
+      "Telegram"
+    ],
+    "url": "https://botaicrm.ru",
+    "accent": "blue",
+    "image": "/img/cases/04-botai.png"
   },
   {
     "id": "provibe",
-    "num": "02",
+    "num": "04",
     "title": "ProVibe",
     "category": "Сайт-визитка",
     "demo": false,
     "description": "Премиальный сайт-визитка для строительной компании из Москвы. Анимированный логотип, портфолио объектов, форма обращения с доставкой заявок напрямую в Telegram.",
-    "stack": ["Node.js", "Express", "Telegram Bot API"],
+    "stack": [
+      "Node.js",
+      "Express",
+      "Telegram Bot API"
+    ],
     "url": "https://provibemsk.ru",
     "accent": "orange",
     "image": "/img/cases/02-provibe.png"
   },
   {
-    "id": "studforma",
-    "num": "03",
-    "title": "СтудФорма",
-    "category": "Сервис",
-    "demo": false,
-    "description": "Веб-сервис для студентов: оформление работ по требованиям вузов. Понятный сценарий от загрузки документа до готового результата.",
-    "stack": ["Node.js", "Express"],
-    "url": "https://studforma.ru",
-    "accent": "blue",
-    "image": "/img/cases/03-studforma.png"
-  },
-  {
-    "id": "botai-crm",
-    "num": "04",
-    "title": "BOTai CRM",
-    "category": "SaaS · В разработке",
-    "demo": false,
-    "description": "CRM-платформа для репетиторов и онлайн-школ: расписание, баланс занятий, домашние задания, роли для учеников и родителей, вход через Telegram. Собственный продукт, в активной разработке.",
-    "stack": ["Node.js", "SQLite", "JWT", "Telegram"],
-    "url": "https://botaicrm.ru",
-    "accent": "orange",
-    "image": "/img/cases/04-botai.png"
-  },
-  {
-    "id": "gran",
+    "id": "bliss-home",
     "num": "05",
-    "title": "ГРАН",
-    "category": "QR-меню",
-    "demo": true,
-    "description": "Электронное меню кофейни, открывается по QR со столика. Категории, пересчёт цен для формата с собой, премиальная тёмная подача.",
-    "stack": ["HTML/CSS/JS", "Vercel"],
-    "url": "https://demo-menu-rho.vercel.app",
+    "title": "Bliss Home",
+    "category": "Каталог мебели",
+    "demo": false,
+    "description": "Интернет-каталог мебели и товаров для дома. Структура разделов под большой ассортимент, карточки товаров, быстрая навигация от знакомства с брендом до выбора конкретной позиции.",
+    "stack": [
+      "Node.js",
+      "Express",
+      "Vercel"
+    ],
+    "url": "https://bliss-home.ru",
     "accent": "blue",
-    "image": "/img/cases/05-menu.png"
+    "image": "/img/cases/01-bliss.png"
   },
   {
-    "id": "vector",
+    "id": "ershdesign",
     "num": "06",
-    "title": "Вектор",
-    "category": "Лендинг курса",
+    "title": "ershdesign",
+    "category": "Кабинет проекта дизайн-студии",
     "demo": true,
-    "description": "Продающий лендинг онлайн-курса подготовки к ЕГЭ: программа, тарифы, FAQ и форма заявки с валидацией.",
-    "stack": ["HTML/CSS/JS", "Serverless"],
-    "url": "https://demo-edu-g0-faqs-projects.vercel.app",
+    "description": "Закрытый кабинет проекта: заказчик входит по шестизначному коду и видит прогресс по стадиям, задачи, файлы, листы рабочей документации и график платежей. Роли владельца, сотрудника и клиента открывают разные разделы, внутри — чаты проекта и панель управления.",
+    "stack": [
+      "Node.js",
+      "Express",
+      "EJS",
+      "SQLite"
+    ],
+    "url": "/ershdesign/",
     "accent": "orange",
-    "image": "/img/cases/06-edu.png"
-  },
-  {
-    "id": "atelie-sveta",
-    "num": "07",
-    "title": "Ателье света",
-    "category": "Каталог",
-    "demo": true,
-    "description": "Каталог дизайнерских светильников: комбинируемые фильтры, карточки товара, запрос цены по конкретной модели.",
-    "stack": ["HTML/CSS/JS", "Vercel"],
-    "url": "https://demo-light-git-main-g0-faqs-projects.vercel.app/",
-    "accent": "blue",
-    "image": "/img/cases/07-light.png"
-  },
-  {
-    "id": "potok",
-    "num": "08",
-    "title": "Поток",
-    "category": "Мини-CRM",
-    "demo": true,
-    "description": "Дашборд заявок: KPI и графики, считающиеся из данных, канбан с перетаскиванием, карточка клиента с историей статусов.",
-    "stack": ["HTML/CSS/JS", "SVG-графики"],
-    "url": "https://demo-crm-pi-five.vercel.app",
-    "accent": "orange",
-    "image": "/img/cases/08-crm.png"
-  },
-  {
-    "id": "britva",
-    "num": "09",
-    "title": "БРИТВА",
-    "category": "Telegram Mini App",
-    "demo": true,
-    "description": "Онлайн-запись в барбершоп в формате Telegram Mini App: услуга, мастер, свободные слоты, подтверждение — с поддержкой темы Telegram.",
-    "stack": ["HTML/CSS/JS", "Telegram WebApp"],
-    "url": "https://demo-booking-sage.vercel.app",
-    "accent": "blue",
-    "image": "/img/cases/09-booking.png"
+    "image": "/img/cases/ershdesign.png"
   }
 ]
