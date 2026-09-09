@@ -167,7 +167,7 @@ async function calculatorState(sessionId) {
 async function enqueue(client, { sessionId, kind, dedupeKey, text, delaySec = 0 }) {
   await client.query(
     `INSERT INTO notifications (session_id, kind, dedupe_key, text, send_after)
-     VALUES ($1, $2, $3, $4, now() + make_interval(secs => $5))
+     VALUES ($1, $2, $3, $4, now() + make_interval(secs => $5::int))
      ON CONFLICT (dedupe_key) DO NOTHING`,
     [sessionId, kind, dedupeKey || null, text, delaySec],
   );

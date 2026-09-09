@@ -92,7 +92,7 @@ async function shouldRun(minIntervalSec) {
   const result = await query(
     `UPDATE maintenance_log
         SET last_run = now()
-      WHERE id = 1 AND last_run < now() - make_interval(secs => $1)
+      WHERE id = 1 AND last_run < now() - make_interval(secs => $1::int)
       RETURNING id`,
     [minIntervalSec],
   );
@@ -135,7 +135,7 @@ async function runMaintenance({ force = false, minIntervalSec = 30 } = {}) {
       WHERE s.summary_sent = false
         AND s.is_bot = false
         AND (s.ended_at IS NOT NULL
-             OR s.last_event_at < now() - make_interval(mins => $1))
+             OR s.last_event_at < now() - make_interval(mins => $1::int))
       ORDER BY s.last_event_at ASC LIMIT 10`,
     [config.sessionTimeoutMin],
   )).rows;
@@ -160,7 +160,7 @@ async function runMaintenance({ force = false, minIntervalSec = 30 } = {}) {
   }
 
   const pruned = await query(
-    `DELETE FROM events WHERE created_at < now() - make_interval(days => $1)`,
+    `DELETE FROM events WHERE created_at < now() - make_interval(days => $1::int)`,
     [config.eventRetentionDays],
   );
   report.pruned = pruned.rowCount || 0;
