@@ -1171,7 +1171,7 @@ function initCasesHint() {
    ничего менять не нужно. */
 
 const CONSENT_KEY = 'g0faq.consent';
-const METRIKA_ID = '';
+const METRIKA_ID = '112416202';
 
 function loadMetrika() {
   if (!METRIKA_ID) return;
