@@ -4007,30 +4007,29 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
   }
 }
 
-/* ── Экран согласия на аналитику ────────────────────────────────────────────
-   Полноэкранный слой поверх сайта при первом заходе. Обе кнопки одинаково
-   доступны: «Отклонить» не спрятана и не обесцвечена — отказ должен быть
-   таким же простым действием, как согласие. */
+/* ── Плашка согласия на аналитику ──────────────────────────────────────────
+   Компактная полоса в углу, а не модальное окно: сайт остаётся доступен,
+   пока человек не решил. Обе кнопки одного размера и контраста — отказ
+   должен быть таким же простым действием, как согласие.
 
-/* Скрытый экран обязан исчезать полностью: без этого правила класс
-   .consent с display:flex перебивает атрибут hidden, и прозрачный слой
-   остаётся поверх страницы, перехватывая все клики. */
+   Скрытое состояние объявляется первым и явно: правило с display у класса
+   перебивает атрибут hidden, и без этого прозрачная плашка ловила бы клики. */
+
 .consent[hidden] {
   display: none;
 }
 
 .consent {
   position: fixed;
-  inset: 0;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
   z-index: 200;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  background: rgba(5, 5, 7, 0.86);
-  backdrop-filter: blur(8px);
+  justify-content: flex-start;
+  pointer-events: none;
   opacity: 0;
-  transition: opacity 260ms ease;
+  transition: opacity 240ms ease;
 }
 
 .consent.is-visible {
@@ -4038,14 +4037,14 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
 }
 
 .consent__panel {
-  width: min(560px, 100%);
-  max-height: calc(100dvh - 48px);
-  overflow-y: auto;
-  padding: clamp(28px, 5vw, 44px);
+  pointer-events: auto;
+  width: min(460px, 100%);
+  padding: 18px 20px;
   border: 1px solid var(--border);
   background: var(--surface-1);
-  transform: translateY(14px);
-  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  transform: translateY(10px);
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .consent.is-visible .consent__panel {
@@ -4056,61 +4055,40 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
 .consent__panel::before {
   content: "";
   display: block;
-  width: 56px;
+  width: 40px;
   height: 2px;
-  margin-bottom: 22px;
+  margin-bottom: 14px;
   background: var(--accent-orange);
-}
-
-.consent__title {
-  margin: 10px 0 18px;
-  font-size: clamp(22px, 3.4vw, 30px);
-  line-height: 1.15;
 }
 
 .consent__text {
-  margin: 0 0 18px;
+  margin: 0 0 14px;
   color: var(--text-muted);
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 13px;
+  line-height: 1.55;
 }
 
-.consent__list {
-  margin: 0 0 26px;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 8px;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-muted);
+.consent__more {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
 }
 
-.consent__list li {
-  display: flex;
-  gap: 10px;
-  align-items: baseline;
-}
-
-.consent__list li::before {
-  content: "";
-  flex: none;
-  width: 6px;
-  height: 6px;
-  background: var(--accent-orange);
+.consent__more:hover {
+  color: var(--accent-orange);
 }
 
 .consent__actions {
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .consent__actions .button {
-  flex: 1 1 180px;
-  min-height: 52px;
+  flex: 1;
+  min-height: 44px;
+  padding: 10px 14px;
+  font-size: 11px;
 }
 
 .consent__accept {
@@ -4118,30 +4096,15 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
   color: var(--accent-orange);
 }
 
-.consent__more {
-  display: inline-block;
-  margin-top: 20px;
-  color: var(--text-muted);
-  font-size: 12px;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-.consent__more:hover {
-  color: var(--text);
-}
-
 @media (max-width: 760px) {
   .consent {
-    padding: 14px;
-    align-items: flex-end;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
   }
 
   .consent__panel {
-    padding: 24px 20px 28px;
-  }
-
-  .consent__actions .button {
-    flex: 1 1 100%;
+    width: 100%;
+    padding: 16px;
   }
 }

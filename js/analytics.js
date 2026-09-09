@@ -475,9 +475,9 @@
       const modal = document.querySelector('#consent-screen');
       if (!modal) return;
       modal.hidden = false;
+      // Фокус не перехватываем: плашка не модальная, она не должна
+      // выдёргивать человека из того, что он читает.
       window.setTimeout(() => modal.classList.add('is-visible'), 30);
-      const accept = modal.querySelector('[data-consent="granted"]');
-      if (accept) window.setTimeout(() => accept.focus({ preventScroll: true }), 320);
     },
 
     hide() {
