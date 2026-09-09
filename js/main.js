@@ -1187,10 +1187,14 @@ function loadMetrika() {
   script.async = true;
   document.head.append(script);
 
+  // Параметры один в один из сниппета, выданного Метрикой для этого счётчика.
   window.ym(METRIKA_ID, 'init', {
     ssr: true,
     webvisor: true,
     clickmap: true,
+    ecommerce: 'dataLayer',
+    referrer: document.referrer,
+    url: location.href,
     accurateTrackBounce: true,
     trackLinks: true,
   });
