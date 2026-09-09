@@ -324,8 +324,9 @@ module.exports = async function handler(req, res) {
     }
   } catch (error) {
     // Аналитика не имеет права ломать сайт: логируем и отвечаем успехом.
+    // Текст ошибки возвращаем только в режиме отладки — наружу он не нужен.
     log('ошибка приёма:', error.message);
-    res.status(200).json({ ok: true, stored: false });
+    res.status(200).json({ ok: true, stored: false, ...(config.debug ? { error: error.message } : {}) });
     return;
   }
 
