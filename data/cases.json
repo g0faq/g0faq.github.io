@@ -49,8 +49,41 @@
     "image": "/img/cases/04-botai.png"
   },
   {
-    "id": "provibe",
+    "id": "veshdok",
     "num": "04",
+    "title": "Вещдок",
+    "category": "Сайт магазина одежды",
+    "demo": true,
+    "description": "Сайт мультибрендового магазина в эстетике следственного архива: каждая вещь — «улика» с номером дела, биркой и штампом наличия. Лендинг с интро-анимацией и каталог с фильтрами, сортировкой и синхронизацией состояния с адресной строкой — без фреймворков и сборщика.",
+    "stack": [
+      "HTML/CSS/JS",
+      "ES-модули",
+      "Vercel"
+    ],
+    "url": "/veshdok/",
+    "accent": "orange",
+    "image": "/img/cases/veshdok.png"
+  },
+  {
+    "id": "gromabulka",
+    "num": "05",
+    "title": "GromaBulka",
+    "category": "Онлайн-запись для груминг-студии",
+    "demo": true,
+    "description": "Сайт груминг-студии с записью в четыре шага: услуга, день, свободный слот, контакты. Заявка сразу попадает в админ-панель мастера, где видно расписание дня, загрузку и выручку. Слоты считаются с учётом длительности услуги и перерывов между визитами.",
+    "stack": [
+      "Next.js",
+      "Prisma",
+      "PostgreSQL",
+      "Vercel"
+    ],
+    "url": "/gromabulka/",
+    "accent": "blue",
+    "image": "/img/cases/gromabulka.png"
+  },
+  {
+    "id": "provibe",
+    "num": "06",
     "title": "ProVibe",
     "category": "Сайт-визитка",
     "demo": false,
@@ -66,7 +99,7 @@
   },
   {
     "id": "bliss-home",
-    "num": "05",
+    "num": "07",
     "title": "Bliss Home",
     "category": "Каталог мебели",
     "demo": false,
@@ -82,7 +115,7 @@
   },
   {
     "id": "ershdesign",
-    "num": "06",
+    "num": "08",
     "title": "ershdesign",
     "category": "Кабинет проекта дизайн-студии",
     "demo": true,

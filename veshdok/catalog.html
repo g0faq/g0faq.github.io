@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Каталог — Вещдок, магазин одежды в Дубне</title>
+<meta name="description" content="Опись вещественных доказательств: 14 позиций мужской и женской одежды, обувь и аксессуары. Фильтры по полу, разделу, размеру и цене. Магазин Вещдок, Дубна, пр. Боголюбова, 24Бк3.">
+<meta name="theme-color" content="#f2efe9">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Вещдок">
+<meta property="og:title" content="Каталог — Вещдок">
+<meta property="og:description" content="14 позиций в описи: мужское, женское, верхняя одежда, обувь и аксессуары.">
+<meta property="og:image" content="/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="./assets/img/favicon.png" sizes="any" type="image/png">
+<link rel="apple-touch-icon" href="./assets/img/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./assets/css/style.css">
+<link rel="stylesheet" href="./assets/css/demo.css">
+
+<script>document.documentElement.classList.add('js');</script>
+</head>
+
+<body>
+<div class="demo-bar" role="note"><span class="demo-bar__mark">Демо-версия · данные вымышлены</span><a class="demo-bar__back" href="/">← Портфолио</a></div>
+
+<a class="skip-link" href="#main">К основному содержанию</a>
+
+<header class="head">
+  <div class="head__in">
+    <a class="head__brand" href="./index.html" aria-label="Вещдок — на главную">
+      <img class="head__logo" src="./assets/img/logo.png" alt="Вещдок" width="1100" height="504">
+      <span class="head__meta">ДУБНА<br>24Бк3</span>
+    </a>
+
+    <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Меню">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+        <path d="M3 6h18M3 12h18M3 18h18"/>
+      </svg>
+    </button>
+
+    <nav class="nav" id="nav" aria-label="Основная навигация">
+      <a href="./index.html">Главная</a>
+      <a href="./catalog.html" aria-current="page">Каталог</a>
+      <a href="./index.html#contacts">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="wrap" style="padding-block: clamp(18px,3vw,40px) 0;" aria-labelledby="cat-title">
+    <div class="cat-head">
+      <div>
+        <p class="eyebrow">Опись вещественных доказательств</p>
+        <h1 id="cat-title">Каталог</h1>
+      </div>
+      <p class="count" id="count" role="status" aria-live="polite">Найдено: <b>14</b> из 14</p>
+    </div>
+
+    <div class="catalog">
+      <details class="filters" id="filters" open>
+        <summary>Фильтры</summary>
+
+        <div class="filters__body">
+          <fieldset class="fgroup">
+            <legend>Пол</legend>
+            <div class="chips" id="f-gender"></div>
+          </fieldset>
+
+          <fieldset class="fgroup">
+            <legend>Раздел</legend>
+            <div class="chips chips--col" id="f-cat"></div>
+          </fieldset>
+
+          <fieldset class="fgroup">
+            <legend>Размер</legend>
+            <div class="chips" id="f-size"></div>
+          </fieldset>
+
+          <fieldset class="fgroup">
+            <legend><label for="f-price">Цена до</label></legend>
+            <input type="range" id="f-price" min="1500" max="12000" step="100" value="12000">
+            <div class="price-out">
+              <span>1 500 ₽</span>
+              <span id="f-price-out">12 000 ₽</span>
+            </div>
+          </fieldset>
+
+          <button class="btn btn--full" type="button" data-reset>Сбросить фильтры</button>
+        </div>
+      </details>
+
+      <div class="results">
+        <div class="sortbar">
+          <p class="eyebrow" id="sort-label">Сортировка</p>
+          <div class="chips" id="f-sort" role="group" aria-labelledby="sort-label"></div>
+        </div>
+
+        <div class="grid" id="results"></div>
+
+        <div class="empty" id="empty" hidden>
+          <p class="empty__stamp">Дело закрыто</p>
+          <h2>По этим приметам ничего не найдено</h2>
+          <p>В описи нет позиций, подходящих под заданные параметры. Измените фильтры или сбросьте их полностью.</p>
+          <button class="btn btn--stamp" type="button" data-reset>Сбросить фильтры</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot__in">
+    <div class="foot__top">
+      <div>
+        <img class="foot__logo" src="./assets/img/logo.png" alt="Вещдок" width="1100" height="504" loading="lazy">
+        <div class="barcode" aria-hidden="true"></div>
+        <p class="foot__code">4 607 000 000 24</p>
+      </div>
+
+      <address class="foot__req">
+        г. Дубна, пр. Боголюбова, 24Бк3<br>
+        Ежедневно до 21:00<br>
+        [ТЕЛЕФОН]<br>
+        [EMAIL]<br>
+        [TELEGRAM] · [INSTAGRAM]
+        <span class="dim">[НАИМЕНОВАНИЕ ЮРЛИЦА]<br>[ИНН] / [ОГРН]</span>
+      </address>
+    </div>
+
+    <div class="foot__bar">
+      <span>Демо-версия сайта. Данные условные.</span>
+      <span>© <span id="year">2026</span> Вещдок</span>
+    </div>
+  </div>
+</footer>
+
+<!-- МОДАЛКА ТОВАРА -->
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal__box">
+    <div class="modal__shot">
+      <div class="modal__shotinner" data-m="shot"></div>
+      <span class="modal__bigstamp" data-m="stamp"></span>
+    </div>
+    <div class="modal__side">
+      <div class="modal__top">
+        <p class="modal__case" data-m="case"></p>
+        <button class="modal__close" type="button" data-close>Закрыть ✕</button>
+      </div>
+
+      <h2 id="modal-title" data-m="title"></h2>
+      <p class="modal__price" data-m="price"></p>
+      <p class="modal__desc" data-m="desc"></p>
+
+      <div>
+        <p class="eyebrow">Размерная сетка</p>
+        <div class="sizes" data-m="sizes"></div>
+        <p class="modal__note">Зачёркнутые размеры уже изъяты.</p>
+      </div>
+
+      <dl class="specs">
+        <div><dt>Состав</dt><dd data-m="composition"></dd></div>
+        <div><dt>Поступление</dt><dd data-m="admitted"></dd></div>
+        <div><dt>Хранение</dt><dd>Зал / Дубна</dd></div>
+      </dl>
+
+      <p class="booking" data-m="booking" hidden>
+        Онлайн-брони пока нет. Отложить вещь и назначить примерку можно по телефону
+        <span class="ph">[ТЕЛЕФОН]</span> — держим до конца дня. Оплата только в магазине.
+      </p>
+
+      <button class="btn btn--stamp btn--full modal__cta" type="button" data-m="book">Отложить и примерить</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./assets/js/catalog.js"></script>
+</body>
+</html>

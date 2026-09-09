@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ru" data-intro>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Вещдок — магазин одежды в Дубне, пр. Боголюбова, 24Бк3</title>
+<meta name="description" content="Вещдок — мультибрендовый магазин мужской и женской одежды в Дубне. Пр. Боголюбова, 24Бк3. Рейтинг 4.6 на Яндекс.Картах. Примерка без спешки, работаем до 21:00.">
+<meta name="theme-color" content="#f2efe9">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Вещдок">
+<meta property="og:title" content="Вещдок — магазин одежды в Дубне">
+<meta property="og:description" content="Мужская и женская одежда, мультибренд. Пр. Боголюбова, 24Бк3. Всё изъято, всё в наличии.">
+<meta property="og:image" content="/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="./assets/img/favicon.png" sizes="any" type="image/png">
+<link rel="apple-touch-icon" href="./assets/img/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="./assets/img/logo.png">
+<link rel="stylesheet" href="./assets/css/style.css">
+<link rel="stylesheet" href="./assets/css/demo.css">
+
+<script>
+  (function () {
+    var h = document.documentElement;
+    h.classList.add('js');
+    var skip = false;
+    try {
+      skip = sessionStorage.getItem('vd-intro') === 'done' ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch (e) { skip = true; }
+    if (h.hasAttribute('data-intro') && !skip) h.classList.add('intro-run');
+  })();
+</script>
+<noscript><style>.intro{display:none!important}html{overflow:auto!important}</style></noscript>
+</head>
+
+<body>
+<div class="demo-bar" role="note"><span class="demo-bar__mark">Демо-версия · данные вымышлены</span><a class="demo-bar__back" href="/">← Портфолио</a></div>
+
+<!-- ИНТРО: лупа проявляет леттеринг, затем логотип улетает в шапку -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro__bg"></div>
+
+  <p class="intro__corner intro__corner--tl">Архив вещественных<br>доказательств · Дубна</p>
+  <p class="intro__corner intro__corner--br">Том I / сезон 24<br>Позиций в описи: 14</p>
+
+  <div class="intro__stage">
+    <img class="intro__ghost" src="./assets/img/logo.png" alt="" width="1100" height="504">
+    <img class="intro__logo" src="./assets/img/logo.png" alt="" width="1100" height="504">
+    <span class="intro__lens">
+      <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <circle cx="42" cy="42" r="30" fill="rgba(255,255,255,.28)" stroke="currentColor" stroke-width="3"/>
+        <circle cx="42" cy="42" r="26" stroke="rgba(20,20,20,.25)" stroke-width="1"/>
+        <path d="M30 30 a17 17 0 0 1 12 -7" stroke="rgba(255,255,255,.85)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M64 64 L86 86" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+      </svg>
+    </span>
+  </div>
+
+  <p class="intro__stamp">Опись вскрыта</p>
+  <button class="intro__skip" type="button">Пропустить</button>
+</div>
+
+<a class="skip-link" href="#main">К основному содержанию</a>
+
+<header class="head">
+  <div class="head__in">
+    <a class="head__brand" href="./index.html" aria-label="Вещдок — на главную">
+      <img class="head__logo" src="./assets/img/logo.png" alt="Вещдок" width="1100" height="504">
+      <span class="head__meta">ДУБНА<br>24Бк3</span>
+    </a>
+
+    <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Меню">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+        <path d="M3 6h18M3 12h18M3 18h18"/>
+      </svg>
+    </button>
+
+    <nav class="nav" id="nav" aria-label="Основная навигация">
+      <a href="./index.html" aria-current="page">Главная</a>
+      <a href="./catalog.html">Каталог</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- 1. ШАПКА ДЕЛА -->
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero__top">
+      <p class="hero__index">Опись фондов<br>Том I / сезон 24</p>
+
+      <dl class="docket">
+        <div class="docket__row"><dt>Город</dt><dd>Дубна</dd></div>
+        <div class="docket__row"><dt>Адрес</dt><dd>пр. Боголюбова, 24Бк3</dd></div>
+        <div class="docket__row"><dt>Часы</dt><dd>Ежедневно до 21:00</dd></div>
+        <div class="docket__row"><dt>Рейтинг</dt><dd class="is-stamp">4.6 · 13 оценок</dd></div>
+      </dl>
+    </div>
+
+    <p class="hero__kicker">Стиль без алиби</p>
+    <h1 id="hero-title">Всё изъято,<br>всё в наличии</h1>
+
+    <hr class="rule hero__rule">
+
+    <div class="hero__bottom">
+      <p class="hero__lead">Магазин одежды в Дубне. Мужское и женское, мультибренд. Каждая вещь отобрана вручную и заведена в опись.</p>
+      <div class="btns">
+        <a class="btn btn--stamp" href="./catalog.html">Смотреть каталог</a>
+        <a class="btn" href="#contacts">Как добраться</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. БЕГУЩАЯ СТРОКА -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <div class="ticker__group">
+        <span>Новое поступление</span><span class="ticker__dot">·</span>
+        <span>Мужское</span><span class="ticker__dot">·</span>
+        <span>Женское</span><span class="ticker__dot">·</span>
+        <span>Примерка бесплатно</span><span class="ticker__dot">·</span>
+        <span>Новое поступление</span><span class="ticker__dot">·</span>
+        <span>Мужское</span><span class="ticker__dot">·</span>
+        <span>Женское</span><span class="ticker__dot">·</span>
+        <span>Примерка бесплатно</span><span class="ticker__dot">·</span>
+      </div>
+      <div class="ticker__group">
+        <span>Новое поступление</span><span class="ticker__dot">·</span>
+        <span>Мужское</span><span class="ticker__dot">·</span>
+        <span>Женское</span><span class="ticker__dot">·</span>
+        <span>Примерка бесплатно</span><span class="ticker__dot">·</span>
+        <span>Новое поступление</span><span class="ticker__dot">·</span>
+        <span>Мужское</span><span class="ticker__dot">·</span>
+        <span>Женское</span><span class="ticker__dot">·</span>
+        <span>Примерка бесплатно</span><span class="ticker__dot">·</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. РАЗДЕЛЫ ФОНДА -->
+  <section class="section wrap" aria-labelledby="cats-title">
+    <div class="section__head reveal">
+      <h2 id="cats-title">Разделы фонда</h2>
+      <p class="section__aside">04 единицы хранения</p>
+    </div>
+
+    <div class="cats">
+      <a class="cat reveal" href="/catalog?cat=men">
+        <span class="eyebrow">Раздел</span>
+        <span>
+          <span class="cat__num">01</span>
+          <span class="cat__title">Мужское</span>
+          <span class="cat__count" data-cat-count="men"></span>
+        </span>
+      </a>
+      <a class="cat reveal" href="/catalog?cat=women">
+        <span class="eyebrow">Раздел</span>
+        <span>
+          <span class="cat__num">02</span>
+          <span class="cat__title">Женское</span>
+          <span class="cat__count" data-cat-count="women"></span>
+        </span>
+      </a>
+      <a class="cat reveal" href="/catalog?cat=outer">
+        <span class="eyebrow">Раздел</span>
+        <span>
+          <span class="cat__num">03</span>
+          <span class="cat__title">Верхняя одежда</span>
+          <span class="cat__count" data-cat-count="outer"></span>
+        </span>
+      </a>
+      <a class="cat reveal" href="/catalog?cat=shoes">
+        <span class="eyebrow">Раздел</span>
+        <span>
+          <span class="cat__num">04</span>
+          <span class="cat__title">Обувь и аксессуары</span>
+          <span class="cat__count" data-cat-count="shoes"></span>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 4. ВИТРИНА -->
+  <section class="section wrap" aria-labelledby="show-title">
+    <div class="section__head reveal">
+      <h2 id="show-title">Вещественные доказательства</h2>
+      <a class="section__aside" href="./catalog.html">Весь каталог →</a>
+    </div>
+    <div class="grid" id="showcase"></div>
+  </section>
+
+  <!-- 5. О МАГАЗИНЕ -->
+  <section class="section wrap" aria-labelledby="about-title">
+    <div class="section__head reveal">
+      <h2 id="about-title">О магазине</h2>
+      <p class="section__aside">Протокол осмотра</p>
+    </div>
+
+    <div class="about">
+      <div class="about__list">
+        <div class="thesis reveal">
+          <span class="thesis__num">01</span>
+          <div>
+            <h3>Лично отбираем</h3>
+            <p>Каждую позицию смотрим руками до закупки: посадка, швы, плотность ткани. В зал не попадает то, что мы не носили бы сами.</p>
+          </div>
+        </div>
+        <div class="thesis reveal">
+          <span class="thesis__num">02</span>
+          <div>
+            <h3>Примерка без спешки</h3>
+            <p>Можно взять несколько размеров сразу и спокойно всё померить. Никто не стоит над душой и не торопит с решением.</p>
+          </div>
+        </div>
+        <div class="thesis reveal">
+          <span class="thesis__num">03</span>
+          <div>
+            <h3>Обмен</h3>
+            <p>Если дома вещь не подошла, поменяем на другой размер или другую модель. Срок и условия обмена — <span class="ph">[УСЛОВИЯ ОБМЕНА]</span>.</p>
+          </div>
+        </div>
+        <div class="thesis reveal">
+          <span class="thesis__num">04</span>
+          <div>
+            <h3>Поможем с образом</h3>
+            <p>Подскажем, с чем носить и какой размер брать под слой снизу. Без навязывания и без дежурного «вам очень идёт».</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about__side">
+        <div class="score reveal">
+          <p class="eyebrow">Средняя оценка</p>
+          <p class="score__num">4.6</p>
+          <p class="score__sub">13 оценок на Яндекс.Картах</p>
+        </div>
+
+        <figure class="review reveal">
+          <p><span class="ph">[ТЕКСТ ОТЗЫВА 1]</span> — сюда подставляются реальные отзывы с Яндекс.Карт после согласования с владельцем.</p>
+          <footer>Отзыв с Яндекс.Карт · <span class="ph">[АВТОР]</span></footer>
+        </figure>
+        <figure class="review reveal">
+          <p><span class="ph">[ТЕКСТ ОТЗЫВА 2]</span> — в демо-версии отзывы не выдуманы намеренно: показываем только проверенную оценку 4.6.</p>
+          <footer>Отзыв с Яндекс.Карт · <span class="ph">[АВТОР]</span></footer>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. КОНТАКТЫ -->
+  <section class="section wrap" id="contacts" aria-labelledby="contacts-title">
+    <div class="section__head reveal">
+      <h2 id="contacts-title">Контакты</h2>
+      <p class="section__aside">Место хранения</p>
+    </div>
+
+    <div class="contacts">
+      <div class="contacts__col reveal">
+        <dl>
+          <dt>Адрес</dt>
+          <dd>г. Дубна, пр. Боголюбова, 24Бк3</dd>
+          <dt>Часы работы</dt>
+          <dd>Ежедневно до 21:00</dd>
+          <dt>Телефон</dt>
+          <dd><span class="ph">[ТЕЛЕФОН]</span></dd>
+          <dt>Мессенджер</dt>
+          <dd><span class="ph">[TELEGRAM]</span></dd>
+          <dt>Соцсеть</dt>
+          <dd><span class="ph">[INSTAGRAM]</span></dd>
+          <dt>Почта</dt>
+          <dd><span class="ph">[EMAIL]</span></dd>
+        </dl>
+
+        <div>
+          <div class="btns">
+            <button class="btn btn--stamp" type="button" data-contact aria-controls="contact-note" aria-expanded="false">Написать</button>
+            <button class="btn" type="button" data-contact aria-controls="contact-note" aria-expanded="false">Позвонить</button>
+          </div>
+          <p class="booking" id="contact-note" hidden>
+            Контакты подставляются на боевой версии: телефон <span class="ph">[ТЕЛЕФОН]</span>,
+            мессенджер <span class="ph">[TELEGRAM]</span>. В демо-версии кнопки никуда не ведут.
+          </p>
+        </div>
+      </div>
+
+      <div class="map reveal" role="img" aria-label="Схематическая карта: магазин Вещдок, пр. Боголюбова, 24Бк3. Интерактивная карта в демо-версии не подключена.">
+        <p class="map__label">Схема участка / кв. 24Б</p>
+        <div class="map__pin">
+          <span class="map__dot"></span>
+          <span class="map__tip">Вещдок · 24Бк3</span>
+        </div>
+        <p class="map__note">Карта — заглушка</p>
+      </div>
+
+      <figure class="shot reveal">
+        <!-- В демо вместо снимка фасада — заглушка: фотографии объекта в портфолио не переносятся. -->
+        <div class="shot__placeholder" role="img" aria-label="Место для фотографии фасада магазина">
+          <span>Фотофиксация<br>объекта</span>
+        </div>
+        <figcaption>Снимок объекта в демо-версии не публикуется</figcaption>
+      </figure>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot__in">
+    <div class="foot__top">
+      <div>
+        <img class="foot__logo" src="./assets/img/logo.png" alt="Вещдок" width="1100" height="504" loading="lazy">
+        <div class="barcode" aria-hidden="true"></div>
+        <p class="foot__code">4 607 000 000 24</p>
+      </div>
+
+      <address class="foot__req">
+        г. Дубна, пр. Боголюбова, 24Бк3<br>
+        Ежедневно до 21:00<br>
+        [ТЕЛЕФОН]<br>
+        [EMAIL]<br>
+        [TELEGRAM] · [INSTAGRAM]
+        <span class="dim">[НАИМЕНОВАНИЕ ЮРЛИЦА]<br>[ИНН] / [ОГРН]</span>
+      </address>
+    </div>
+
+    <div class="foot__bar">
+      <span>Демо-версия сайта. Данные условные.</span>
+      <span>© <span id="year">2026</span> Вещдок</span>
+    </div>
+  </div>
+</footer>
+
+<!-- МОДАЛКА ТОВАРА -->
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal__box">
+    <div class="modal__shot">
+      <div class="modal__shotinner" data-m="shot"></div>
+      <span class="modal__bigstamp" data-m="stamp"></span>
+    </div>
+    <div class="modal__side">
+      <div class="modal__top">
+        <p class="modal__case" data-m="case"></p>
+        <button class="modal__close" type="button" data-close>Закрыть ✕</button>
+      </div>
+
+      <h2 id="modal-title" data-m="title"></h2>
+      <p class="modal__price" data-m="price"></p>
+      <p class="modal__desc" data-m="desc"></p>
+
+      <div>
+        <p class="eyebrow">Размерная сетка</p>
+        <div class="sizes" data-m="sizes"></div>
+        <p class="modal__note">Зачёркнутые размеры уже изъяты.</p>
+      </div>
+
+      <dl class="specs">
+        <div><dt>Состав</dt><dd data-m="composition"></dd></div>
+        <div><dt>Поступление</dt><dd data-m="admitted"></dd></div>
+        <div><dt>Хранение</dt><dd>Зал / Дубна</dd></div>
+      </dl>
+
+      <p class="booking" data-m="booking" hidden>
+        Онлайн-брони пока нет. Отложить вещь и назначить примерку можно по телефону
+        <span class="ph">[ТЕЛЕФОН]</span> — держим до конца дня. Оплата только в магазине.
+      </p>
+
+      <button class="btn btn--stamp btn--full modal__cta" type="button" data-m="book">Отложить и примерить</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./assets/js/main.js"></script>
+</body>
+</html>
