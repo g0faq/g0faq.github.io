@@ -70,7 +70,7 @@ async function sendActivity(row) {
     const text = describe(event);
     if (text && actions[actions.length - 1] !== text) actions.push(text);
   }
-  if (!actions.length) return false;
+  if (!actions.length) return 'empty';
 
   const pathItems = Array.isArray(session.path) ? session.path : [];
   const seconds = (Date.now() - new Date(session.started_at).getTime()) / 1000;
@@ -115,8 +115,17 @@ async function runMaintenance({ force = false, minIntervalSec = 30 } = {}) {
 
   for (const row of pending) {
     let ok = false;
-    if (row.kind === 'activity') ok = await sendActivity(row);
-    else if (row.text) ok = (await telegram.send(row.text)).ok;
+    if (row.kind === 'activity') {
+      const result = await sendActivity(row);
+      // Пустая пачка — не сбой: закрываем сразу, чтобы не ретраить впустую.
+      if (result === 'empty') {
+        await query('UPDATE notifications SET sent_at = now() WHERE id = $1', [row.id]);
+        continue;
+      }
+      ok = result;
+    } else if (row.text) {
+      ok = (await telegram.send(row.text)).ok;
+    }
 
     if (ok) {
       await query('UPDATE notifications SET sent_at = now() WHERE id = $1', [row.id]);
