@@ -20,12 +20,15 @@ function getPool() {
   if (pool) return pool;
   const url = connectionString();
   if (!url) throw new Error('POSTGRES_URL не задан');
+  // Supabase отдаёт строку с sslmode=require: node-postgres в этом случае
+  // строит свою конфигурацию TLS и падает на самоподписанном сертификате пула.
+  const dsn = url.replace(/sslmode=require/, 'sslmode=no-verify');
   pool = new Pool({
-    connectionString: url,
+    connectionString: dsn,
     max: 3,
     idleTimeoutMillis: 10000,
     connectionTimeoutMillis: 5000,
-    ssl: url.includes('localhost') ? false : { rejectUnauthorized: false },
+    ssl: dsn.includes('localhost') ? false : { rejectUnauthorized: false },
   });
   return pool;
 }

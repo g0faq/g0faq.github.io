@@ -15,9 +15,13 @@ if (!url) {
 }
 
 const sql = await readFile(resolve(root, 'db/schema.sql'), 'utf8');
+// Supabase отдаёт строку с sslmode=require, и node-postgres в этом случае
+// строит собственную конфигурацию TLS, игнорируя переданный ssl-объект.
+// Меняем режим на no-verify: сертификат у пула самоподписанный.
+const dsn = url.replace(/sslmode=require/, 'sslmode=no-verify');
 const client = new pg.Client({
-  connectionString: url,
-  ssl: url.includes('localhost') ? false : { rejectUnauthorized: false },
+  connectionString: dsn,
+  ssl: dsn.includes('localhost') ? false : { rejectUnauthorized: false },
 });
 
 await client.connect();
