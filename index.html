@@ -124,6 +124,13 @@
         <div class="cases-sticky" id="cases-stack" aria-live="polite">
           <p class="cases-loading">ЗАГРУЖАЮ КЕЙСЫ…</p>
         </div>
+        <!-- Подсказка о горизонтальной прокрутке: показывается один раз, только на телефоне -->
+        <div class="cases-hint" id="cases-hint" hidden>
+          <span class="cases-hint__arrows" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
+          <span class="cases-hint__text">Листайте вбок</span>
+        </div>
       </section>
 
       <section class="content-section section-tone section-assembly section-tone--services" id="services" data-section-name="Услуги" aria-labelledby="services-title">
@@ -404,5 +411,17 @@
         <p>© 2026</p>
       </div>
     </footer>
+
+    <!-- Согласие на аналитику. Яндекс.Метрика подключается только после «Принять». -->
+    <div class="cookie-bar" id="cookie-bar" role="dialog" aria-label="Использование cookie" aria-live="polite" hidden>
+      <p class="cookie-bar__text">
+        Сайт использует cookie и Яндекс.Метрику, чтобы понимать, какие разделы читают.
+        Без согласия аналитика не загружается.
+      </p>
+      <div class="cookie-bar__actions">
+        <button class="button cookie-bar__accept" type="button" data-cookie="granted">Принять</button>
+        <button class="button" type="button" data-cookie="denied">Только необходимые</button>
+      </div>
+    </div>
   </body>
 </html>

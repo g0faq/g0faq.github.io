@@ -3930,3 +3930,143 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
   border-color: var(--text);
   color: var(--text);
 }
+
+/* ── Подсказка о горизонтальной прокрутке кейсов ────────────────────────────
+   На телефоне стопка кейсов превращается в ленту со scroll-snap, и по
+   статичному экрану не видно, что её листают вбок. Подсказка показывается
+   один раз за устройство и гаснет после первого же движения. */
+
+.cases-hint {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .cases-section {
+    position: relative;
+  }
+
+  .cases-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px;
+    border: 1px solid var(--section-accent, var(--accent-orange));
+    background: rgba(13, 13, 15, 0.92);
+    color: var(--text);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transform: translateX(-50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 260ms ease;
+  }
+
+  .cases-hint.is-visible {
+    opacity: 1;
+  }
+
+  .cases-hint__arrows {
+    display: inline-flex;
+    gap: 3px;
+  }
+
+  /* Три шеврона, бегущие вправо: направление читается без текста. */
+  .cases-hint__arrows span {
+    width: 6px;
+    height: 6px;
+    border-top: 1px solid var(--section-accent, var(--accent-orange));
+    border-right: 1px solid var(--section-accent, var(--accent-orange));
+    transform: rotate(45deg);
+    animation: cases-hint-run 1.4s ease-in-out infinite;
+  }
+
+  .cases-hint__arrows span:nth-child(2) { animation-delay: 0.15s; }
+  .cases-hint__arrows span:nth-child(3) { animation-delay: 0.3s; }
+}
+
+@keyframes cases-hint-run {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cases-hint__arrows span {
+    animation: none;
+    opacity: 0.8;
+  }
+}
+
+/* ── Согласие на cookie ─────────────────────────────────────────────────────
+   Плашка снизу. Аналитика не грузится, пока человек не нажал «Принять». */
+
+.cookie-bar {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 16px 24px;
+  flex-wrap: wrap;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  background: rgba(13, 13, 15, 0.96);
+  backdrop-filter: blur(6px);
+  transform: translateY(12px);
+  opacity: 0;
+  transition: opacity 240ms ease, transform 240ms ease;
+}
+
+.cookie-bar.is-visible {
+  transform: none;
+  opacity: 1;
+}
+
+.cookie-bar__text {
+  flex: 1 1 320px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.cookie-bar__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cookie-bar .button {
+  min-height: 42px;
+  padding: 10px 18px;
+  font-size: 11px;
+}
+
+.cookie-bar__accept {
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+}
+
+@media (max-width: 760px) {
+  .cookie-bar {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .cookie-bar__actions .button {
+    flex: 1;
+  }
+}

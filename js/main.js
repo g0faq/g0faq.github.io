@@ -1112,13 +1112,138 @@ function initContactForm() {
   });
 }
 
+/* ── Подсказка о горизонтальной прокрутке кейсов ───────────────────────────
+   Только на телефоне и только при первом заходе: дальше человек уже знает,
+   что лента листается, и повторное напоминание превращается в мусор. */
+
+const CASES_HINT_KEY = 'g0faq.cases.hint';
+
+function initCasesHint() {
+  const hint = document.querySelector('#cases-hint');
+  const stack = document.querySelector('#cases-stack');
+  if (!hint || !stack) return;
+  if (window.innerWidth > CASES_BREAKPOINT) return;
+
+  // Приватный режим запрещает доступ к хранилищу — тогда просто показываем.
+  try {
+    if (window.localStorage.getItem(CASES_HINT_KEY) === 'seen') return;
+  } catch {
+    /* см. выше */
+  }
+
+  let hideTimer = 0;
+
+  const dismiss = () => {
+    window.clearTimeout(hideTimer);
+    hint.classList.remove('is-visible');
+    window.setTimeout(() => { hint.hidden = true; }, 300);
+    stack.removeEventListener('scroll', dismiss);
+    stack.removeEventListener('pointerdown', dismiss);
+    try {
+      window.localStorage.setItem(CASES_HINT_KEY, 'seen');
+    } catch {
+      /* см. выше */
+    }
+  };
+
+  // Показываем, только когда кейсы действительно на экране, — иначе подсказка
+  // отработает вхолостую, пока человек читает первый экран.
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      hint.hidden = false;
+      // setTimeout, а не rAF: в фоновой вкладке кадры не рисуются и класс не встал бы.
+      window.setTimeout(() => hint.classList.add('is-visible'), 30);
+      hideTimer = window.setTimeout(dismiss, 6000);
+    });
+  }, { threshold: 0.4 });
+
+  observer.observe(stack);
+
+  stack.addEventListener('scroll', dismiss, { passive: true, once: true });
+  stack.addEventListener('pointerdown', dismiss, { passive: true, once: true });
+}
+
+/* ── Согласие на cookie и Яндекс.Метрика ───────────────────────────────────
+   Счётчик не загружается, пока не нажато «Принять»: до согласия на сайте нет
+   ни одного стороннего запроса. Номер счётчика вписать в METRIKA_ID — больше
+   ничего менять не нужно. */
+
+const CONSENT_KEY = 'g0faq.consent';
+const METRIKA_ID = '';
+
+function loadMetrika() {
+  if (!METRIKA_ID) return;
+  if (window.ym) return;
+
+  window.ym = window.ym || function ymStub(...args) {
+    (window.ym.a = window.ym.a || []).push(args);
+  };
+  window.ym.l = Date.now();
+
+  const script = document.createElement('script');
+  script.src = 'https://mc.yandex.ru/metrika/tag.js';
+  script.async = true;
+  document.head.append(script);
+
+  window.ym(METRIKA_ID, 'init', {
+    ssr: true,
+    webvisor: true,
+    clickmap: true,
+    accurateTrackBounce: true,
+    trackLinks: true,
+  });
+}
+
+function initConsent() {
+  const bar = document.querySelector('#cookie-bar');
+  if (!bar) return;
+
+  let saved = null;
+  try {
+    saved = window.localStorage.getItem(CONSENT_KEY);
+  } catch {
+    // Приватный режим: спрашиваем каждый раз, но ничего не грузим без ответа.
+  }
+
+  if (saved === 'granted') {
+    loadMetrika();
+    return;
+  }
+
+  if (saved === 'denied') return;
+
+  bar.hidden = false;
+  window.setTimeout(() => bar.classList.add('is-visible'), 30);
+
+  bar.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-cookie]');
+    if (!button) return;
+    const choice = button.dataset.cookie;
+
+    try {
+      window.localStorage.setItem(CONSENT_KEY, choice);
+    } catch {
+      /* см. выше */
+    }
+
+    bar.classList.remove('is-visible');
+    window.setTimeout(() => { bar.hidden = true; }, 260);
+
+    if (choice === 'granted') loadMetrika();
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initSiteParticles();
   initCases();
+  initCasesHint();
   initHeroFlow();
   initSectionAssembly();
   initPageSlider();
   initContentVisuals();
   initStackVisualizer();
   initContactForm();
+  initConsent();
 });
