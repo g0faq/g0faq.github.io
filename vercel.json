@@ -11,5 +11,11 @@
         }
       ]
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/flush",
+      "schedule": "0 3 * * *"
+    }
   ]
 }

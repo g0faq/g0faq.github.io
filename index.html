@@ -37,6 +37,7 @@
     <script src="./js/calculator-config.js" defer></script>
     <script src="./js/calculator.js" defer></script>
     <script src="./js/main.js" defer></script>
+    <script src="./js/analytics.js" defer></script>
   </head>
   <body>
     <canvas class="site-particles" aria-hidden="true"></canvas>
@@ -408,19 +409,34 @@
         <strong>ДОКУМЕНТЫ</strong>
         <span>Работа по договору</span>
         <a href="./assets/docs/dogovor-primer.pdf" target="_blank" rel="noreferrer">Пример договора ↗</a>
+        <a href="./privacy.html">Данные и cookie</a>
+        <a href="#" data-consent-revoke>Настройки cookie</a>
         <p>© 2026</p>
       </div>
     </footer>
 
-    <!-- Согласие на аналитику. Яндекс.Метрика подключается только после «Принять». -->
-    <div class="cookie-bar" id="cookie-bar" role="dialog" aria-label="Использование cookie" aria-live="polite" hidden>
-      <p class="cookie-bar__text">
-        Сайт использует cookie и Яндекс.Метрику, чтобы понимать, какие разделы читают.
-        Без согласия аналитика не загружается.
-      </p>
-      <div class="cookie-bar__actions">
-        <button class="button cookie-bar__accept" type="button" data-cookie="granted">Принять</button>
-        <button class="button" type="button" data-cookie="denied">Только необходимые</button>
+    <!-- Экран согласия. До «Принять» не создаётся идентификатор посетителя,
+         не отправляется ни одно событие и не загружается Яндекс.Метрика. -->
+    <div class="consent" id="consent-screen" role="dialog" aria-modal="true" aria-labelledby="consent-title" hidden>
+      <div class="consent__panel">
+        <p class="eyebrow">Аналитика</p>
+        <h2 class="consent__title" id="consent-title">Разрешить сбор аналитики?</h2>
+        <p class="consent__text">
+          Хочу понимать, какие разделы читают и на чём люди останавливаются — это помогает
+          делать сайт полезнее. Собираю обезличенную статистику: страницы, разделы, нажатия
+          и выбранные варианты в калькуляторе стоимости. Личность не устанавливается,
+          IP-адрес не хранится, тексты незаполненных полей не собираются.
+        </p>
+        <ul class="consent__list">
+          <li>Собственная аналитика посещений</li>
+          <li>Яндекс.Метрика</li>
+          <li>Отказ ничего не ломает — сайт работает полностью</li>
+        </ul>
+        <div class="consent__actions">
+          <button class="button consent__accept" type="button" data-consent="granted">Принять</button>
+          <button class="button" type="button" data-consent="denied">Отклонить</button>
+        </div>
+        <a class="consent__more" href="./privacy.html">Подробнее о данных и cookie ↗</a>
       </div>
     </div>
   </body>

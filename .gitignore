@@ -1,6 +1,8 @@
 .vercel
 .env*
+!.env.example
 .DS_Store
 tmp/
 public/
 photos/
+node_modules/

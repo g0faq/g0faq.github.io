@@ -111,6 +111,61 @@ window.CONTACT_ENDPOINT = window.CONTACT_ENDPOINT || '';
     }
   ];
 
+
+  /* Мост к аналитике. Калькулятор ничего не знает про трекер: он лишь
+     объявляет о происходящем, а слушателя может не быть вовсе. Наружу уходят
+     только заранее заданные варианты ответов и расчётная вилка — свободный
+     текст полей заявки не покидает браузер до отправки формы. */
+  const emit = (type, data, state, extra) => {
+    try {
+      const snapshot = state ? calculatorSnapshot(state, extra) : null;
+      window.dispatchEvent(new CustomEvent('portfolio:calculator', {
+        detail: { type, data: data || null, state: snapshot },
+      }));
+    } catch (error) {
+      // Аналитика не имеет права ломать анкету, но и молчать о поломке нельзя.
+      if (window.console) console.warn('[calculator] событие аналитики не ушло:', error);
+    }
+  };
+
+  const calculatorSnapshot = (state, extra = {}) => {
+    // Расчёт возможен только на полностью заполненной анкете — на середине
+    // пути он бросает исключение, и это нормальный ход событий, а не сбой.
+    let estimate = null;
+    try {
+      estimate = calculateEstimate(config, state.answers);
+    } catch {
+      estimate = null;
+    }
+    const labelOf = (stepKey, id) => {
+      if (!id) return null;
+      const step = steps.find((item) => item.key === stepKey);
+      const option = step && step.options.find((item) => item.id === id);
+      return option ? option.title : id;
+    };
+    return {
+      step: state.step,
+      result: state.result,
+      answers: {
+        product: state.answers.product,
+        scale: state.answers.scale,
+        features: state.answers.features.slice(),
+        design: state.answers.design,
+        timeline: state.answers.timeline,
+      },
+      labels: {
+        product: labelOf('product', state.answers.product),
+        scale: labelOf('scale', state.answers.scale),
+        features: state.answers.features.map((id) => labelOf('features', id)),
+        design: labelOf('design', state.answers.design),
+        timeline: labelOf('timeline', state.answers.timeline),
+      },
+      price_min: estimate ? estimate.min : null,
+      price_max: estimate ? estimate.max : null,
+      ...extra,
+    };
+  };
+
   const defaultAnswers = () => ({
     product: null,
     scale: null,
@@ -138,6 +193,10 @@ window.CONTACT_ENDPOINT = window.CONTACT_ENDPOINT || '';
     }
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let advanceTimer = 0;
+    let formStarted = false;
+    let fieldsTimer = 0;
+
+    emit('calculator_open', null, state);
 
     const saveState = () => {
       try {
@@ -197,6 +256,7 @@ window.CONTACT_ENDPOINT = window.CONTACT_ENDPOINT || '';
     const renderStep = () => {
       const step = steps[state.step];
       const percent = Math.round((state.step / steps.length) * 100);
+      emit('calculator_step_view', { step: step.key, title: step.eyebrow }, state);
       shell.classList.remove('is-result');
       stage.classList.remove('is-choice-locked');
       stepLabel.textContent = `${String(state.step + 1).padStart(2, '0')} / ${String(steps.length).padStart(2, '0')}`;
@@ -279,6 +339,7 @@ window.CONTACT_ENDPOINT = window.CONTACT_ENDPOINT || '';
 
     const renderResult = () => {
       const estimate = calculateEstimate(config, state.answers);
+      emit('calculated_price_changed', { min: estimate.min, max: estimate.max }, state);
       const featureSummary = estimate.features.length
         ? estimate.features.map((item) => item.title).join(', ')
         : 'Ничего из перечисленного';
@@ -368,12 +429,36 @@ window.CONTACT_ENDPOINT = window.CONTACT_ENDPOINT || '';
       }, delay);
     };
 
+
+    /* О свободных полях заявки собираем только метаданные: заполнено или нет,
+       сколько символов и какого типа поле. Сам текст остаётся в браузере,
+       пока человек не отправит форму сам. */
+    const formFields = (form) => {
+      const fields = {};
+      form.querySelectorAll('input, textarea, select').forEach((field) => {
+        const name = field.name;
+        if (!name || field.type === 'password' || field.type === 'hidden') return;
+        if (field.type === 'checkbox') {
+          fields[name] = { type: 'checkbox', filled: field.checked };
+          return;
+        }
+        if (field.tagName === 'SELECT') {
+          fields[name] = { type: 'select', filled: Boolean(field.value), value: field.value };
+          return;
+        }
+        const value = String(field.value || '').trim();
+        fields[name] = { type: field.type || 'text', filled: value.length > 0, len: value.length };
+      });
+      return fields;
+    };
+
     const goForward = () => {
       const step = steps[state.step];
       if (!isStepValid(step)) return;
       if (state.step < steps.length - 1) {
         state.step += 1;
         saveState();
+        emit('calculator_next', { step: steps[state.step].key }, state);
         transitionTo(renderStep);
         return;
       }
@@ -417,6 +502,10 @@ window.CONTACT_ENDPOINT = window.CONTACT_ENDPOINT || '';
       if (option && !state.result) {
         const step = steps[state.step];
         const id = option.dataset.optionId;
+        // Отличаем первый выбор от смены решения — это разные события.
+        const previous = step.multiple
+          ? state.answers.features.includes(id)
+          : Boolean(state.answers[step.key]);
         if (step.multiple) {
           const current = new Set(state.answers.features);
           const selectedOption = findById(step.options, id);
@@ -433,6 +522,12 @@ window.CONTACT_ENDPOINT = window.CONTACT_ENDPOINT || '';
           state.answers[step.key] = id;
         }
         saveState();
+        const chosen = findById(step.options, id);
+        emit(
+          previous ? 'calculator_option_changed' : 'calculator_option_selected',
+          { step: step.key, id, label: chosen ? chosen.title : id },
+          state,
+        );
         updateSelectionUI();
         if (!step.multiple) {
           window.clearTimeout(advanceTimer);
@@ -466,6 +561,24 @@ window.CONTACT_ENDPOINT = window.CONTACT_ENDPOINT || '';
       if (event.target.closest('[data-calculator-reset]')) reset();
     });
 
+    stage.addEventListener('input', (event) => {
+      const form = event.target.closest('[data-calculator-lead-form]');
+      if (!form) return;
+      if (!formStarted) {
+        formStarted = true;
+        emit('form_started', null, state, { form_started: true, form_fields: formFields(form) });
+        return;
+      }
+      window.clearTimeout(fieldsTimer);
+      // Состояние полей обновляем не на каждую букву, а спустя паузу.
+      fieldsTimer = window.setTimeout(() => {
+        emit('form_completed', null, state, {
+          form_started: true,
+          form_fields: formFields(form),
+        });
+      }, 1500);
+    });
+
     stage.addEventListener('change', (event) => {
       const channel = event.target.closest('[data-calculator-lead-channel]');
       if (channel) updateLeadContactField(channel.form, true);
@@ -496,6 +609,12 @@ window.CONTACT_ENDPOINT = window.CONTACT_ENDPOINT || '';
         message: `${resultText(estimate)}${comment ? `\n\nКомментарий клиента: ${comment}` : ''}`,
         consent: data.get('consent') === 'on'
       };
+
+      emit('form_submitted', null, state, {
+        form_started: true,
+        form_submitted: true,
+        form_fields: formFields(form),
+      });
 
       submit.disabled = true;
       submit.textContent = 'Отправляю…';
@@ -543,6 +662,7 @@ window.CONTACT_ENDPOINT = window.CONTACT_ENDPOINT || '';
       window.clearTimeout(advanceTimer);
       state.step -= 1;
       saveState();
+      emit('calculator_back', { step: steps[state.step].key }, state);
       transitionTo(renderStep);
     });
 

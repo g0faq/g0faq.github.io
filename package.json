@@ -1,0 +1,14 @@
+{
+  "name": "g0faq-portfolio",
+  "private": true,
+  "description": "Портфолио g0_faq: статический сайт на GitHub Pages и аналитический API на Vercel Functions",
+  "engines": { "node": ">=20" },
+  "type": "commonjs",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "db:migrate": "node scripts/migrate.mjs"
+  },
+  "dependencies": {
+    "pg": "^8.13.1"
+  }
+}

@@ -29,6 +29,14 @@ await Promise.all([
   mkdir(resolve(output, 'js'), { recursive: true })
 ]);
 
+// Страница политики и трекер отдаются как есть: в общий бандл их включать
+// незачем, а без копирования они на сборке превратились бы в 404.
+await Promise.all([
+  cp(resolve(root, 'privacy.html'), resolve(output, 'privacy.html')),
+  cp(resolve(root, 'css/privacy.css'), resolve(output, 'css/privacy.css')),
+  cp(resolve(root, 'js/analytics.js'), resolve(output, 'js/analytics.js'))
+]);
+
 let html = await read('index.html');
 const [css, calculatorConfig, casesData, ...appScripts] = await Promise.all([
   read('css/main.css'),

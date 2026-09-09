@@ -4003,70 +4003,134 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
   }
 }
 
-/* ── Согласие на cookie ─────────────────────────────────────────────────────
-   Плашка снизу. Аналитика не грузится, пока человек не нажал «Принять». */
+/* ── Экран согласия на аналитику ────────────────────────────────────────────
+   Полноэкранный слой поверх сайта при первом заходе. Обе кнопки одинаково
+   доступны: «Отклонить» не спрятана и не обесцвечена — отказ должен быть
+   таким же простым действием, как согласие. */
 
-.cookie-bar {
+.consent {
   position: fixed;
-  left: 16px;
-  right: 16px;
-  bottom: 16px;
-  z-index: 90;
+  inset: 0;
+  z-index: 200;
   display: flex;
   align-items: center;
-  gap: 16px 24px;
-  flex-wrap: wrap;
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 18px 20px;
-  border: 1px solid var(--border);
-  background: rgba(13, 13, 15, 0.96);
-  backdrop-filter: blur(6px);
-  transform: translateY(12px);
+  justify-content: center;
+  padding: 24px;
+  background: rgba(5, 5, 7, 0.86);
+  backdrop-filter: blur(8px);
   opacity: 0;
-  transition: opacity 240ms ease, transform 240ms ease;
+  transition: opacity 260ms ease;
 }
 
-.cookie-bar.is-visible {
-  transform: none;
+.consent.is-visible {
   opacity: 1;
 }
 
-.cookie-bar__text {
-  flex: 1 1 320px;
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 13px;
-  line-height: 1.5;
+.consent__panel {
+  width: min(560px, 100%);
+  max-height: calc(100dvh - 48px);
+  overflow-y: auto;
+  padding: clamp(28px, 5vw, 44px);
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  transform: translateY(14px);
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.cookie-bar__actions {
+.consent.is-visible .consent__panel {
+  transform: none;
+}
+
+/* Тонкая акцентная линия сверху — та же деталь, что у секций сайта. */
+.consent__panel::before {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 2px;
+  margin-bottom: 22px;
+  background: var(--accent-orange);
+}
+
+.consent__title {
+  margin: 10px 0 18px;
+  font-size: clamp(22px, 3.4vw, 30px);
+  line-height: 1.15;
+}
+
+.consent__text {
+  margin: 0 0 18px;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.consent__list {
+  margin: 0 0 26px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.consent__list li {
   display: flex;
   gap: 10px;
+  align-items: baseline;
+}
+
+.consent__list li::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  background: var(--accent-orange);
+}
+
+.consent__actions {
+  display: flex;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
-.cookie-bar .button {
-  min-height: 42px;
-  padding: 10px 18px;
-  font-size: 11px;
+.consent__actions .button {
+  flex: 1 1 180px;
+  min-height: 52px;
 }
 
-.cookie-bar__accept {
+.consent__accept {
   border-color: var(--accent-orange);
   color: var(--accent-orange);
 }
 
+.consent__more {
+  display: inline-block;
+  margin-top: 20px;
+  color: var(--text-muted);
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.consent__more:hover {
+  color: var(--text);
+}
+
 @media (max-width: 760px) {
-  .cookie-bar {
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
-    padding: 16px;
-    gap: 12px;
+  .consent {
+    padding: 14px;
+    align-items: flex-end;
   }
 
-  .cookie-bar__actions .button {
-    flex: 1;
+  .consent__panel {
+    padding: 24px 20px 28px;
+  }
+
+  .consent__actions .button {
+    flex: 1 1 100%;
   }
 }

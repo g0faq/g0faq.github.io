@@ -1165,80 +1165,6 @@ function initCasesHint() {
   stack.addEventListener('pointerdown', dismiss, { passive: true, once: true });
 }
 
-/* ── Согласие на cookie и Яндекс.Метрика ───────────────────────────────────
-   Счётчик не загружается, пока не нажато «Принять»: до согласия на сайте нет
-   ни одного стороннего запроса. Номер счётчика вписать в METRIKA_ID — больше
-   ничего менять не нужно. */
-
-const CONSENT_KEY = 'g0faq.consent';
-const METRIKA_ID = '112416202';
-
-function loadMetrika() {
-  if (!METRIKA_ID) return;
-  if (window.ym) return;
-
-  window.ym = window.ym || function ymStub(...args) {
-    (window.ym.a = window.ym.a || []).push(args);
-  };
-  window.ym.l = Date.now();
-
-  const script = document.createElement('script');
-  script.src = 'https://mc.yandex.ru/metrika/tag.js';
-  script.async = true;
-  document.head.append(script);
-
-  // Параметры один в один из сниппета, выданного Метрикой для этого счётчика.
-  window.ym(METRIKA_ID, 'init', {
-    ssr: true,
-    webvisor: true,
-    clickmap: true,
-    ecommerce: 'dataLayer',
-    referrer: document.referrer,
-    url: location.href,
-    accurateTrackBounce: true,
-    trackLinks: true,
-  });
-}
-
-function initConsent() {
-  const bar = document.querySelector('#cookie-bar');
-  if (!bar) return;
-
-  let saved = null;
-  try {
-    saved = window.localStorage.getItem(CONSENT_KEY);
-  } catch {
-    // Приватный режим: спрашиваем каждый раз, но ничего не грузим без ответа.
-  }
-
-  if (saved === 'granted') {
-    loadMetrika();
-    return;
-  }
-
-  if (saved === 'denied') return;
-
-  bar.hidden = false;
-  window.setTimeout(() => bar.classList.add('is-visible'), 30);
-
-  bar.addEventListener('click', (event) => {
-    const button = event.target.closest('[data-cookie]');
-    if (!button) return;
-    const choice = button.dataset.cookie;
-
-    try {
-      window.localStorage.setItem(CONSENT_KEY, choice);
-    } catch {
-      /* см. выше */
-    }
-
-    bar.classList.remove('is-visible');
-    window.setTimeout(() => { bar.hidden = true; }, 260);
-
-    if (choice === 'granted') loadMetrika();
-  });
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   initSiteParticles();
   initCases();
@@ -1249,5 +1175,4 @@ document.addEventListener('DOMContentLoaded', () => {
   initContentVisuals();
   initStackVisualizer();
   initContactForm();
-  initConsent();
 });
