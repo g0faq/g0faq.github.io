@@ -8,6 +8,10 @@ const { esc } = require('./telegram');
 
 const MSK = 'Europe/Moscow';
 
+/* Сообщения идут в один чат сплошным потоком, поэтому каждое обрамляется
+   линейкой: иначе соседние уведомления читаются как одно. */
+const RULE = '═══════════════════';
+
 function time(date = new Date()) {
   return new Intl.DateTimeFormat('ru-RU', {
     hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: MSK,
@@ -68,7 +72,9 @@ function visitMessage(session) {
     : 'не определено';
 
   return [
-    session.is_new_visitor ? '👀 <b>Новый посетитель сайта</b>' : '🔁 <b>Вернулся посетитель</b>',
+    RULE,
+    session.is_new_visitor ? '👀 <b>НОВЫЙ ПОСЕТИТЕЛЬ</b>' : '🔁 <b>ВЕРНУЛСЯ ПОСЕТИТЕЛЬ</b>',
+    RULE,
     '',
     `📍 ${esc(place(session))}`,
     `📱 ${esc(device)}${session.os ? ` · ${esc(session.os)}` : ''}`,
@@ -80,13 +86,14 @@ function visitMessage(session) {
     `Visitor: #${esc(session.visitor_short)}`,
     `Session: #${esc(session.short_id)}`,
     '',
+    RULE,
     time(),
   ].join('\n');
 }
 
 /** 👤 Пачка действий за окно буферизации. */
 function activityMessage(session, pathItems, actions, seconds) {
-  const lines = [`👤 <b>#${esc(session.visitor_short)}</b>`, ''];
+  const lines = [RULE, `👤 <b>ДЕЙСТВИЯ · #${esc(session.visitor_short)}</b>`, RULE, ''];
 
   if (pathItems.length) {
     lines.push('<b>Путь:</b>');
@@ -101,6 +108,7 @@ function activityMessage(session, pathItems, actions, seconds) {
   }
 
   lines.push(`⏱ На сайте: ${shortDuration(seconds)}`);
+  lines.push(RULE);
   return lines.join('\n');
 }
 
@@ -131,7 +139,9 @@ function calculatorLines(calc) {
 /** 🏁 Итог сессии. */
 function summaryMessage(session, calc, pathItems) {
   const lines = [
-    '🏁 <b>Посетитель ушёл</b>',
+    RULE,
+    '🏁 <b>ПОСЕТИТЕЛЬ УШЁЛ</b>',
+    RULE,
     '',
     `Visitor: #${esc(session.visitor_short)}`,
     '',
@@ -153,13 +163,13 @@ function summaryMessage(session, calc, pathItems) {
     lines.push(calc.form_submitted ? '✅ Заявка отправлена' : '❌ Форму не отправил');
   }
 
-  lines.push('', time());
+  lines.push('', RULE, time());
   return lines.join('\n');
 }
 
 /** Немедленные уведомления о важных шагах. */
 function importantMessage(session, kind, calc) {
-  const head = `⚡️ <b>#${esc(session.visitor_short)}</b>`;
+  const head = `${RULE}\n⚡️ <b>#${esc(session.visitor_short)}</b>`;
   const titles = {
     calculator_open: '🧮 Открыл калькулятор',
     calculator_result: '💰 Получил расчёт стоимости',
@@ -167,10 +177,10 @@ function importantMessage(session, kind, calc) {
     form_submitted: '🎉 <b>Отправил заявку</b>',
     form_abandoned: '🚪 Ушёл, не отправив заявку',
   };
-  const lines = [head, '', titles[kind] || kind];
+  const lines = [head, RULE, '', titles[kind] || kind];
   const calcLines = calculatorLines(calc);
   if (calcLines.length) lines.push('', ...calcLines);
-  lines.push('', time());
+  lines.push('', RULE, time());
   return lines.join('\n');
 }
 
