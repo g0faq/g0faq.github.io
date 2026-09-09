@@ -157,6 +157,7 @@
       this.push('session_start');
       this.trackPage();
       this.observeSections();
+      this.observeCases();
       this.observeScroll();
       this.observeClicks();
       this.observeCalculator();
@@ -249,6 +250,53 @@
       }, { threshold: 0.4 });
 
       sections.forEach((section) => observer.observe(section));
+    },
+
+    /* Кейсы рисуются после загрузки данных, поэтому наблюдателя навешиваем
+       и на уже готовые карточки, и на те, что появятся позже. Отдельно от
+       секций: важно знать не только «дошёл до кейсов», но и какие именно
+       карточки человек листал. */
+    observeCases() {
+      const stack = document.querySelector('#cases-stack');
+      if (!stack || !('IntersectionObserver' in window)) return;
+
+      const seen = new Set();
+      const enteredAt = new Map();
+
+      const titleOf = (panel) => {
+        const heading = panel.querySelector('h3');
+        return heading ? heading.textContent.trim().slice(0, 60) : null;
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const title = titleOf(entry.target);
+          if (!title) return;
+          if (entry.isIntersecting) {
+            if (!enteredAt.has(title)) enteredAt.set(title, Date.now());
+            if (!seen.has(title)) {
+              seen.add(title);
+              this.push('case_view', { title, position: seen.size });
+            }
+          } else if (enteredAt.has(title)) {
+            const seconds = Math.round((Date.now() - enteredAt.get(title)) / 1000);
+            enteredAt.delete(title);
+            // Пролистнул мимо — не считаем просмотром.
+            if (seconds >= 2) this.push('case_view', { title, seconds });
+          }
+        });
+      }, { threshold: 0.6 });
+
+      const attach = () => {
+        stack.querySelectorAll('.case-panel').forEach((panel) => {
+          if (panel.dataset.trackView) return;
+          panel.dataset.trackView = '1';
+          observer.observe(panel);
+        });
+      };
+
+      attach();
+      new MutationObserver(attach).observe(stack, { childList: true, subtree: true });
     },
 
     observeScroll() {

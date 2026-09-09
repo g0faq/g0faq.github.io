@@ -21,6 +21,9 @@ function describe(event) {
     case 'section_view': return data.name ? `посмотрел «${data.name}»` : null;
     case 'scroll_depth': return data.depth >= 90 ? 'дочитал страницу до конца' : null;
     case 'cta_click': return data.label ? `нажал «${data.label}»` : 'нажал кнопку';
+    case 'case_view': return data.title
+      ? (data.seconds >= 5 ? `изучал кейс «${data.title}» (${data.seconds} сек)` : `посмотрел кейс «${data.title}»`)
+      : null;
     case 'case_open': return data.title ? `открыл кейс «${data.title}»` : 'открыл кейс';
     case 'contact_click': return data.channel ? `нажал контакт: ${data.channel}` : 'нажал контакт';
     case 'outbound_click': return data.host ? `ушёл по ссылке на ${data.host}` : null;

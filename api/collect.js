@@ -18,7 +18,7 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 /** Белый список типов: всё, чего здесь нет, отбрасывается. */
 const EVENT_TYPES = new Set([
   'session_start', 'page_view', 'page_leave', 'section_view', 'scroll_depth',
-  'cta_click', 'case_open', 'contact_click', 'outbound_click',
+  'cta_click', 'case_view', 'case_open', 'contact_click', 'outbound_click',
   'calculator_open', 'calculator_step_view', 'calculator_option_selected',
   'calculator_option_changed', 'calculator_back', 'calculator_next',
   'calculated_price_changed', 'form_started', 'form_completed',

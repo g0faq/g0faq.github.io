@@ -3945,6 +3945,10 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
     position: relative;
   }
 
+  .cases-hint[hidden] {
+    display: none;
+  }
+
   .cases-hint {
     position: absolute;
     left: 50%;
@@ -4007,6 +4011,13 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
    Полноэкранный слой поверх сайта при первом заходе. Обе кнопки одинаково
    доступны: «Отклонить» не спрятана и не обесцвечена — отказ должен быть
    таким же простым действием, как согласие. */
+
+/* Скрытый экран обязан исчезать полностью: без этого правила класс
+   .consent с display:flex перебивает атрибут hidden, и прозрачный слой
+   остаётся поверх страницы, перехватывая все клики. */
+.consent[hidden] {
+  display: none;
+}
 
 .consent {
   position: fixed;
