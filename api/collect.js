@@ -168,7 +168,7 @@ async function enqueue(client, { sessionId, kind, dedupeKey, text, delaySec = 0 
   await client.query(
     `INSERT INTO notifications (session_id, kind, dedupe_key, text, send_after)
      VALUES ($1, $2, $3, $4, now() + make_interval(secs => $5::int))
-     ON CONFLICT (dedupe_key) DO NOTHING`,
+     ON CONFLICT (dedupe_key) WHERE dedupe_key IS NOT NULL DO NOTHING`,
     [sessionId, kind, dedupeKey || null, text, delaySec],
   );
 }
@@ -313,7 +313,7 @@ module.exports = async function handler(req, res) {
         const reserved = await query(
           `INSERT INTO notifications (session_id, kind, dedupe_key, text, sent_at)
            VALUES ($1, 'important', $2, $3, now())
-           ON CONFLICT (dedupe_key) DO NOTHING
+           ON CONFLICT (dedupe_key) WHERE dedupe_key IS NOT NULL DO NOTHING
            RETURNING id`,
           [payload.session_id, key, kind],
         );
