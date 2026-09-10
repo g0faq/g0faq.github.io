@@ -1,0 +1,272 @@
+/* Текстовая страница политики. Отдельный файл: главная — одностраничник со
+   сложной механикой, и тянуть её разметку сюда незачем. */
+
+.doc-page {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.doc-head,
+.doc-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 28px var(--page-padding);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.doc-head { border-bottom: 1px solid var(--border); }
+.doc-foot { border-top: 1px solid var(--border); color: var(--text-muted); }
+.doc-foot a:hover, .doc-back:hover { color: var(--accent-orange); }
+
+.doc {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 48px var(--page-padding) 64px;
+}
+
+.doc h1 {
+  margin: 10px 0 20px;
+  font-size: clamp(28px, 5vw, 44px);
+  line-height: 1.1;
+}
+
+.doc-lead {
+  max-width: 620px;
+  margin-bottom: 8px;
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.doc-section {
+  padding-top: 34px;
+  margin-top: 34px;
+  border-top: 1px solid var(--border);
+}
+
+.doc-section h2 {
+  margin-bottom: 14px;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+}
+
+.doc-section p {
+  max-width: 660px;
+  margin-bottom: 14px;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.doc-section p:last-child { margin-bottom: 0; }
+.doc-section strong { color: var(--text); font-weight: 400; }
+.doc-section a { color: var(--accent-blue); text-decoration: underline; text-underline-offset: 3px; }
+.doc-section a:hover { color: var(--accent-orange); }
+
+.doc-list {
+  max-width: 660px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.doc-list li {
+  position: relative;
+  padding-left: 20px;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.doc-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  background: var(--accent-orange);
+}
+
+.doc-note p { color: var(--text-muted); font-size: 14px; }
+
+/* ── Карточки скачивания ────────────────────────────────────────────────── */
+
+.doc-download {
+  display: grid;
+  gap: 12px;
+  margin: 30px 0 6px;
+  max-width: 660px;
+}
+
+.doc-file {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.doc-file:hover {
+  border-color: var(--accent-orange);
+  background: var(--surface-2);
+}
+
+.doc-file__type {
+  flex: none;
+  padding: 6px 10px;
+  border: 1px solid var(--accent-orange);
+  color: var(--accent-orange);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.doc-file__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.doc-file__name {
+  display: block;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.doc-file__note {
+  display: block;
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.doc-file__action {
+  flex: none;
+  color: var(--text-muted);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.doc-file:hover .doc-file__action {
+  color: var(--accent-orange);
+}
+
+/* ── Нумерованный список шагов ──────────────────────────────────────────── */
+
+.doc-steps {
+  max-width: 660px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: doc-step;
+  display: grid;
+  gap: 10px;
+}
+
+.doc-steps li {
+  counter-increment: doc-step;
+  position: relative;
+  padding-left: 34px;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.doc-steps li::before {
+  content: counter(doc-step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  color: var(--accent-orange);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+}
+
+/* ── Таблица вариантов ──────────────────────────────────────────────────── */
+
+/* Таблица широкая: на узком экране она прокручивается внутри своей области,
+   а не растягивает страницу. */
+.doc-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+}
+
+.doc-table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.doc-table th,
+.doc-table td {
+  padding: 11px 14px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+}
+
+.doc-table th {
+  background: var(--surface-1);
+  color: var(--text);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.doc-table td {
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.doc-table td:first-child {
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.doc-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ── Акценты внутри страницы ────────────────────────────────────────────── */
+
+.doc-warning {
+  border-left: 2px solid var(--accent-orange);
+  padding-left: 18px;
+}
+
+.doc-cta p:last-child {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+@media (max-width: 620px) {
+  .doc-file {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .doc-file__body {
+    flex: 1 1 100%;
+    order: 3;
+  }
+}

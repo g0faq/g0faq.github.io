@@ -4108,3 +4108,12 @@ html.section-motion-ready #contacts:not(.is-assembled) .contact-form > [data-ass
     padding: 16px;
   }
 }
+
+/* Кнопка внутри ответа FAQ: отбиваем от текста, чтобы не липла к абзацу. */
+.faq-answer__actions {
+  margin-top: 16px;
+}
+
+.faq-answer__actions .button {
+  min-height: 44px;
+}

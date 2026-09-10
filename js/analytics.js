@@ -356,6 +356,13 @@
           return;
         }
 
+        // Скачивание файла — отдельный сигнал: видно, что забирают шаблон договора.
+        if (link.hasAttribute('download')) {
+          const file = href.split('/').pop() || '';
+          this.push('cta_click', { label: `скачал ${file}`, href: href.slice(0, 200) });
+          return;
+        }
+
         if (link.classList.contains('button') || link.classList.contains('header-chip')) {
           this.push('cta_click', { label: text, href: href.slice(0, 200) });
           return;

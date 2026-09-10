@@ -33,7 +33,8 @@ await Promise.all([
 // незачем, а без копирования они на сборке превратились бы в 404.
 await Promise.all([
   cp(resolve(root, 'privacy.html'), resolve(output, 'privacy.html')),
-  cp(resolve(root, 'css/privacy.css'), resolve(output, 'css/privacy.css')),
+  cp(resolve(root, 'css/doc.css'), resolve(output, 'css/doc.css')),
+  cp(resolve(root, 'contract.html'), resolve(output, 'contract.html')),
   cp(resolve(root, 'js/analytics.js'), resolve(output, 'js/analytics.js'))
 ]);
 
