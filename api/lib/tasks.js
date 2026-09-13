@@ -44,7 +44,7 @@ function describe(event) {
 
 async function sendActivity(row) {
   const session = (await query(
-    `SELECT s.*, v.short_id AS visitor_short
+    `SELECT s.*, v.short_id AS visitor_short, v.name AS visitor_name
        FROM sessions s JOIN visitors v ON v.id = s.visitor_id
       WHERE s.id = $1`, [row.session_id],
   )).rows[0];
@@ -75,7 +75,7 @@ async function sendActivity(row) {
   const pathItems = Array.isArray(session.path) ? session.path : [];
   const seconds = (Date.now() - new Date(session.started_at).getTime()) / 1000;
   const text = format.activityMessage(session, pathItems.slice(-6), actions.slice(-12), seconds);
-  const result = await telegram.send(text);
+  const result = await telegram.send(text, { replyMarkup: format.nameKeyboard(session) });
   return result.ok || result.skipped === 'disabled';
 }
 
@@ -85,7 +85,7 @@ async function sendSummary(session) {
   )).rows[0] || null;
   const pathItems = Array.isArray(session.path) ? session.path : [];
   const text = format.summaryMessage(session, calc, pathItems.slice(-10));
-  const result = await telegram.send(text);
+  const result = await telegram.send(text, { replyMarkup: format.nameKeyboard(session) });
   return result.ok || result.skipped === 'disabled';
 }
 
@@ -124,7 +124,15 @@ async function runMaintenance({ force = false, minIntervalSec = 30 } = {}) {
       }
       ok = result;
     } else if (row.text) {
-      ok = (await telegram.send(row.text)).ok;
+      // Кнопка «Назвать» нужна и под уведомлением о заходе из очереди.
+      const owner = row.session_id
+        ? (await query(
+          `SELECT s.visitor_id, v.name AS visitor_name
+             FROM sessions s JOIN visitors v ON v.id = s.visitor_id WHERE s.id = $1`,
+          [row.session_id],
+        )).rows[0]
+        : null;
+      ok = (await telegram.send(row.text, { replyMarkup: owner ? format.nameKeyboard(owner) : null })).ok;
     }
 
     if (ok) {
@@ -142,7 +150,7 @@ async function runMaintenance({ force = false, minIntervalSec = 30 } = {}) {
   }
 
   const stale = (await query(
-    `SELECT s.*, v.short_id AS visitor_short
+    `SELECT s.*, v.short_id AS visitor_short, v.name AS visitor_name
        FROM sessions s JOIN visitors v ON v.id = s.visitor_id
       WHERE s.summary_sent = false
         AND s.is_bot = false

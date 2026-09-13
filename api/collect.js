@@ -276,8 +276,12 @@ module.exports = async function handler(req, res) {
 
       // Уведомление о заходе — один раз на сессию.
       if (created && notify) {
-        const visitor = await client.query('SELECT short_id FROM visitors WHERE id = $1', [payload.visitor_id]);
-        const view = { ...session, visitor_short: visitor.rows[0]?.short_id || '????' };
+        const visitor = await client.query('SELECT short_id, name FROM visitors WHERE id = $1', [payload.visitor_id]);
+        const view = {
+          ...session,
+          visitor_short: visitor.rows[0]?.short_id || '????',
+          visitor_name: visitor.rows[0]?.name || null,
+        };
         await enqueue(client, {
           sessionId: session.id,
           kind: 'visit',
@@ -305,8 +309,13 @@ module.exports = async function handler(req, res) {
     // должен держать открытым соединение с базой.
     if (outcome.notify && outcome.important.length) {
       const calc = await calculatorState(payload.session_id);
-      const visitor = await query('SELECT short_id FROM visitors WHERE id = $1', [payload.visitor_id]);
-      const view = { ...outcome.session, visitor_short: visitor.rows[0]?.short_id || '????' };
+      const visitor = await query('SELECT short_id, name FROM visitors WHERE id = $1', [payload.visitor_id]);
+      const view = {
+        ...outcome.session,
+        visitor_id: payload.visitor_id,
+        visitor_short: visitor.rows[0]?.short_id || '????',
+        visitor_name: visitor.rows[0]?.name || null,
+      };
       const unique = [...new Set(outcome.important)];
       for (const kind of unique) {
         const key = `important:${payload.session_id}:${kind}`;
@@ -319,7 +328,7 @@ module.exports = async function handler(req, res) {
         );
         if (!reserved.rows.length) continue;
         const mapped = kind === 'calculated_price_changed' ? 'calculator_result' : kind;
-        await telegram.send(format.importantMessage(view, mapped, calc));
+        await telegram.send(format.importantMessage(view, mapped, calc), { replyMarkup: format.nameKeyboard(view) });
       }
     }
   } catch (error) {

@@ -64,6 +64,23 @@ const place = (session) => {
   return 'не определено';
 };
 
+/** Подпись посетителя: «Ольга (#ECB7)», если владелец дал имя, иначе «#ECB7». */
+function who(session) {
+  const tag = `#${esc(session.visitor_short || '????')}`;
+  return session.visitor_name ? `${esc(session.visitor_name)} (${tag})` : tag;
+}
+
+/** Кнопка под сообщением: назвать посетителя или сменить имя. */
+function nameKeyboard(session) {
+  if (!session.visitor_id) return null;
+  return {
+    inline_keyboard: [[{
+      text: session.visitor_name ? '✏️ Переименовать' : '✏️ Назвать',
+      callback_data: `nm:${session.visitor_id}`,
+    }]],
+  };
+}
+
 /** 👀 Новый посетитель. */
 function visitMessage(session) {
   const device = [session.device_model, session.browser].filter(Boolean).join(' / ') || 'не определено';
@@ -73,7 +90,9 @@ function visitMessage(session) {
 
   return [
     RULE,
-    session.is_new_visitor ? '👀 <b>НОВЫЙ ПОСЕТИТЕЛЬ</b>' : '🔁 <b>ВЕРНУЛСЯ ПОСЕТИТЕЛЬ</b>',
+    session.visitor_name
+      ? `🔁 <b>ВЕРНУЛСЯ: ${esc(session.visitor_name).toUpperCase()}</b>`
+      : session.is_new_visitor ? '👀 <b>НОВЫЙ ПОСЕТИТЕЛЬ</b>' : '🔁 <b>ВЕРНУЛСЯ ПОСЕТИТЕЛЬ</b>',
     RULE,
     '',
     `📍 ${esc(place(session))}`,
@@ -83,7 +102,7 @@ function visitMessage(session) {
     `📺 Экран: ${esc(screen)}`,
     `🌐 Язык: ${esc(session.language || 'не определено')}`,
     '',
-    `Visitor: #${esc(session.visitor_short)}`,
+    `Visitor: ${who(session)}`,
     `Session: #${esc(session.short_id)}`,
     '',
     RULE,
@@ -93,7 +112,7 @@ function visitMessage(session) {
 
 /** 👤 Пачка действий за окно буферизации. */
 function activityMessage(session, pathItems, actions, seconds) {
-  const lines = [RULE, `👤 <b>ДЕЙСТВИЯ · #${esc(session.visitor_short)}</b>`, RULE, ''];
+  const lines = [RULE, `👤 <b>ДЕЙСТВИЯ · ${who(session)}</b>`, RULE, ''];
 
   if (pathItems.length) {
     lines.push('<b>Путь:</b>');
@@ -143,7 +162,7 @@ function summaryMessage(session, calc, pathItems) {
     '🏁 <b>ПОСЕТИТЕЛЬ УШЁЛ</b>',
     RULE,
     '',
-    `Visitor: #${esc(session.visitor_short)}`,
+    `Visitor: ${who(session)}`,
     '',
     `⏱ ${duration(session.duration_sec)}`,
     `📄 Страниц: ${session.pages_count || 1}`,
@@ -169,7 +188,7 @@ function summaryMessage(session, calc, pathItems) {
 
 /** Немедленные уведомления о важных шагах. */
 function importantMessage(session, kind, calc) {
-  const head = `${RULE}\n⚡️ <b>#${esc(session.visitor_short)}</b>`;
+  const head = `${RULE}\n⚡️ <b>${who(session)}</b>`;
   const titles = {
     calculator_open: '🧮 Открыл калькулятор',
     calculator_result: '💰 Получил расчёт стоимости',
@@ -185,6 +204,8 @@ function importantMessage(session, kind, calc) {
 }
 
 module.exports = {
+  who,
+  nameKeyboard,
   visitMessage,
   activityMessage,
   summaryMessage,

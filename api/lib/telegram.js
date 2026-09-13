@@ -24,7 +24,7 @@ function esc(value) {
  * Отправка сообщения. Никогда не бросает исключение наружу: падение Telegram
  * не должно ломать приём событий.
  */
-async function send(text) {
+async function send(text, options = {}) {
   if (!config.telegramEnabled) {
     log('telegram отключён, сообщение не отправлено:\n' + text);
     return { ok: false, skipped: 'disabled' };
@@ -41,10 +41,11 @@ async function send(text) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          chat_id: config.chatId,
+          chat_id: options.chatId || config.chatId,
           text: clamp(text),
           parse_mode: 'HTML',
           disable_web_page_preview: true,
+          ...(options.replyMarkup ? { reply_markup: options.replyMarkup } : {}),
         }),
         signal: AbortSignal.timeout(8000),
       },
@@ -58,4 +59,21 @@ async function send(text) {
   }
 }
 
-module.exports = { send, esc, clamp };
+/** Произвольный метод Bot API: ответы на кнопки, установка вебхука, команды. */
+async function api(method, body) {
+  if (!config.botToken) return { ok: false, description: 'нет TELEGRAM_BOT_TOKEN' };
+  try {
+    const response = await fetch(`https://api.telegram.org/bot${config.botToken}/${method}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body || {}),
+      signal: AbortSignal.timeout(8000),
+    });
+    return await response.json().catch(() => ({ ok: false }));
+  } catch (error) {
+    log(`telegram ${method} недоступен:`, error.message);
+    return { ok: false, description: error.message };
+  }
+}
+
+module.exports = { send, api, esc, clamp };

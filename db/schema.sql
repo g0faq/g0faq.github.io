@@ -137,3 +137,17 @@ CREATE TABLE IF NOT EXISTS maintenance_log (
 );
 
 INSERT INTO maintenance_log (id) VALUES (1) ON CONFLICT (id) DO NOTHING;
+
+-- Имена посетителей, которые владелец сайта задаёт вручную через бота
+-- («#ECB7 — это Ольга»). Автоматически ничего не определяется: имя появляется
+-- только если владелец сам узнал человека и подписал его.
+ALTER TABLE visitors ADD COLUMN IF NOT EXISTS name TEXT;
+ALTER TABLE visitors ADD COLUMN IF NOT EXISTS named_at TIMESTAMPTZ;
+
+-- Ожидание ответа в боте: после нажатия «Назвать» следующее сообщение
+-- владельца считается именем для этого посетителя.
+CREATE TABLE IF NOT EXISTS bot_pending (
+  chat_id    BIGINT PRIMARY KEY,
+  visitor_id UUID NOT NULL REFERENCES visitors(id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
