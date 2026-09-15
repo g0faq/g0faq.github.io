@@ -12,14 +12,20 @@ const { log } = require('./config');
 
 const API_URL = 'https://api.openai.com/v1/chat/completions';
 
+/* Две модели: быстрая и дешёвая — на каждый вопрос опроса и подбор кейсов,
+   умнее — на черновик ТЗ, который собирается в фоне и где скорость не важна. */
 const settings = () => ({
   key: process.env.OPENAI_API_KEY || '',
-  model: process.env.OPENAI_MODEL || 'gpt-5-mini',
+  model: process.env.OPENAI_MODEL || 'gpt-5.6-luna',
+  draftModel: process.env.OPENAI_MODEL_DRAFT || 'gpt-5.6-terra',
 });
 
 const isConfigured = () => Boolean(settings().key);
 
-const supportsReasoning = (model) => /^(gpt-5|o\d)/.test(model);
+const supportsReasoning = (model) => /^(gpt-5|gpt-6|o\d)/.test(model);
+
+/* У моделей новее gpt-5 нет уровня minimal — самый быстрый там none. */
+const effortFor = (model, effort) => (effort === 'minimal' && /^gpt-(5\.\d|6)/.test(model) ? 'none' : effort);
 
 class OpenAIError extends Error {
   constructor(message, status) {
@@ -38,8 +44,9 @@ class OpenAIError extends Error {
  * @param {number} [p.maxTokens]
  * @param {number} [p.timeoutMs]
  */
-async function structured({ system, user, name, schema, effort = 'low', maxTokens = 4000, timeoutMs = 60000 }) {
-  const { key, model } = settings();
+async function structured({ system, user, name, schema, effort = 'low', maxTokens = 4000, timeoutMs = 60000, quality = 'fast' }) {
+  const { key, model: fastModel, draftModel } = settings();
+  const model = quality === 'draft' ? draftModel : fastModel;
   if (!key) throw new OpenAIError('OPENAI_API_KEY не задан', 0);
 
   const body = {
@@ -54,7 +61,7 @@ async function structured({ system, user, name, schema, effort = 'low', maxToken
     },
     max_completion_tokens: maxTokens,
   };
-  if (supportsReasoning(model)) body.reasoning_effort = effort;
+  if (supportsReasoning(model)) body.reasoning_effort = effortFor(model, effort);
 
   const call = async (payload) => {
     const response = await fetch(API_URL, {

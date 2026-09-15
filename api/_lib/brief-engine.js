@@ -457,7 +457,8 @@ async function buildDraft(brief) {
       ].filter(Boolean).join('\n\n'),
       name: 'brief_draft',
       schema: DRAFT_SCHEMA,
-      effort: 'low',
+      quality: 'draft',
+      effort: 'medium',
       maxTokens: 9000,
       timeoutMs: 120000,
     });
