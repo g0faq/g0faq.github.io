@@ -109,6 +109,10 @@ function buildReport(brief) {
       ['Ответов', String(answered.length)],
     ];
     if (brief.draft?.complexity) meta.push(['Сложность', COMPLEXITY[brief.draft.complexity] || brief.draft.complexity]);
+    if (brief.estimate?.min) {
+      const money = (value) => new Intl.NumberFormat('ru-RU').format(value);
+      meta.push(['Оценка', `${money(brief.estimate.min)}–${money(brief.estimate.max)} ₽ (примерно)`]);
+    }
 
     const metaTop = doc.y;
     const rowHeight = 19;
@@ -163,6 +167,22 @@ function buildReport(brief) {
       doc.moveDown(0.25);
       doc.moveTo(left, doc.y).lineTo(left + width, doc.y).lineWidth(0.5).strokeColor(COLOR.line).stroke();
     });
+
+    /* ── Основа оценки ── */
+    if (brief.estimate?.basis) {
+      const b = brief.estimate.basis;
+      heading('Как посчитана оценка для клиента');
+      doc.fillColor(COLOR.muted).font('regular').fontSize(9)
+        .text('Посчитано по ценам калькулятора на сайте, показана нижняя часть вилки. Клиенту сказано, что финальная стоимость уточняется у вас.', { width });
+      label('Разметка задачи');
+      bullets([
+        `Тип: ${b.product}`,
+        `Масштаб: ${b.scale}`,
+        `Функции: ${b.features && b.features.length ? b.features.join(', ') : 'без дополнительных'}`,
+        `Дизайн: ${b.design}`,
+        `Сроки: ${b.timeline}`,
+      ]);
+    }
 
     /* ── Кейсы ── */
     if (Array.isArray(brief.cases) && brief.cases.length) {

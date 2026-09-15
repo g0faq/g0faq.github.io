@@ -17,7 +17,7 @@ const reporter = require('./_lib/brief-report');
  *   POST { action: 'complete', token, contact, consent }
  *
  * Клиенту никогда не возвращаются черновик ТЗ и заметки владельца — только
- * текущий вопрос, прогресс и в конце подобранные кейсы. */
+ * текущий вопрос, прогресс и в конце подобранные кейсы с примерной стоимостью. */
 
 const PUBLIC_TTL_DAYS = 7;
 const OWNER_TTL_DAYS = Number(process.env.BRIEF_LINK_TTL_DAYS || 30);
@@ -70,7 +70,10 @@ function clientState(brief, extra = {}) {
   };
 
   if (brief.status === 'deleted') return { ...base, status: 'deleted' };
-  if (brief.status === 'completed') return { ...base, status: 'completed', cases: brief.cases || [] };
+  if (brief.status === 'completed') {
+    const estimate = brief.estimate ? { min: brief.estimate.min, max: brief.estimate.max } : null;
+    return { ...base, status: 'completed', cases: brief.cases || [], estimate };
+  }
   if (isExpired(brief)) return { ...base, status: 'expired' };
 
   const steps = brief.steps || [];
@@ -346,13 +349,13 @@ async function actionComplete(req, res, body) {
   if (locked.state) return res.status(200).json(locked.state);
 
   const { brief } = locked;
-  const cases = await engine.matchCases(brief.steps, brief.mode === 'owner' ? brief.title || '' : '');
+  const { cases, estimate } = await engine.finalizeForClient(brief.steps, brief.mode === 'owner' ? brief.title || '' : '');
 
   const updated = (await query(
     `UPDATE briefs SET status = 'completed', completed_at = now(), last_activity_at = now(),
-       client_name = $2, client_contact_channel = $3, client_contact = $4, cases = $5
+       client_name = $2, client_contact_channel = $3, client_contact = $4, cases = $5, estimate = $6
       WHERE id = $1 AND status = 'active' RETURNING *`,
-    [brief.id, name || null, value ? channel : null, value || null, JSON.stringify(cases)],
+    [brief.id, name || null, value ? channel : null, value || null, JSON.stringify(cases), estimate ? JSON.stringify(estimate) : null],
   )).rows[0];
 
   if (!updated) {

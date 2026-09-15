@@ -206,3 +206,6 @@ ALTER TABLE bot_pending ADD COLUMN IF NOT EXISTS kind TEXT NOT NULL DEFAULT 'nam
 
 -- Все вопросы отвечены, осталось оставить контакты.
 ALTER TABLE briefs ADD COLUMN IF NOT EXISTS awaiting_contact BOOLEAN NOT NULL DEFAULT false;
+
+-- Примерная стоимость, показанная клиенту после опроса.
+ALTER TABLE briefs ADD COLUMN IF NOT EXISTS estimate JSONB;

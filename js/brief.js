@@ -591,11 +591,21 @@
         h('span', { class: 'brief-case__link', text: external ? 'Открыть сайт ↗' : 'Смотреть демо →' })));
     });
 
+    const money = (value) => new Intl.NumberFormat('ru-RU').format(value);
+    const estimate = view.estimate && view.estimate.min ? view.estimate : null;
+
     mount(h('section', { class: 'brief-screen' },
       h('div', { class: 'brief-card' },
         h('div', { class: 'brief-done__mark', 'aria-hidden': 'true', text: '✓' }),
         h('h1', { class: 'brief-title', text: greeting, tabindex: '-1' }),
         h('p', { class: 'brief-lead', text: 'Ответы уже у меня. Я изучу задачу и подготовлю техническое задание.' }),
+        estimate ? h('div', { class: 'brief-estimate' },
+          h('p', { class: 'brief-estimate__label', text: 'Примерная стоимость реализации' }),
+          h('p', { class: 'brief-estimate__value' },
+            h('span', { class: 'brief-estimate__from', text: 'от ' }),
+            `${money(estimate.min)} до ${money(estimate.max)} ₽`),
+          h('p', { class: 'brief-estimate__note', text: 'Это предварительная оценка по вашим ответам. Финальная стоимость уточняется у исполнителя после обсуждения задачи и зависит от деталей ТЗ.' }),
+        ) : null,
         h('div', { class: 'brief-callout' },
           h('h2', { text: 'Чтобы получить ТЗ, свяжитесь с исполнителем' }),
           h('p', { text: 'ТЗ я отправляю лично — после короткого обсуждения, чтобы учесть всё, что не уместилось в опрос. Напишите мне, и договоримся о деталях.' }),

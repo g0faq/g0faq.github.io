@@ -48,6 +48,9 @@ async function sendReport(briefId) {
       `👤 ${esc(brief.client_name || 'имя не указано')}`,
       brief.client_contact ? `📨 ${esc(brief.client_contact_channel || 'контакт')}: ${esc(brief.client_contact)}` : '📨 контакт не оставлен',
       `✍️ Ответов: ${answered}${draft?.complexity ? ` · сложность ${esc(draft.complexity)}` : ''}`,
+      brief.estimate?.min
+        ? `💰 Клиенту показано: ${new Intl.NumberFormat('ru-RU').format(brief.estimate.min)}–${new Intl.NumberFormat('ru-RU').format(brief.estimate.max)} ₽`
+        : '',
       draft ? '' : '\n⚠️ Черновик ТЗ не собран — ИИ был недоступен, в PDF только ответы.',
     ].filter((line) => line !== '').join('\n');
 

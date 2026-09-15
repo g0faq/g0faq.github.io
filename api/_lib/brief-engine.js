@@ -1,6 +1,7 @@
 'use strict';
 
 const openai = require('./openai');
+const pricing = require('./pricing');
 const { log } = require('./config');
 const CASES = require('../../data/cases.json');
 
@@ -146,8 +147,9 @@ const PLAN_SCHEMA = {
 const CASES_SCHEMA = {
   type: 'object',
   additionalProperties: false,
-  required: ['matches'],
+  required: ['matches', 'selection'],
   properties: {
+    selection: pricing.selectionSchema(),
     matches: {
       type: 'array',
       items: {
@@ -343,30 +345,33 @@ async function nextAdaptive(steps, previousProgress = 0) {
   };
 }
 
-/** Похожие кейсы для клиента: ИИ с объяснением, иначе — по совпадению слов. */
-async function matchCases(steps, context = '') {
+/** Итог для клиента: похожие кейсы и примерная стоимость. */
+async function finalizeForClient(steps, context = '') {
   const catalog = CASES.map((item) => (
     `id: ${item.id}\nназвание: ${item.title}\nкатегория: ${item.category}\nописание: ${item.description}\nстек: ${item.stack.join(', ')}`
   )).join('\n\n');
 
   let matches = [];
+  let selection = null;
   if (openai.isConfigured()) {
     try {
       const result = await openai.structured({
         system: [
-          'Ты подбираешь из портфолио разработчика проекты, похожие на задачу клиента.',
-          'Выбери от 1 до 3 наиболее близких проектов по сути задачи, типу продукта или функциям. Если прямо похожих нет — выбери технически ближайшие.',
-          'reason — одно предложение, обращённое к клиенту: чем проект похож на его задачу. Не обещай результатов и цен.',
+          'Ты помогаешь частному разработчику подвести итог опроса клиента. Две задачи.',
+          '1) matches: выбери из портфолио от 1 до 3 проектов, наиболее близких к задаче по сути, типу продукта или функциям. Если прямо похожих нет — технически ближайшие. reason — одно предложение клиенту: чем проект похож на его задачу. Не обещай результатов и не называй цен.',
+          '2) selection: разложи задачу клиента по пунктам калькулятора стоимости. Выбирай только то, что клиент действительно назвал или без чего задача не работает; не добавляй функции «на всякий случай». Если масштаб неясен — small, если сроки не названы — standard, если про дизайн ничего — base.',
+          `Пункты калькулятора:\n${pricing.catalogForPrompt()}`,
           SAFETY,
         ].join('\n'),
         user: `Портфолио:\n${catalog}\n\nЗадача клиента:\n<<<\n${context ? `${clipMultiline(context, 1500)}\n\n` : ''}${transcript(steps)}\n>>>`,
-        name: 'brief_cases',
+        name: 'brief_result',
         schema: CASES_SCHEMA,
         effort: 'minimal',
-        maxTokens: 800,
-        timeoutMs: 25000,
+        maxTokens: 1200,
+        timeoutMs: 30000,
       });
       matches = result.matches;
+      selection = result.selection;
     } catch (error) {
       log('подбор кейсов: ИИ недоступен, подбираю по словам —', error.message);
     }
@@ -402,9 +407,17 @@ async function matchCases(steps, context = '') {
     }
   }
 
+  // Стоимость считает код по ценам калькулятора, модель только размечает задачу.
+  let estimate = null;
+  try {
+    estimate = pricing.clientEstimate(selection || pricing.guessSelection(steps, context));
+  } catch (error) {
+    log('оценка стоимости не рассчитана:', error.message);
+  }
+
   const byId = new Map(CASES.map((item) => [item.id, item]));
   const seen = new Set();
-  return matches
+  const cases = matches
     .filter((match) => byId.has(match.id) && !seen.has(match.id) && seen.add(match.id))
     .slice(0, 3)
     .map((match) => {
@@ -420,6 +433,8 @@ async function matchCases(steps, context = '') {
         reason: clip(match.reason, 240),
       };
     });
+
+  return { cases, estimate };
 }
 
 /** Черновик ТЗ — только для владельца. null, если ИИ недоступен. */
@@ -460,6 +475,6 @@ module.exports = {
   planForOwner,
   nextFromPlan,
   nextAdaptive,
-  matchCases,
+  finalizeForClient,
   buildDraft,
 };
