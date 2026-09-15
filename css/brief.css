@@ -873,3 +873,23 @@ textarea.brief-field {
     transition: none;
   }
 }
+
+.brief-note {
+  margin: 18px 0 0;
+}
+
+.brief-note__label {
+  display: block;
+  margin: 0 0 8px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.brief-note__label span {
+  color: var(--text-muted);
+}
+
+.brief-note__field {
+  min-height: 64px;
+  resize: vertical;
+}

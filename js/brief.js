@@ -267,6 +267,7 @@
     const body = h('div', {});
     let otherInput = null;
     let textInput = null;
+    let noteInput = null;
 
     const valid = () => {
       if (choice) return selected.size > 0 || (otherActive && otherInput && otherInput.value.trim().length > 0);
@@ -346,6 +347,15 @@
       }
 
       if (q.type === 'multi') body.append(h('p', { class: 'brief-muted', text: 'Можно выбрать несколько вариантов.' }));
+
+      noteInput = h('textarea', {
+        class: 'brief-field brief-note__field', maxlength: '1000', rows: '2', id: `brief-note-${view.index}`,
+        placeholder: 'Поясните выбор или добавьте детали — это поможет точнее составить ТЗ',
+      });
+      noteInput.value = prefill?.note || '';
+      body.append(h('div', { class: 'brief-note' },
+        h('label', { class: 'brief-note__label', for: noteInput.id }, 'Уточнить ', h('span', { text: '— необязательно' })),
+        noteInput));
       sync();
 
       // Цифры 1–9 — быстрый выбор, если фокус не в поле ввода.
@@ -394,7 +404,7 @@
 
     const collect = (skipped) => {
       if (skipped) return { skipped: true };
-      if (choice) return { choices: [...selected], other: otherActive && otherInput ? otherInput.value.trim() : '' };
+      if (choice) return { choices: [...selected], other: otherActive && otherInput ? otherInput.value.trim() : '', note: noteInput ? noteInput.value.trim() : '' };
       return { text: textInput.value.trim() };
     };
 

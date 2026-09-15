@@ -23,6 +23,7 @@ const LIMITS = {
   optionLen: 80,
   answerText: 3000,
   otherText: 300,
+  noteText: 1000,
   contextLen: 4000,
 };
 
@@ -95,7 +96,9 @@ function normalizeAnswer(question, raw) {
     const unique = [...new Set(choices)];
     if (question.type === 'single' && unique.length > 1) return null;
     if (!unique.length && !other) return null;
-    return { skipped: false, choices: unique, other, text: '' };
+    // Пояснение к выбору — необязательное свободное поле «Уточнить».
+    const note = clipMultiline(raw?.note, LIMITS.noteText);
+    return { skipped: false, choices: unique, other, text: '', note };
   }
 
   const text = clipMultiline(raw?.text, LIMITS.answerText);
@@ -110,6 +113,7 @@ function answerText(answer) {
   const parts = [...answer.choices];
   if (answer.other) parts.push(`свой вариант: ${answer.other}`);
   if (answer.text) parts.push(answer.text);
+  if (answer.note) parts.push(`уточнение: ${answer.note}`);
   return parts.join('; ') || '—';
 }
 
