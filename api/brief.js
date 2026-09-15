@@ -21,7 +21,7 @@ const reporter = require('./_lib/brief-report');
 
 const PUBLIC_TTL_DAYS = 7;
 const OWNER_TTL_DAYS = Number(process.env.BRIEF_LINK_TTL_DAYS || 30);
-const MAX_AI_CALLS = 32;
+const MAX_AI_CALLS = 50;
 const IP_DAILY = Number(process.env.BRIEF_IP_DAILY_LIMIT || 6);
 const GLOBAL_DAILY = Number(process.env.BRIEF_DAILY_LIMIT || 80);
 const TOKEN_RE = /^[A-Za-z0-9_-]{20,64}$/;

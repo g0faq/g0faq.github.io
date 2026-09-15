@@ -134,21 +134,44 @@ function buildReport(brief) {
       label('Суть проекта'); paragraph(d.summary);
       label('Цели'); bullets(d.goals);
       label('Аудитория'); paragraph(d.audience);
-      label('Пользовательские сценарии'); bullets(d.user_scenarios);
-      label('Обязательно в первой версии'); bullets(d.scope_must);
-      label('Желательно'); bullets(d.scope_should);
-      label('Можно отложить'); bullets(d.scope_later);
-      label('Страницы и экраны'); bullets(d.pages_screens);
-      label('Роли'); bullets(d.roles);
+
+      heading('Роли и права');
+      (d.roles || []).forEach((role) => { label(role.name); bullets(role.permissions); });
+
+      heading('Пользовательские сценарии');
+      bullets(d.user_scenarios);
+
+      heading('Функциональные требования');
+      (d.modules || []).forEach((module) => { label(module.name); bullets(module.requirements); });
+
+      heading('Страницы и экраны');
+      bullets(d.pages_screens);
+
+      heading('Интеграции и уведомления');
       label('Интеграции'); bullets(d.integrations);
+      label('Уведомления'); bullets(d.notifications);
+
+      heading('Контент и дизайн');
       label('Контент'); paragraph(d.content);
       label('Дизайн'); paragraph(d.design);
-      label('Технические заметки'); bullets(d.technical_notes);
+
+      heading('Нефункциональные требования');
+      bullets(d.non_functional);
+
+      heading('Этапы работ');
+      bullets((d.stages || []).map((stage) => `${stage.name} — ${stage.result}`));
+
+      heading('Критерии приёмки');
+      bullets(d.acceptance_criteria);
+
+      heading('Принятые решения');
+      bullets(d.assumptions);
+
+      heading('Сроки, бюджет, риски');
       label('Сроки'); paragraph(d.timeline);
       label('Бюджет'); paragraph(d.budget);
+      label('Не входит в первую версию'); bullets(d.scope_later);
       label('Риски'); bullets(d.risks);
-      label('Уточнить до оценки'); bullets(d.open_questions);
-      label('Следующие шаги'); bullets(d.next_steps);
     } else {
       heading('Черновик технического задания');
       paragraph('Черновик не сформирован: ИИ был недоступен в момент завершения опроса. Ниже — все ответы клиента без обработки.');

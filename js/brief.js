@@ -208,7 +208,7 @@
         class: 'brief-lead',
         text: owner
           ? (view.intro || 'Несколько вопросов о вашем проекте — ответы помогут точно подготовить техническое задание.')
-          : 'Ответьте на вопросы о проекте — каждый следующий подстраивается под ваши ответы. Займёт 5–7 минут, разбираться в технических терминах не нужно.',
+          : 'Ответьте на вопросы о проекте — каждый следующий подстраивается под ваши ответы. Сначала опишете идею своими словами, дальше — уточняющие вопросы. Займёт 10–15 минут, разбираться в технических терминах не нужно.',
       }),
       resumeToken ? h('div', { class: 'brief-resume' },
         h('span', { text: 'У вас есть незавершённый опрос.' }),
@@ -359,14 +359,14 @@
       textInput = h(long ? 'textarea' : 'input', {
         class: 'brief-field',
         type: long ? null : 'text',
-        maxlength: '1500',
+        maxlength: '3000',
         placeholder: q.placeholder || (long ? 'Напишите своими словами' : 'Ваш ответ'),
         'aria-label': q.title,
-        rows: long ? '6' : null,
+        rows: long ? (q.required ? '9' : '6') : null,
       });
       textInput.value = prefill?.text || '';
-      const counter = h('span', { text: `${textInput.value.length} / 1500` });
-      textInput.addEventListener('input', () => { counter.textContent = `${textInput.value.length} / 1500`; refresh(); });
+      const counter = h('span', { text: `${textInput.value.length} / 3000` });
+      textInput.addEventListener('input', () => { counter.textContent = `${textInput.value.length} / 3000`; refresh(); });
       textInput.addEventListener('keydown', (event) => {
         const submit = long ? (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) : event.key === 'Enter';
         if (submit && valid()) { event.preventDefault(); next.click(); }
@@ -376,7 +376,8 @@
       state.keyHandler = null;
     }
 
-    const skip = h('button', { class: 'brief-link', type: 'button', text: 'Затрудняюсь ответить' });
+    // Описание идеи обязательно — без него уточнять нечего.
+    const skip = q.required ? null : h('button', { class: 'brief-link', type: 'button', text: 'Затрудняюсь ответить' });
     const back = view.canBack ? h('button', { class: 'button', type: 'button', text: '← Назад' }) : null;
 
     const card = h('section', { class: 'brief-screen brief-card brief-question' },
@@ -417,7 +418,7 @@
     };
 
     next.addEventListener('click', () => submit(false));
-    skip.addEventListener('click', () => submit(true));
+    skip?.addEventListener('click', () => submit(true));
     back?.addEventListener('click', async () => {
       if (state.busy) return;
       if (isPreview) { previewAdvance(-1); return; }
