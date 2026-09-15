@@ -13,7 +13,7 @@ const { esc } = telegram;
  * переживает сбои: если PDF не ушёл, фоновое обслуживание повторит попытку. */
 
 const SITE = process.env.SITE_URL || 'https://g0faq.ru';
-const linkFor = (token) => `${SITE}/brief.html?b=${encodeURIComponent(token)}`;
+const linkFor = (token) => `${SITE}/brief/?b=${encodeURIComponent(token)}`;
 
 const MAX_REPORT_ATTEMPTS = 4;
 const ABANDON_AFTER_MIN = 40;

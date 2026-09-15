@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Нет технического задания? Опишите идею своими словами и ответьте на уточняющие вопросы — каждый следующий подстраивается под ваши ответы. Разработчик получит бриф и подготовит ТЗ.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://g0faq.ru/brief/">
+    <title>Помощь с ТЗ — g0_faq</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/brief.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet">
+  </head>
+  <body class="brief-page">
+    <div class="brief-backdrop" aria-hidden="true"></div>
+
+    <header class="brief-top">
+      <a class="logo" href="/index.html">g0_faq</a>
+      <div class="brief-top__meta" data-brief-meta></div>
+      <a class="brief-top__back" href="/index.html">← На сайт</a>
+    </header>
+
+    <main class="brief-main">
+      <div class="brief-progress" data-brief-progress hidden>
+        <div class="brief-progress__info">
+          <span data-brief-section></span>
+          <span data-brief-counter></span>
+        </div>
+        <div class="brief-progress__track" role="progressbar" aria-label="Прогресс опроса" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <span data-brief-bar></span>
+        </div>
+      </div>
+
+      <div class="brief-app" id="brief-app" aria-live="polite">
+        <div class="brief-screen brief-screen--loading">
+          <div class="brief-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          <p class="brief-muted">Загружаю опрос…</p>
+        </div>
+      </div>
+
+      <noscript>
+        <p class="brief-noscript">Для опроса нужен JavaScript. Если он недоступен — напишите мне в <a href="https://t.me/g0_faq">Telegram</a>, помогу с ТЗ лично.</p>
+      </noscript>
+    </main>
+
+    <footer class="brief-foot">
+      <a href="/privacy.html">Данные и cookie</a>
+      <a href="/contract.html">Шаблон договора</a>
+      <a href="https://t.me/g0_faq" target="_blank" rel="noreferrer">Telegram ↗</a>
+    </footer>
+
+    <script src="/js/brief.js" defer></script>
+    <script src="/js/analytics.js" defer></script>
+  </body>
+</html>
