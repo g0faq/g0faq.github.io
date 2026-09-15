@@ -1,8 +1,8 @@
 'use strict';
 
-const { config } = require('./lib/config');
-const { hasDatabase } = require('./lib/db');
-const { runMaintenance } = require('./lib/tasks');
+const { config } = require('./_lib/config');
+const { hasDatabase } = require('./_lib/db');
+const { runMaintenance } = require('./_lib/tasks');
 
 /* Эндпоинт обслуживания. Вызывается расписанием Vercel Cron, а при
    необходимости — вручную. Основная работа живёт в api/lib/tasks.js и та же

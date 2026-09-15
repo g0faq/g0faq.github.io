@@ -151,3 +151,58 @@ CREATE TABLE IF NOT EXISTS bot_pending (
   visitor_id UUID NOT NULL REFERENCES visitors(id) ON DELETE CASCADE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- ─── Помощь с ТЗ ─────────────────────────────────────────────────────────────
+-- Опрос, по которому собирается бриф. Два режима:
+--   owner  — владелец сам описал проект в боте, ИИ заранее собрал вопросы,
+--            клиент получает уникальную ссылку;
+--   public — посетитель открыл «Помощь с ТЗ», вопросы генерируются по ходу.
+-- Черновик ТЗ хранится только здесь и уходит только владельцу — клиенту
+-- API его никогда не возвращает.
+CREATE TABLE IF NOT EXISTS briefs (
+  id            UUID PRIMARY KEY,
+  token         TEXT NOT NULL UNIQUE,             -- секрет ссылки / возобновления
+  mode          TEXT NOT NULL CHECK (mode IN ('owner', 'public')),
+  status        TEXT NOT NULL DEFAULT 'active'
+                CHECK (status IN ('active', 'completed', 'deleted')),
+  title         TEXT,
+  client_intro  TEXT,
+  owner_context TEXT,                             -- заметки владельца, клиенту не показываются
+  plan          JSONB,                            -- вопросы заранее (режим owner)
+  steps         JSONB NOT NULL DEFAULT '[]'::jsonb, -- [{question, answer}]
+  ai_calls      INTEGER NOT NULL DEFAULT 0,
+  client_name   TEXT,
+  client_contact_channel TEXT,
+  client_contact TEXT,
+  cases         JSONB,                            -- показанные клиенту похожие кейсы
+  draft         JSONB,                            -- черновик ТЗ для владельца
+  created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
+  opened_at     TIMESTAMPTZ,
+  last_activity_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  completed_at  TIMESTAMPTZ,
+  expires_at    TIMESTAMPTZ NOT NULL,
+  report_sent   BOOLEAN NOT NULL DEFAULT false,
+  report_attempts INTEGER NOT NULL DEFAULT 0,
+  abandon_notified BOOLEAN NOT NULL DEFAULT false
+);
+
+CREATE INDEX IF NOT EXISTS idx_briefs_pending_report
+  ON briefs (completed_at) WHERE status = 'completed' AND report_sent = false;
+CREATE INDEX IF NOT EXISTS idx_briefs_activity ON briefs (last_activity_at) WHERE status = 'active';
+
+-- Защита от выжигания бюджета OpenAI: счётчики стартов на хэш адреса за сутки.
+-- Сам адрес не хранится, хэш солится секретом и датой, строки живут двое суток.
+CREATE TABLE IF NOT EXISTS brief_rate (
+  bucket     TEXT NOT NULL,                       -- 'ip:<hash>' или 'global'
+  day        DATE NOT NULL DEFAULT CURRENT_DATE,
+  count      INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (bucket, day)
+);
+
+-- Ожидание ответа в боте теперь бывает двух видов: имя посетителя и описание
+-- проекта для нового опроса.
+ALTER TABLE bot_pending ALTER COLUMN visitor_id DROP NOT NULL;
+ALTER TABLE bot_pending ADD COLUMN IF NOT EXISTS kind TEXT NOT NULL DEFAULT 'name';
+
+-- Все вопросы отвечены, осталось оставить контакты.
+ALTER TABLE briefs ADD COLUMN IF NOT EXISTS awaiting_contact BOOLEAN NOT NULL DEFAULT false;

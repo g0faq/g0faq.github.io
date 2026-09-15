@@ -1,11 +1,11 @@
 'use strict';
 
-const { config, log } = require('./lib/config');
-const { query, transaction, hasDatabase } = require('./lib/db');
-const { fromHeaders } = require('./lib/geo');
-const telegram = require('./lib/telegram');
-const format = require('./lib/format');
-const { runMaintenance } = require('./lib/tasks');
+const { config, log } = require('./_lib/config');
+const { query, transaction, hasDatabase } = require('./_lib/db');
+const { fromHeaders } = require('./_lib/geo');
+const telegram = require('./_lib/telegram');
+const format = require('./_lib/format');
+const { runMaintenance } = require('./_lib/tasks');
 
 /* Единственная точка приёма событий с сайта.
  *
@@ -23,6 +23,7 @@ const EVENT_TYPES = new Set([
   'calculator_option_changed', 'calculator_back', 'calculator_next',
   'calculated_price_changed', 'form_started', 'form_completed',
   'form_submitted', 'form_abandoned', 'session_end',
+  'brief_open', 'brief_start', 'brief_answer', 'brief_back', 'brief_completed',
 ]);
 
 /** Эти события уходят в Telegram сразу, не дожидаясь окна буферизации. */

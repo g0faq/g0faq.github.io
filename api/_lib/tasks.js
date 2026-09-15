@@ -38,6 +38,10 @@ function describe(event) {
     case 'form_started': return 'начал заполнять заявку';
     case 'form_submitted': return 'отправил заявку';
     case 'form_abandoned': return 'бросил заявку';
+    case 'brief_open': return 'открыл «Помощь с ТЗ»';
+    case 'brief_start': return 'начал опрос для ТЗ';
+    case 'brief_answer': return data.section ? `ответил в опросе: ${data.section}` : 'ответил на вопрос опроса';
+    case 'brief_completed': return 'отправил бриф для ТЗ';
     default: return null;
   }
 }
@@ -188,6 +192,15 @@ async function runMaintenance({ force = false, minIntervalSec = 30 } = {}) {
   await query(
     `DELETE FROM notifications WHERE sent_at IS NOT NULL AND sent_at < now() - interval '7 days'`,
   );
+
+  // Опросы «Помощь с ТЗ»: повтор неотправленных PDF и сигнал о брошенных.
+  try {
+    const briefs = await require('./brief-report').maintain();
+    report.briefReports = briefs.reports;
+    report.briefAbandoned = briefs.abandoned;
+  } catch (error) {
+    log('обслуживание опросов не прошло:', error.message);
+  }
 
   log('обслуживание:', JSON.stringify(report));
   return report;

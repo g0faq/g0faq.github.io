@@ -76,4 +76,30 @@ async function api(method, body) {
   }
 }
 
-module.exports = { send, api, esc, clamp };
+/** Отправка файла (PDF-отчёта) с подписью. Никогда не бросает исключение. */
+async function sendDocument(buffer, filename, caption, options = {}) {
+  if (!config.telegramEnabled) return { ok: false, skipped: 'disabled' };
+  if (!config.botToken || !config.chatId) return { ok: false, skipped: 'no-credentials' };
+  try {
+    const form = new FormData();
+    form.append('chat_id', String(options.chatId || config.chatId));
+    form.append('document', new Blob([buffer], { type: 'application/pdf' }), filename);
+    // Подпись к документу ограничена 1024 символами.
+    form.append('caption', String(caption || '').slice(0, 1000));
+    form.append('parse_mode', 'HTML');
+    if (options.replyMarkup) form.append('reply_markup', JSON.stringify(options.replyMarkup));
+    const response = await fetch(`https://api.telegram.org/bot${config.botToken}/sendDocument`, {
+      method: 'POST',
+      body: form,
+      signal: AbortSignal.timeout(30000),
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!data.ok) log('telegram отказал в документе:', data.description || response.status);
+    return { ok: Boolean(data.ok), error: data.description };
+  } catch (error) {
+    log('telegram недоступен для документа:', error.message);
+    return { ok: false, error: error.message };
+  }
+}
+
+module.exports = { send, sendDocument, api, esc, clamp };
