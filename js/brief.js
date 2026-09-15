@@ -349,12 +349,12 @@
       if (q.type === 'multi') body.append(h('p', { class: 'brief-muted', text: 'Можно выбрать несколько вариантов.' }));
 
       noteInput = h('textarea', {
-        class: 'brief-field brief-note__field', maxlength: '1000', rows: '2', id: `brief-note-${view.index}`,
+        class: 'brief-field brief-clarify__field', maxlength: '1000', rows: '2', id: `brief-note-${view.index}`,
         placeholder: 'Поясните выбор или добавьте детали — это поможет точнее составить ТЗ',
       });
       noteInput.value = prefill?.note || '';
-      body.append(h('div', { class: 'brief-note' },
-        h('label', { class: 'brief-note__label', for: noteInput.id }, 'Уточнить ', h('span', { text: '— необязательно' })),
+      body.append(h('div', { class: 'brief-clarify' },
+        h('label', { class: 'brief-clarify__label', for: noteInput.id }, 'Уточнить ', h('span', { text: '— необязательно' })),
         noteInput));
       sync();
 

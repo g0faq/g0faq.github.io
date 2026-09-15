@@ -874,22 +874,22 @@ textarea.brief-field {
   }
 }
 
-.brief-note {
+.brief-clarify {
   margin: 18px 0 0;
 }
 
-.brief-note__label {
+.brief-clarify__label {
   display: block;
   margin: 0 0 8px;
   color: var(--text);
   font-size: 14px;
 }
 
-.brief-note__label span {
+.brief-clarify__label span {
   color: var(--text-muted);
 }
 
-.brief-note__field {
+.brief-clarify__field {
   min-height: 64px;
   resize: vertical;
 }
