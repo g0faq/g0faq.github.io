@@ -20,6 +20,7 @@
     : 'https://portfolio-ten-umber-3z9vgkulzy.vercel.app/api/brief';
   const TELEGRAM = 'https://t.me/g0_faq';
   const RESUME_KEY = 'g0faq.brief';
+  const DEVICE_KEY = 'g0faq.brief.device';
   const TIMEOUT_MS = 75000;
 
   const CHANNELS = [
@@ -65,6 +66,17 @@
     get() { try { return localStorage.getItem(RESUME_KEY); } catch { return null; } },
     set(value) { try { localStorage.setItem(RESUME_KEY, value); } catch { /* приватный режим */ } },
     clear() { try { localStorage.removeItem(RESUME_KEY); } catch { /* приватный режим */ } },
+    /** Случайная метка браузера — только для лимита «1 опрос в день, 3 в месяц». */
+    device() {
+      try {
+        let id = localStorage.getItem(DEVICE_KEY);
+        if (!id) {
+          id = [...crypto.getRandomValues(new Uint8Array(18))].map((b) => b.toString(16).padStart(2, '0')).join('');
+          localStorage.setItem(DEVICE_KEY, id);
+        }
+        return id;
+      } catch { return ''; }
+    },
   };
 
   /* ── DOM ─────────────────────────────────────────────────────────────────── */
@@ -239,7 +251,7 @@
       start.disabled = true;
       start.textContent = 'Готовлю первый вопрос…';
       try {
-        const next = await api(owner ? { action: 'start', consent: true, token: state.token } : { action: 'start', consent: true });
+        const next = await api(owner ? { action: 'start', consent: true, token: state.token } : { action: 'start', consent: true, device: store.device() });
         track('brief_start', { mode: state.mode });
         render(next);
       } catch (error) {

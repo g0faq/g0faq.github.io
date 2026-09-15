@@ -22,7 +22,9 @@ const reporter = require('./_lib/brief-report');
 const PUBLIC_TTL_DAYS = 7;
 const OWNER_TTL_DAYS = Number(process.env.BRIEF_LINK_TTL_DAYS || 30);
 const MAX_AI_CALLS = 50;
-const IP_DAILY = Number(process.env.BRIEF_IP_DAILY_LIMIT || 6);
+// Один человек (адрес или браузер): 1 опрос в сутки и 3 за 30 дней.
+const PERSON_DAILY = Number(process.env.BRIEF_PERSON_DAILY_LIMIT || 1);
+const PERSON_MONTHLY = Number(process.env.BRIEF_PERSON_MONTHLY_LIMIT || 3);
 const GLOBAL_DAILY = Number(process.env.BRIEF_DAILY_LIMIT || 80);
 const TOKEN_RE = /^[A-Za-z0-9_-]{20,64}$/;
 const BOT_UA = /bot|crawler|spider|crawling|headless|lighthouse|pagespeed|preview|curl|wget|python-requests|axios|scrapy/i;
@@ -109,27 +111,51 @@ function clientIp(req) {
   return forwarded || String(req.headers['x-real-ip'] || '') || 'unknown';
 }
 
-/** Лимиты стартов. Адрес не хранится: только соль+дата хэш, живёт двое суток. */
-async function allowStart(req) {
-  const day = new Date().toISOString().slice(0, 10);
-  const hash = crypto.createHash('sha256')
-    .update(`${clientIp(req)}|${day}|${config.cronSecret || 'brief'}`)
-    .digest('hex')
-    .slice(0, 32);
+const pseudonym = (kind, value) => `${kind}:${crypto.createHash('sha256')
+  .update(`${kind}|${value}|${config.cronSecret || 'brief'}`)
+  .digest('hex')
+  .slice(0, 32)}`;
+
+// Сутки считаются по Москве.
+const TODAY = `(now() AT TIME ZONE 'Europe/Moscow')::date`;
+
+/** Лимиты стартов. Человек узнаётся по адресу или по метке браузера — хватит
+ *  совпадения любого из двух. Хранятся только необратимые хэши, 31 день. */
+async function allowStart(req, body) {
+  const buckets = [pseudonym('ip', clientIp(req))];
+  const device = String(body.device || '');
+  if (/^[A-Za-z0-9_-]{16,64}$/.test(device)) buckets.push(pseudonym('dev', device));
+
+  const usage = (await query(
+    `SELECT COALESCE(MAX(daily), 0) AS daily, COALESCE(MAX(monthly), 0) AS monthly FROM (
+       SELECT bucket,
+              SUM(count) FILTER (WHERE day = ${TODAY}) AS daily,
+              SUM(count) AS monthly
+         FROM brief_rate
+        WHERE bucket = ANY($1) AND day > ${TODAY} - 30
+        GROUP BY bucket) per_bucket`,
+    [buckets],
+  )).rows[0];
+  if (Number(usage.daily) >= PERSON_DAILY) return { ok: false, code: 'rate_daily' };
+  if (Number(usage.monthly) >= PERSON_MONTHLY) return { ok: false, code: 'rate_monthly' };
 
   const bump = async (bucket) => (await query(
-    `INSERT INTO brief_rate (bucket, day, count) VALUES ($1, CURRENT_DATE, 1)
+    `INSERT INTO brief_rate (bucket, day, count) VALUES ($1, ${TODAY}, 1)
      ON CONFLICT (bucket, day) DO UPDATE SET count = brief_rate.count + 1
      RETURNING count`,
     [bucket],
   )).rows[0].count;
 
-  const perIp = await bump(`ip:${hash}`);
-  if (perIp > IP_DAILY) return { ok: false, code: 'rate_ip' };
-  const global = await bump('global');
-  if (global > GLOBAL_DAILY) return { ok: false, code: 'rate_global' };
+  if (await bump('global') > GLOBAL_DAILY) return { ok: false, code: 'rate_global' };
+  await Promise.all(buckets.map(bump));
   return { ok: true };
 }
+
+const LIMIT_MESSAGES = {
+  rate_daily: 'Сегодня вы уже проходили опрос — новый можно начать завтра. Если нужно срочно, напишите мне в Telegram, помогу с ТЗ лично.',
+  rate_monthly: 'Опрос можно пройти не больше 3 раз за месяц, лимит уже исчерпан. Напишите мне в Telegram — помогу с ТЗ лично.',
+  rate_global: 'Сегодня опрос прошло слишком много людей. Попробуйте завтра или напишите мне в Telegram — помогу с ТЗ лично.',
+};
 
 /* ── Действия ─────────────────────────────────────────────────────────────── */
 
@@ -192,10 +218,8 @@ async function actionStart(req, res, body) {
     return fail(res, 403, 'bot', 'Автоматические запросы не поддерживаются');
   }
 
-  const limit = await allowStart(req);
-  if (!limit.ok) {
-    return fail(res, 429, limit.code, 'Слишком много новых опросов за сегодня. Напишите мне в Telegram — помогу с ТЗ лично.');
-  }
+  const limit = await allowStart(req, body);
+  if (!limit.ok) return fail(res, 429, limit.code, LIMIT_MESSAGES[limit.code]);
 
   const first = await engine.nextAdaptive([], 0);
   const id = crypto.randomUUID();

@@ -137,7 +137,7 @@ async function maintain() {
     }
   }
 
-  await query(`DELETE FROM brief_rate WHERE day < CURRENT_DATE - 1`);
+  await query(`DELETE FROM brief_rate WHERE day < CURRENT_DATE - 31`);
   // Срок хранения, обещанный в политике: опросы старше года удаляются,
   // брошенные и просроченные — через месяц после окончания срока ссылки.
   await query(`DELETE FROM briefs WHERE created_at < now() - interval '365 days'`);
