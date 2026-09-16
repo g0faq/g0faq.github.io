@@ -16,7 +16,7 @@
     'У меня новый клиент Лофт, 5 роликов за 60 тысяч, дедлайн 20 октября',
     'По Lumo съёмку перенесли на пятницу, напомни в четверг в 18:00 подготовить свет',
     'Новый проект для White Smile',
-    'Напомни через 2 минуты позвонить клиенту',
+    'Напомни завтра в 12:00 отправить договор',
     'Что у меня по Lumo?',
     'Клиент просит скидку 20%, что ответить?',
     'придумай 5 хуков для Lumo',
@@ -240,10 +240,6 @@
 
     var errorBox = el('div', { 'data-error': '' });
     if (step.final) {
-      // honeypot: человек его не видит и не заполняет
-      var hp = el('input', { type: 'text', name: 'website', tabindex: '-1', autocomplete: 'off', 'aria-hidden': 'true' });
-      form.appendChild(el('div', { class: 'hp', 'aria-hidden': 'true' }, [el('label', { text: 'Сайт' }, [hp])]));
-
       var consent = el('input', { type: 'checkbox', name: 'consent' });
       consent.checked = state.consent;
       consent.addEventListener('change', function () { state.consent = consent.checked; save(); });
@@ -289,22 +285,24 @@
     return typeof v === 'string' ? v.trim() : '';
   }
 
-  function collectAnswers() {
-    var list = [];
-    STEPS.forEach(function (s) {
-      s.questions.forEach(function (q) {
-        if (q.id === 'contact') return;
-        var a = answerText(q);
-        list.push({ question: s.title + ' · ' + q.label, answer: a || '—' });
-      });
+  function collectSections() {
+    return STEPS.map(function (s) {
+      return {
+        title: s.title,
+        items: s.questions.filter(function (q) { return q.id !== 'contact'; }).map(function (q) {
+          return { question: q.label, answer: answerText(q) || '—' };
+        })
+      };
     });
-    return list;
   }
 
   function answersAsText() {
     var contact = answerText({ id: 'contact' });
-    var lines = ['Бриф: AI-менеджер для креаторов', 'Контакт: ' + (contact || 'не указан'), ''];
-    collectAnswers().forEach(function (a) { lines.push(a.question + ': ' + a.answer); });
+    var lines = ['Бриф: AI-менеджер', 'Контакт: ' + (contact || 'не указан')];
+    collectSections().forEach(function (sec) {
+      lines.push('', sec.title);
+      sec.items.forEach(function (a) { lines.push('• ' + a.question + ': ' + a.answer); });
+    });
     return lines.join('\n');
   }
 
@@ -319,13 +317,7 @@
     button.disabled = true;
     button.textContent = 'Отправляю…';
 
-    var contact = answerText({ id: 'contact' });
-    var payload = {
-      name: 'Бриф: AI-менеджер',
-      contact: contact.length >= 3 ? contact.slice(0, 200) : 'не указан',
-      answers: collectAnswers(),
-      website: (form.querySelector('input[name="website"]') || {}).value || ''
-    };
+    var payload = { contact: answerText({ id: 'contact' }).slice(0, 200), sections: collectSections() };
 
     var controller = typeof AbortController === 'function' ? new AbortController() : null;
     var timer = setTimeout(function () { if (controller) controller.abort(); }, TIMEOUT_MS);
@@ -339,7 +331,7 @@
       .then(function (res) {
         return res.json().catch(function () { return {}; }).then(function (data) {
           if (!res.ok || !data || data.ok !== true) {
-            var err = new Error((data && data.error) || ('Сервер ответил ' + res.status));
+            var err = new Error((data && data.message) || ('Сервер ответил ' + res.status));
             err.server = true;
             throw err;
           }
@@ -364,11 +356,18 @@
     box.textContent = '';
     var copyBtn = el('button', { type: 'button', class: 'btn btn--primary', text: 'Скопировать ответы текстом' });
     copyBtn.addEventListener('click', function () { copy(answersAsText()); });
-    var botLink = el('a', { class: 'btn', href: BOT_URL, target: '_blank', rel: 'noopener', text: 'Открыть бота' });
+    var download = el('button', { type: 'button', class: 'btn', text: 'Скачать ответы (.txt)' });
+    download.addEventListener('click', function () {
+      var blob = new Blob([answersAsText()], { type: 'text/plain;charset=utf-8' });
+      var a = el('a', { href: URL.createObjectURL(blob), download: 'brief-ai-manager.txt' });
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    });
     box.appendChild(el('div', { class: 'status status--error', role: 'alert' }, [
       el('h3', { text: 'Ответы не отправились' }),
-      el('p', { text: reason + ' Черновик сохранён в браузере. Можно попробовать ещё раз или скопировать ответы и прислать их в Telegram.' }),
-      el('div', { class: 'nav' }, [copyBtn, botLink])
+      el('p', { text: reason + ' Черновик сохранён в браузере. Можно попробовать ещё раз, скопировать или скачать ответы и прислать их в Telegram.' }),
+      el('div', { class: 'nav' }, [copyBtn, download])
     ]));
   }
 
