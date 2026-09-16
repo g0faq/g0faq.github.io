@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark light">
+<title>Демо и бриф — AI-менеджер</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet">
+<link rel="stylesheet" href="./css/page.css">
+</head>
+<!-- Настройка: адрес API бота и username бота без @ -->
+<body data-api="https://BOT_HOST/api/brief" data-bot="BOT_USERNAME">
+<div class="backdrop" aria-hidden="true"></div>
+
+<header class="top">
+  <span class="logo">g0_faq</span>
+  <span class="top__tag">демо · бриф</span>
+</header>
+
+<main class="page">
+  <section class="hero">
+    <p class="eyebrow">AI-менеджер для креаторов и фрилансеров</p>
+    <h1>Демо и бриф: AI-менеджер для креаторов</h1>
+    <p class="lead">Демо работает на тестовых данных: ответы заготовлены, в рабочей версии их формирует ИИ.</p>
+  </section>
+
+  <section class="card" aria-labelledby="try-title">
+    <p class="eyebrow">01</p>
+    <h2 id="try-title">Как попробовать</h2>
+    <a class="btn btn--primary" data-bot-link href="#" target="_blank" rel="noopener">Открыть бота</a>
+    <p class="muted">Нажмите /start, ответьте на 3 вопроса и отправьте боту любую фразу из списка — или напишите своими словами.</p>
+    <ul class="phrases" data-phrases></ul>
+    <div class="hint">
+      <p><b>/demo</b> — пульт демо: утренний и вечерний дайджест, проактивные уведомления, пример переписки и договора, завершение пробного периода и исчерпание лимита.</p>
+      <p><b>/admin</b> — демо-админка: пользователи, платежи, блокировка, лимиты и пороги уведомлений. Данные вымышленные, у каждого тестировщика свои.</p>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="brief-title">
+    <p class="eyebrow">02</p>
+    <h2 id="brief-title">Бриф для финального ТЗ</h2>
+    <p class="muted">Ответы сохраняются в этом браузере автоматически — можно закрыть страницу и вернуться. Все вопросы необязательные, кроме согласия в конце.</p>
+    <div class="brief" id="brief" aria-live="polite">
+      <noscript><p>Для анкеты нужен JavaScript.</p></noscript>
+    </div>
+  </section>
+</main>
+
+<div class="toast" data-toast role="status" hidden></div>
+<script src="./js/page.js"></script>
+</body>
+</html>
