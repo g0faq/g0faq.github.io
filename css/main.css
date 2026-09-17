@@ -2293,6 +2293,73 @@ p {
   animation-play-state: paused !important;
 }
 
+/* ── Логотип уходит под страницу ────────────────────────────────────────────
+   Блок с большими буквами закреплён под шапкой (sticky), а всё, что ниже,
+   — непрозрачный «лист» поверх него. Пока лист наезжает, js уменьшает,
+   гасит и размывает логотип (--sink от 0 до 1). */
+.hero > .hero__figure {
+  position: sticky;
+  top: var(--header-height);
+  z-index: 0;
+}
+
+.hero__logo {
+  transform: translateY(calc(var(--sink, 0) * 48px)) scale(calc(1 - var(--sink, 0) * 0.14));
+  opacity: calc(1 - var(--sink, 0) * 0.55);
+  filter: blur(calc(var(--sink, 0) * 3px));
+  transform-origin: center 70%;
+  will-change: transform, opacity, filter;
+}
+
+.hero__figure .guide--diag,
+.hero__figure .fig-caption {
+  opacity: calc(1 - var(--sink, 0));
+}
+
+.hero > :not(.hero__figure) {
+  position: relative;
+  z-index: 1;
+  background-color: var(--paper);
+  /* Фон листа на всю ширину экрана, а не только колонки. */
+  box-shadow: 0 0 0 100vmax var(--paper);
+  clip-path: inset(0 -100vmax);
+}
+
+.hero > .hatch-band {
+  background-color: var(--paper);
+}
+
+.hero > .marquee {
+  background: var(--ink);
+  box-shadow: 0 0 0 100vmax var(--ink);
+}
+
+/* Верхний край листа: тушь и мягкая тень на логотип под ним. */
+.hero__identity {
+  border-top: 2px solid var(--ink);
+  clip-path: inset(-40px -100vmax 0 -100vmax) !important;
+}
+
+.hero__identity::before {
+  content: "";
+  position: absolute;
+  left: -100vmax;
+  right: -100vmax;
+  bottom: 100%;
+  height: 40px;
+  background: linear-gradient(to top, rgba(16, 17, 20, 0.1), transparent);
+  opacity: var(--sheet-shadow, 0);
+  pointer-events: none;
+}
+
+/* Направляющие колонки поверх листа, чтобы сетка не обрывалась. */
+@media (min-width: 1121px) {
+  .hero > .frame:not(.hero__figure) {
+    border-left: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+  }
+}
+
 /* ── Анимации ───────────────────────────────────────────────────────────────
    Всё движение — через transform/opacity. При prefers-reduced-motion
    отключается в конце файла. */

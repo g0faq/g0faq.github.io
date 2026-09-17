@@ -327,6 +327,27 @@ function initHeroTilt() {
   });
 }
 
+/* Логотип первого экрана «уходит под страницу»: чем дальше прокрутка, тем
+   сильнее он уменьшается и гаснет, а над листом появляется тень. */
+function initHeroSink() {
+  const figure = document.querySelector('.hero__figure');
+  const identity = document.querySelector('.hero__identity');
+  if (!figure || !identity || reducedMotion()) return;
+
+  let frame = 0;
+  const update = () => {
+    frame = 0;
+    const height = figure.offsetHeight || 1;
+    const sink = clamp(window.scrollY / height, 0, 1);
+    figure.style.setProperty('--sink', sink.toFixed(3));
+    identity.style.setProperty('--sheet-shadow', clamp(sink * 4, 0, 1).toFixed(2));
+  };
+
+  window.addEventListener('scroll', () => { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+}
+
 function initHeader() {
   const header = document.querySelector('.site-header');
   const toggle = header?.querySelector('.nav-toggle');
@@ -460,6 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initClock();
   initProcess();
   initHeroTilt();
+  initHeroSink();
   document.querySelectorAll('.tag-grid li').forEach((item, index) => item.style.setProperty('--t', String(index)));
   initRoute();
   initCases();
