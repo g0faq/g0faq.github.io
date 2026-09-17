@@ -381,9 +381,11 @@ function initHeroStory() {
     setTimeout(() => story.classList.add('is-compact'), motion.matches ? 0 : 600);
   };
   const play = () => {
-    if (started) return;
+    if (started !== 0 || frame) return;
     if (motion.matches) { value = 1; paint(); story.classList.add('is-compact'); return; }
-    frame = requestAnimationFrame(step);
+    // Первый кадр — целое слово: держим его, прежде чем разбирать на строки.
+    started = -1;
+    setTimeout(() => { started = 0; frame = requestAnimationFrame(step); }, 900);
   };
   const measure = () => {
     mobile = window.innerWidth <= 600;

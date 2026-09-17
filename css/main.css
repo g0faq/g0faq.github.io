@@ -2407,6 +2407,8 @@ html.is-splash .hero__story > .hero__figure {
 .iso-definition .iso-definition__label { font-family: var(--mono); font-size: 9px; letter-spacing: 1.8px; fill: var(--ink-3); }
 .iso-definition .iso-definition__russian { font-size: 19px; letter-spacing: -.4px; }
 .hero__meaning { font: 14px/1.6 var(--mono); max-width: 860px; margin: 20px auto; }
+/* До инициализации сюжета строка не должна мелькать. */
+.motion-ready .hero__meaning { opacity: 0; }
 .hero__story.is-enhanced .hero__meaning {
   margin: 0 auto; text-align: center; opacity: 0; transform: translateY(6px);
   font: 13px/1.7 var(--mono); letter-spacing: .02em; color: var(--ink-3);
