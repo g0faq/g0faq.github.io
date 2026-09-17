@@ -154,7 +154,7 @@ async function initCases() {
   try {
     let cases = window.CASES_DATA;
     if (!Array.isArray(cases)) {
-      const response = await fetch('./data/cases.json');
+      const response = await fetch(`./data/cases.json?v=${document.querySelector('meta[name="build-commit"]')?.content || ''}`);
       if (!response.ok) throw new Error('Cases request failed');
       cases = await response.json();
     }
