@@ -381,7 +381,8 @@ function initContactForm() {
     Telegram: { label: 'Ваш Telegram', placeholder: '@username', autocomplete: 'off', inputMode: 'text', phone: false },
     VK: { label: 'Ссылка или ID во VK', placeholder: 'vk.com/username', autocomplete: 'url', inputMode: 'url', phone: false },
     MAX: { label: 'Номер в MAX', placeholder: '+7(999)-999-99-99', autocomplete: 'tel', inputMode: 'tel', phone: true },
-    'Телефон': { label: 'Номер телефона', placeholder: '+7(999)-999-99-99', autocomplete: 'tel', inputMode: 'tel', phone: true }
+    'Телефон': { label: 'Номер телефона', placeholder: '+7(999)-999-99-99', autocomplete: 'tel', inputMode: 'tel', phone: true },
+    Email: { label: 'Ваш email', placeholder: 'name@example.com', autocomplete: 'email', inputMode: 'email', phone: false }
   };
 
   const formatRussianPhone = (value) => {
