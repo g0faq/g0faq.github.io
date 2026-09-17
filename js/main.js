@@ -328,11 +328,10 @@ function initHeroTilt() {
 }
 
 /* Логотип первого экрана «уходит под страницу»: чем дальше прокрутка, тем
-   сильнее он уменьшается и гаснет, а над листом появляется тень. */
+   сильнее он уменьшается и гаснет. */
 function initHeroSink() {
   const figure = document.querySelector('.hero__figure');
-  const identity = document.querySelector('.hero__identity');
-  if (!figure || !identity || reducedMotion()) return;
+  if (!figure || reducedMotion()) return;
 
   let frame = 0;
   const update = () => {
@@ -340,7 +339,6 @@ function initHeroSink() {
     const height = figure.offsetHeight || 1;
     const sink = clamp(window.scrollY / height, 0, 1);
     figure.style.setProperty('--sink', sink.toFixed(3));
-    identity.style.setProperty('--sheet-shadow', clamp(sink * 4, 0, 1).toFixed(2));
   };
 
   window.addEventListener('scroll', () => { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });
