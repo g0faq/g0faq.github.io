@@ -39,6 +39,8 @@ await Promise.all([
   cp(resolve(root, 'brief.html'), resolve(output, 'brief.html')),
   cp(resolve(root, 'css/brief.css'), resolve(output, 'css/brief.css')),
   cp(resolve(root, 'js/brief.js'), resolve(output, 'js/brief.js')),
+  cp(resolve(root, 'js/doc.js'), resolve(output, 'js/doc.js')),
+  cp(resolve(root, 'css/main.css'), resolve(output, 'css/main.css')),
   cp(resolve(root, 'js/analytics.js'), resolve(output, 'js/analytics.js'))
 ]);
 

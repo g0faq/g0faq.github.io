@@ -1,90 +1,263 @@
-/* Текстовая страница политики. Отдельный файл: главная — одностраничник со
-   сложной механикой, и тянуть её разметку сюда незачем. */
+/* Текстовые страницы — шаблон договора и политика данных.
+ * Токены, шапка, подвал и кнопки — из css/main.css. Здесь только разметка
+ * документа: шапка-лист с подписью Fig., оглавление слева и разделы-карточки. */
 
-.doc-page {
-  background: var(--bg);
-  color: var(--text);
+.doc-hero {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  padding-block: clamp(36px, 7vw, 80px) clamp(28px, 5vw, 48px);
+  border-bottom: 1px solid var(--line);
 }
 
-.doc-head,
-.doc-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  max-width: 820px;
-  margin: 0 auto;
-  padding: 28px var(--page-padding);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.doc-hero h1 {
+  max-width: 18ch;
+  font-family: var(--display);
+  font-size: clamp(30px, 5.4vw, 60px);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
 }
 
-.doc-head { border-bottom: 1px solid var(--border); }
-.doc-foot { border-top: 1px solid var(--border); color: var(--text-muted); }
-.doc-foot a:hover, .doc-back:hover { color: var(--accent-orange); }
-
-.doc {
-  max-width: 820px;
-  margin: 0 auto;
-  padding: 48px var(--page-padding) 64px;
-}
-
-.doc h1 {
-  margin: 10px 0 20px;
-  font-size: clamp(28px, 5vw, 44px);
-  line-height: 1.1;
+.doc-hero .fig-caption {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 12px;
 }
 
 .doc-lead {
-  max-width: 620px;
-  margin-bottom: 8px;
-  color: var(--text-muted);
-  font-size: 16px;
+  max-width: 62ch;
+  color: var(--ink-2);
+  font-size: clamp(15.5px, 1.4vw, 18px);
   line-height: 1.6;
 }
 
+/* ── Файлы для скачивания ── */
+
+.doc-download {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 780px;
+  margin-top: 12px;
+}
+
+.doc-file {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "type body"
+    "type action";
+  align-items: center;
+  gap: 4px 14px;
+  padding: 14px 16px;
+  border: 2px solid var(--ink);
+  background: var(--card);
+  box-shadow: var(--shadow-2) var(--ink);
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform 0.13s var(--ease), box-shadow 0.13s var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .doc-file:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-3) var(--accent);
+  }
+}
+
+.doc-file:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.doc-file__type {
+  grid-area: type;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 60px;
+  background: var(--ink);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  clip-path: polygon(0 0, 72% 0, 100% 22%, 100% 100%, 0 100%);
+}
+
+.doc-file__body {
+  grid-area: body;
+  min-width: 0;
+}
+
+.doc-file__name {
+  display: block;
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.doc-file__note {
+  display: block;
+  color: var(--ink-3);
+  font-size: 13px;
+}
+
+.doc-file__action {
+  grid-area: action;
+  color: var(--accent-deep);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* ── Раскладка: оглавление + текст ── */
+
+.doc-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  min-width: 0;
+  gap: 48px;
+  align-items: start;
+  padding-block: clamp(32px, 6vw, 64px) clamp(48px, 8vw, 96px);
+}
+
+.doc-toc {
+  position: sticky;
+  top: calc(var(--header-height) + 24px);
+  display: grid;
+  gap: 2px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+}
+
+.doc-toc summary {
+  margin-bottom: 10px;
+  color: var(--ink-3);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  list-style: none;
+  pointer-events: none;
+}
+
+.doc-toc summary::-webkit-details-marker {
+  display: none;
+}
+
+.doc-toc a {
+  display: flex;
+  gap: 10px;
+  padding: 7px 0 7px 12px;
+  border-left: 2px solid var(--line);
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: color 0.16s, border-color 0.16s, padding 0.2s var(--ease);
+}
+
+.doc-toc a span {
+  color: var(--ink-3);
+}
+
+.doc-toc a:hover {
+  color: var(--ink);
+}
+
+.doc-toc a.is-active {
+  padding-left: 16px;
+  border-left-color: var(--accent);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.doc-toc a.is-active span {
+  color: var(--accent-deep);
+}
+
+.doc-body {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* ── Разделы ── */
+
 .doc-section {
-  padding-top: 34px;
-  margin-top: 34px;
-  border-top: 1px solid var(--border);
+  min-width: 0;
+  overflow-wrap: anywhere;
+  scroll-margin-top: calc(var(--header-height) + 20px);
+  padding: clamp(18px, 3vw, 30px);
+  border: 1.5px solid var(--ink);
+  background: var(--card);
 }
 
 .doc-section h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
   margin-bottom: 14px;
-  font-size: 19px;
-  letter-spacing: -0.01em;
+  font-size: clamp(19px, 2.2vw, 24px);
+}
+
+.doc-section h2::before {
+  content: attr(data-num);
+  flex: none;
+  padding: 2px 7px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transform: translateY(-3px);
 }
 
 .doc-section p {
-  max-width: 660px;
-  margin-bottom: 14px;
-  color: var(--text-muted);
-  font-size: 15px;
+  max-width: 68ch;
+  margin-bottom: 12px;
+  color: var(--ink-2);
+  font-size: 15.5px;
   line-height: 1.65;
 }
 
-.doc-section p:last-child { margin-bottom: 0; }
-.doc-section strong { color: var(--text); font-weight: 400; }
-.doc-section a { color: var(--accent-blue); text-decoration: underline; text-underline-offset: 3px; }
-.doc-section a:hover { color: var(--accent-orange); }
+.doc-section p:last-child {
+  margin-bottom: 0;
+}
+
+.doc-section strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.doc-section a:not(.button) {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
 
 .doc-list {
-  max-width: 660px;
-  margin: 0 0 14px;
+  display: grid;
+  gap: 8px;
+  max-width: 68ch;
+  margin: 0 0 12px;
   padding: 0;
   list-style: none;
-  display: grid;
-  gap: 10px;
+}
+
+.doc-list:last-child {
+  margin-bottom: 0;
 }
 
 .doc-list li {
   position: relative;
-  padding-left: 20px;
-  color: var(--text-muted);
-  font-size: 15px;
+  padding-left: 22px;
+  color: var(--ink-2);
+  font-size: 15.5px;
   line-height: 1.6;
 }
 
@@ -93,117 +266,49 @@
   position: absolute;
   left: 0;
   top: 9px;
-  width: 6px;
-  height: 6px;
-  background: var(--accent-orange);
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  box-shadow: 2px 2px 0 var(--ink);
 }
-
-.doc-note p { color: var(--text-muted); font-size: 14px; }
-
-/* ── Карточки скачивания ────────────────────────────────────────────────── */
-
-.doc-download {
-  display: grid;
-  gap: 12px;
-  margin: 30px 0 6px;
-  max-width: 660px;
-}
-
-.doc-file {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px 18px;
-  border: 1px solid var(--border);
-  background: var(--surface-1);
-  transition: border-color 150ms ease, background 150ms ease;
-}
-
-.doc-file:hover {
-  border-color: var(--accent-orange);
-  background: var(--surface-2);
-}
-
-.doc-file__type {
-  flex: none;
-  padding: 6px 10px;
-  border: 1px solid var(--accent-orange);
-  color: var(--accent-orange);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-}
-
-.doc-file__body {
-  flex: 1;
-  min-width: 0;
-}
-
-.doc-file__name {
-  display: block;
-  color: var(--text);
-  font-size: 15px;
-}
-
-.doc-file__note {
-  display: block;
-  margin-top: 3px;
-  color: var(--text-muted);
-  font-size: 13px;
-}
-
-.doc-file__action {
-  flex: none;
-  color: var(--text-muted);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.doc-file:hover .doc-file__action {
-  color: var(--accent-orange);
-}
-
-/* ── Нумерованный список шагов ──────────────────────────────────────────── */
 
 .doc-steps {
-  max-width: 660px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0;
   padding: 0;
+  border-top: 1.5px solid var(--ink);
+  border-left: 1.5px solid var(--ink);
   list-style: none;
   counter-reset: doc-step;
-  display: grid;
-  gap: 10px;
 }
 
 .doc-steps li {
-  counter-increment: doc-step;
   position: relative;
-  padding-left: 34px;
-  color: var(--text-muted);
-  font-size: 15px;
-  line-height: 1.6;
+  padding: 12px 14px 12px 48px;
+  border-right: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.5;
+  counter-increment: doc-step;
 }
 
 .doc-steps li::before {
   content: counter(doc-step, decimal-leading-zero);
   position: absolute;
-  left: 0;
-  top: 1px;
-  color: var(--accent-orange);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 12px;
+  left: 12px;
+  top: 12px;
+  color: var(--accent-deep);
+  font-family: var(--mono);
+  font-size: 12.5px;
+  font-weight: 700;
 }
 
-/* ── Таблица вариантов ──────────────────────────────────────────────────── */
-
-/* Таблица широкая: на узком экране она прокручивается внутри своей области,
-   а не растягивает страницу. */
 .doc-table-wrap {
   overflow-x: auto;
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--ink);
 }
 
 .doc-table {
@@ -215,58 +320,189 @@
 
 .doc-table th,
 .doc-table td {
-  padding: 11px 14px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
   text-align: left;
   vertical-align: top;
-  border-bottom: 1px solid var(--border);
 }
 
 .doc-table th {
-  background: var(--surface-1);
-  color: var(--text);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
-  font-weight: 400;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .doc-table td {
-  color: var(--text-muted);
-  line-height: 1.55;
+  background: var(--paper);
+  color: var(--ink-2);
+  line-height: 1.5;
 }
 
 .doc-table td:first-child {
-  color: var(--text);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
   white-space: nowrap;
 }
 
 .doc-table tr:last-child td {
-  border-bottom: none;
+  border-bottom: 0;
 }
 
-/* ── Акценты внутри страницы ────────────────────────────────────────────── */
-
+/* Акценты. */
 .doc-warning {
-  border-left: 2px solid var(--accent-orange);
-  padding-left: 18px;
+  border-width: 2px;
+  background:
+    repeating-linear-gradient(-45deg, transparent 0 10px, rgba(255, 79, 15, 0.07) 10px 11px),
+    var(--accent-soft);
+  box-shadow: var(--shadow-2) var(--accent);
+}
+
+.doc-note {
+  border-style: dashed;
+  background: var(--paper);
+}
+
+.doc-cta {
+  border-width: 2px;
+  background: var(--accent);
+  box-shadow: var(--shadow-2) var(--ink);
+}
+
+.doc-cta h2::before {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.doc-cta p {
+  color: var(--ink);
 }
 
 .doc-cta p:last-child {
   display: flex;
-  gap: 10px;
   flex-wrap: wrap;
-  margin-top: 18px;
+  gap: 14px;
+  margin-top: 16px;
 }
 
-@media (max-width: 620px) {
-  .doc-file {
-    flex-wrap: wrap;
+.doc-cta .button:first-child {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ── Телефон: плотно ── */
+
+@media (max-width: 860px) {
+  .doc-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    padding-block: 16px 40px;
+  }
+
+  .doc-toc {
+    position: static;
+    padding: 10px 12px;
+    border: 1.5px solid var(--ink);
+    background: var(--card);
+  }
+
+  .doc-toc summary {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  .doc-toc summary::after {
+    content: "+";
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .doc-toc[open] summary {
+    margin-bottom: 8px;
+  }
+
+  .doc-toc[open] summary::after {
+    content: "−";
+  }
+
+  .doc-toc a {
+    padding-block: 5px;
+  }
+}
+
+@media (max-width: 760px) {
+  .doc-hero {
+    gap: 10px;
+    padding-block: 22px 26px;
+  }
+
+  .doc-hero h1 {
+    font-size: 28px;
+  }
+
+  .doc-lead {
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+
+  .doc-download {
+    grid-template-columns: 1fr;
     gap: 10px;
   }
 
-  .doc-file__body {
+  .doc-file {
+    padding: 10px 12px;
+    box-shadow: var(--shadow-1) var(--ink);
+  }
+
+  .doc-file__type {
+    width: 40px;
+    height: 46px;
+    font-size: 10.5px;
+  }
+
+  .doc-body {
+    gap: 12px;
+  }
+
+  .doc-section {
+    padding: 14px;
+  }
+
+  .doc-section h2 {
+    margin-bottom: 8px;
+    font-size: 17px;
+  }
+
+  .doc-section p,
+  .doc-list li {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .doc-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .doc-steps li {
+    padding: 8px 10px 8px 40px;
+    font-size: 13px;
+  }
+
+  .doc-steps li::before {
+    top: 8px;
+    left: 10px;
+  }
+
+  .doc-cta .button {
     flex: 1 1 100%;
-    order: 3;
   }
 }

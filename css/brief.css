@@ -1,32 +1,25 @@
 /* ── Помощь с ТЗ ──────────────────────────────────────────────────────────────
-   Страница опроса. Язык сайта: чёрный фон, Inter для текста, JetBrains Mono
-   для служебных подписей, оранжевый акцент и острые углы. Анимации короткие
-   и выключаются при prefers-reduced-motion. */
+   Страница опроса в стиле главной: бумага, тушь, оранжевый акцент, рамки
+   толщиной 2px и жёсткие тени. Токены, кнопки и шрифты — из css/main.css.
+   На телефоне всё плотнее, главная кнопка закреплена под пальцем. */
 
 .brief-page {
   --brief-width: 820px;
-  --brief-card: rgba(13, 13, 15, 0.86);
-  --brief-line: rgba(86, 86, 87, 0.7);
-  --brief-accent-soft: rgba(255, 65, 5, 0.09);
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
-  color: var(--text);
 }
 
-/* Тонкая сетка и тёплое свечение — фон в духе главной, без тяжёлой графики. */
-.brief-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
+/* Направляющие колонки — как на главной, но по ширине опроса. */
+.brief-page::before {
   background:
-    radial-gradient(60% 45% at 85% 0%, rgba(255, 65, 5, 0.12), transparent 70%),
-    radial-gradient(50% 40% at 0% 100%, rgba(31, 88, 242, 0.12), transparent 70%),
-    linear-gradient(rgba(216, 234, 255, 0.035) 1px, transparent 1px) 0 0 / 56px 56px,
-    linear-gradient(90deg, rgba(216, 234, 255, 0.035) 1px, transparent 1px) 0 0 / 56px 56px;
+    linear-gradient(var(--line), var(--line)) calc(50% - var(--brief-width) / 2) 0 / 1px 100% no-repeat,
+    linear-gradient(var(--line), var(--line)) calc(50% + var(--brief-width) / 2) 0 / 1px 100% no-repeat;
+}
+
+.brief-backdrop {
+  display: none;
 }
 
 .brief-top,
@@ -39,25 +32,37 @@
 /* ── Шапка ── */
 
 .brief-top {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 22px var(--page-padding);
-  border-bottom: 1px solid var(--brief-line);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  height: var(--header-height);
+  padding: 0 max(var(--gutter), calc((100% - var(--brief-width)) / 2 + var(--gutter)));
+  border-bottom: 1px solid var(--ink);
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .brief-top__meta {
-  color: var(--text-muted);
+  color: var(--ink-3);
+  font-family: var(--mono);
+  font-size: 12px;
   text-align: center;
 }
 
+.brief-top__back {
+  color: var(--ink-2);
+  font-family: var(--mono);
+  font-size: 12.5px;
+  text-decoration: none;
+}
+
 .brief-top__back:hover {
-  color: var(--accent-orange);
+  color: var(--accent-deep);
 }
 
 /* ── Основная колонка ── */
@@ -66,57 +71,58 @@
   flex: 1;
   width: min(var(--brief-width), 100%);
   margin: 0 auto;
-  padding: clamp(28px, 6vh, 64px) var(--page-padding) 56px;
+  padding: clamp(24px, 5vh, 56px) var(--gutter) 56px;
 }
 
 /* ── Прогресс ── */
 
 .brief-progress {
-  margin-bottom: 26px;
+  margin-bottom: 20px;
 }
 
 .brief-progress__info {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 10px;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
+  margin-bottom: 8px;
+  color: var(--ink-3);
+  font-family: var(--mono);
+  font-size: 12px;
 }
 
 .brief-progress__info [data-brief-section] {
-  color: var(--accent-orange);
+  color: var(--accent-deep);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .brief-progress__track {
   position: relative;
-  height: 2px;
-  background: var(--brief-line);
+  height: 10px;
   overflow: hidden;
+  border: 1.5px solid var(--ink);
+  background: var(--card);
 }
 
 .brief-progress__track span {
   position: absolute;
   inset: 0 auto 0 0;
   width: 0;
-  background: var(--accent-orange);
-  box-shadow: 0 0 12px rgba(255, 65, 5, 0.6);
-  transition: width 520ms cubic-bezier(0.22, 1, 0.36, 1);
+  background: repeating-linear-gradient(-45deg, var(--accent) 0 6px, #ff7a40 6px 12px);
+  transition: width 520ms var(--ease);
 }
 
 /* ── Экраны ── */
 
 .brief-screen {
-  animation: brief-arrive 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: brief-arrive 380ms var(--ease) both;
 }
 
 @keyframes brief-arrive {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(12px);
   }
 }
 
@@ -130,59 +136,58 @@
 
 .brief-card {
   position: relative;
-  padding: clamp(24px, 4.5vw, 48px);
-  border: 1px solid var(--brief-line);
-  background: var(--brief-card);
-  backdrop-filter: blur(6px);
-}
-
-.brief-card::before {
-  content: "";
-  position: absolute;
-  top: -1px;
-  left: -1px;
-  width: 64px;
-  height: 2px;
-  background: var(--accent-orange);
+  padding: clamp(22px, 4.5vw, 44px);
+  border: 2px solid var(--ink);
+  background: var(--card);
+  box-shadow: var(--shadow-3) var(--ink);
 }
 
 .brief-eyebrow {
-  margin: 0 0 18px;
-  color: var(--text-muted);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
-  letter-spacing: 0.14em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 16px;
+  color: var(--ink-2);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .brief-eyebrow b {
-  color: var(--accent-orange);
-  font-weight: 400;
+  padding: 2px 7px;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 700;
 }
 
 .brief-title {
-  margin: 0 0 18px;
-  font-size: clamp(30px, 5vw, 50px);
+  margin: 0 0 16px;
+  font-family: var(--display);
+  font-size: clamp(28px, 5vw, 46px);
+  font-weight: 700;
   line-height: 1.05;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
 }
 
 .brief-title span {
-  color: var(--accent-blue);
+  color: var(--accent);
 }
 
 .brief-lead {
   max-width: 600px;
-  margin: 0 0 30px;
-  color: var(--text-muted);
+  margin: 0 0 26px;
+  color: var(--ink-2);
   font-size: 16px;
-  line-height: 1.65;
+  line-height: 1.6;
 }
 
 .brief-muted {
-  color: var(--text-muted);
+  color: var(--ink-3);
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.55;
 }
 
 /* ── Вступление ── */
@@ -190,71 +195,68 @@
 .brief-steps {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  margin: 0 0 28px;
+  margin: 0 0 24px;
   padding: 0;
+  border-top: 1.5px solid var(--ink);
+  border-left: 1.5px solid var(--ink);
   list-style: none;
-  background: var(--brief-line);
-  border: 1px solid var(--brief-line);
 }
 
 .brief-steps li {
-  padding: 18px;
-  background: var(--bg);
+  padding: 16px;
+  border-right: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+  background: var(--paper);
 }
 
 .brief-steps strong {
   display: block;
-  margin-bottom: 8px;
-  color: var(--accent-orange);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+  color: var(--accent-deep);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .brief-steps span {
   display: block;
-  color: var(--text);
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.45;
 }
 
 .brief-note {
   display: flex;
   gap: 12px;
-  margin: 0 0 26px;
-  padding: 14px 16px;
-  border-left: 2px solid var(--accent-orange);
-  background: var(--brief-accent-soft);
-  color: var(--text);
+  margin: 0 0 22px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
   font-size: 14px;
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
 .brief-check {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  margin: 0 0 24px;
-  color: var(--text-muted);
-  font-size: 13px;
-  line-height: 1.55;
+  margin: 0 0 22px;
+  color: var(--ink-2);
+  font-size: 13.5px;
+  line-height: 1.5;
   cursor: pointer;
 }
 
 .brief-check input {
   flex: none;
-  width: 18px;
-  height: 18px;
-  margin: 1px 0 0;
-  accent-color: var(--accent-orange);
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--accent);
   cursor: pointer;
 }
 
 .brief-check a {
-  color: var(--text);
-  text-decoration: underline;
+  color: var(--ink);
   text-underline-offset: 3px;
 }
 
@@ -262,43 +264,28 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
-.brief-page .button--primary,
 .brief-primary {
-  border-color: var(--accent-orange);
-  background: var(--accent-orange);
-  color: #000;
-}
-
-.brief-page .button--primary:hover,
-.brief-primary:hover {
-  border-color: var(--text);
-  background: var(--text);
-  color: #000;
-}
-
-.brief-page .button:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
+  background: var(--accent);
+  color: #fff;
 }
 
 .brief-link {
   padding: 0;
   border: 0;
   background: none;
-  color: var(--text-muted);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 12px;
-  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  font-family: var(--mono);
+  font-size: 12.5px;
   text-decoration: underline;
   text-underline-offset: 4px;
   cursor: pointer;
 }
 
 .brief-link:hover {
-  color: var(--accent-orange);
+  color: var(--accent-deep);
 }
 
 .brief-resume {
@@ -306,36 +293,40 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
-  margin: 0 0 22px;
-  padding: 16px 18px;
-  border: 1px dashed var(--accent-orange);
+  gap: 12px;
+  margin: 0 0 20px;
+  padding: 14px 16px;
+  border: 2px dashed var(--ink);
+  background: var(--paper);
   font-size: 14px;
 }
 
 /* ── Вопрос ── */
 
 .brief-question__title {
-  margin: 0 0 12px;
-  font-size: clamp(24px, 3.6vw, 34px);
-  line-height: 1.18;
-  letter-spacing: -0.01em;
+  margin: 0 0 10px;
+  font-family: var(--display);
+  font-size: clamp(21px, 3.2vw, 30px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
   outline: none;
+  text-wrap: balance;
 }
 
 .brief-question__hint {
   max-width: 640px;
-  margin: 0 0 28px;
-  color: var(--text-muted);
+  margin: 0 0 22px;
+  color: var(--ink-2);
   font-size: 15px;
-  line-height: 1.6;
+  line-height: 1.55;
 }
 
 .brief-options {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   gap: 10px;
-  margin: 0 0 18px;
+  margin: 0 0 14px;
   padding: 0;
   border: 0;
 }
@@ -344,55 +335,50 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 14px;
-  min-height: 64px;
-  padding: 14px 44px 14px 14px;
-  border: 1px solid var(--brief-line);
-  background: rgba(0, 0, 0, 0.35);
-  color: var(--text);
+  gap: 12px;
+  min-height: 58px;
+  padding: 12px 42px 12px 12px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
   font: inherit;
   font-size: 15px;
-  line-height: 1.35;
+  line-height: 1.3;
   text-align: left;
   cursor: pointer;
-  transition: border-color 140ms ease, background-color 140ms ease, transform 140ms ease;
-  animation: brief-arrive 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: calc(var(--order, 0) * 35ms);
+  transition: background 0.14s, color 0.14s, transform 0.13s var(--ease), box-shadow 0.13s var(--ease);
+  animation: brief-arrive 400ms var(--ease) both;
+  animation-delay: calc(var(--order, 0) * 30ms);
 }
 
-.brief-option:hover {
-  border-color: var(--text-muted);
-  transform: translateY(-1px);
-}
-
-.brief-option:focus-visible {
-  outline: 2px solid var(--accent-orange);
-  outline-offset: 2px;
+@media (hover: hover) and (pointer: fine) {
+  .brief-option:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-1) var(--ink);
+  }
 }
 
 .brief-option__key {
   flex: none;
   display: grid;
   place-items: center;
-  width: 26px;
-  height: 26px;
-  border: 1px solid var(--brief-line);
-  color: var(--text-muted);
-  font-family: "JetBrains Mono", monospace;
+  width: 24px;
+  height: 24px;
+  border: 1px solid currentColor;
+  font-family: var(--mono);
   font-size: 11px;
 }
 
-/* Галочка справа: квадрат для множественного выбора, круг — для одного. */
+/* Отметка справа: квадрат для нескольких вариантов, круг — для одного. */
 .brief-option::after {
   content: "";
   position: absolute;
   top: 50%;
-  right: 16px;
+  right: 14px;
   width: 16px;
   height: 16px;
-  border: 1px solid var(--brief-line);
+  border: 1.5px solid currentColor;
   transform: translateY(-50%);
-  transition: background-color 140ms ease, border-color 140ms ease;
 }
 
 .brief-options[data-type="single"] .brief-option::after {
@@ -400,50 +386,52 @@
 }
 
 .brief-option[aria-checked="true"] {
-  border-color: var(--accent-orange);
-  background: var(--brief-accent-soft);
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: var(--shadow-1) var(--accent);
 }
 
 .brief-option[aria-checked="true"] .brief-option__key {
-  border-color: var(--accent-orange);
-  color: var(--accent-orange);
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
 }
 
 .brief-option[aria-checked="true"]::after {
-  border-color: var(--accent-orange);
-  background: var(--accent-orange);
-  box-shadow: inset 0 0 0 3px #000;
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: inset 0 0 0 3px var(--ink);
 }
 
 .brief-other {
-  margin: 0 0 18px;
+  margin: 0 0 14px;
 }
 
 .brief-field {
   display: block;
   width: 100%;
-  padding: 14px 16px;
-  border: 1px solid var(--brief-line);
+  padding: 12px 14px;
+  border: 1.5px solid var(--ink);
   border-radius: 0;
-  background: rgba(0, 0, 0, 0.45);
-  color: var(--text);
+  background: var(--paper);
+  color: var(--ink);
   font: inherit;
   font-size: 16px;
   line-height: 1.5;
-  transition: border-color 140ms ease;
+  transition: box-shadow 0.14s;
 }
 
 .brief-field::placeholder {
-  color: var(--text-muted);
+  color: var(--ink-3);
 }
 
 .brief-field:focus {
-  border-color: var(--accent-orange);
   outline: none;
+  box-shadow: var(--shadow-1) var(--accent);
 }
 
 textarea.brief-field {
-  min-height: 150px;
+  min-height: 140px;
   resize: vertical;
 }
 
@@ -451,10 +439,36 @@ textarea.brief-field {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  margin-top: 8px;
-  color: var(--text-muted);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
+  margin-top: 6px;
+  color: var(--ink-3);
+  font-family: var(--mono);
+  font-size: 11.5px;
+}
+
+.brief-clarify {
+  margin: 16px 0 0;
+}
+
+.brief-clarify__label {
+  display: block;
+  margin: 0 0 6px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.brief-clarify__label span {
+  color: var(--ink-3);
+  font-weight: 400;
+}
+
+.brief-clarify__field {
+  min-height: 60px;
+  resize: vertical;
+}
+
+textarea.brief-clarify__field {
+  min-height: 60px;
 }
 
 .brief-controls {
@@ -463,9 +477,9 @@ textarea.brief-field {
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  margin-top: 30px;
-  padding-top: 22px;
-  border-top: 1px solid var(--brief-line);
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--line);
 }
 
 .brief-controls__side {
@@ -475,17 +489,16 @@ textarea.brief-field {
 }
 
 .brief-kbd {
-  color: var(--text-muted);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
+  color: var(--ink-3);
+  font-family: var(--mono);
+  font-size: 11.5px;
 }
 
 .brief-error {
-  margin: 16px 0 0;
-  padding: 12px 14px;
-  border-left: 2px solid var(--accent-orange);
-  background: var(--brief-accent-soft);
-  color: var(--text);
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
   font-size: 14px;
 }
 
@@ -493,18 +506,16 @@ textarea.brief-field {
 
 .brief-thinking {
   display: grid;
-  gap: 22px;
+  gap: 20px;
 }
 
 .brief-thinking__status {
   display: flex;
   align-items: center;
   gap: 14px;
-  color: var(--text-muted);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  color: var(--ink-2);
+  font-family: var(--mono);
+  font-size: 12.5px;
 }
 
 .brief-dots {
@@ -513,9 +524,9 @@ textarea.brief-field {
 }
 
 .brief-dots span {
-  width: 7px;
-  height: 7px;
-  background: var(--accent-orange);
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
   animation: brief-dot 1.1s ease-in-out infinite;
 }
 
@@ -523,17 +534,18 @@ textarea.brief-field {
 .brief-dots span:nth-child(3) { animation-delay: 0.3s; }
 
 @keyframes brief-dot {
-  0%, 100% { opacity: 0.2; transform: translateY(0); }
+  0%, 100% { opacity: 0.25; transform: translateY(0); }
   50% { opacity: 1; transform: translateY(-4px); }
 }
 
 .brief-skeleton {
   height: 14px;
-  background: linear-gradient(90deg, rgba(216, 234, 255, 0.05) 25%, rgba(216, 234, 255, 0.12) 50%, rgba(216, 234, 255, 0.05) 75%) 0 0 / 200% 100%;
+  background:
+    linear-gradient(90deg, var(--paper-2) 25%, var(--paper-3) 50%, var(--paper-2) 75%) 0 0 / 200% 100%;
   animation: brief-shimmer 1.4s linear infinite;
 }
 
-.brief-skeleton--title { height: 30px; width: 78%; }
+.brief-skeleton--title { height: 28px; width: 78%; }
 .brief-skeleton--line { width: 52%; }
 
 .brief-skeleton-grid {
@@ -543,7 +555,7 @@ textarea.brief-field {
 }
 
 .brief-skeleton-grid .brief-skeleton {
-  height: 64px;
+  height: 58px;
 }
 
 @keyframes brief-shimmer {
@@ -554,16 +566,17 @@ textarea.brief-field {
 
 .brief-form {
   display: grid;
-  gap: 18px;
+  gap: 16px;
 }
 
 .brief-label {
   display: block;
-  margin-bottom: 8px;
-  color: var(--text-muted);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
-  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+  color: var(--ink-2);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
@@ -574,20 +587,20 @@ textarea.brief-field {
 }
 
 .brief-segment button {
-  padding: 10px 14px;
-  border: 1px solid var(--brief-line);
-  background: transparent;
-  color: var(--text);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 12px;
+  padding: 9px 14px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 12.5px;
   cursor: pointer;
-  transition: border-color 140ms ease, color 140ms ease;
+  transition: background 0.14s, color 0.14s;
 }
 
 .brief-segment button[aria-pressed="true"] {
-  border-color: var(--accent-orange);
-  color: var(--accent-orange);
-  background: var(--brief-accent-soft);
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: var(--shadow-1) var(--accent);
 }
 
 /* ── Финал ── */
@@ -595,12 +608,14 @@ textarea.brief-field {
 .brief-done__mark {
   display: grid;
   place-items: center;
-  width: 64px;
-  height: 64px;
-  margin-bottom: 24px;
-  border: 1px solid var(--accent-orange);
-  color: var(--accent-orange);
-  font-size: 28px;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 20px;
+  border: 2px solid var(--ink);
+  background: var(--accent);
+  box-shadow: var(--shadow-2) var(--ink);
+  color: #fff;
+  font-size: 26px;
   animation: brief-pop 520ms cubic-bezier(0.22, 1.4, 0.36, 1) both;
 }
 
@@ -610,57 +625,71 @@ textarea.brief-field {
 
 .brief-callout {
   display: grid;
-  gap: 16px;
-  margin: 8px 0 44px;
-  padding: clamp(20px, 3.5vw, 30px);
-  border: 1px solid var(--accent-orange);
-  background: linear-gradient(135deg, rgba(255, 65, 5, 0.14), rgba(255, 65, 5, 0.02));
+  gap: 14px;
+  margin: 8px 0 36px;
+  padding: clamp(18px, 3.5vw, 28px);
+  border: 2px solid var(--ink);
+  background: var(--accent);
+  color: var(--ink);
 }
 
 .brief-callout h2 {
   margin: 0;
-  font-size: clamp(21px, 3vw, 27px);
-  line-height: 1.2;
+  font-size: clamp(20px, 3vw, 26px);
 }
 
 .brief-callout p {
   margin: 0;
-  color: var(--text-muted);
   font-size: 15px;
-  line-height: 1.6;
+  line-height: 1.55;
+}
+
+.brief-callout .button {
+  justify-self: start;
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: var(--shadow-2) var(--paper);
 }
 
 .brief-cases__title {
-  margin: 0 0 18px;
+  margin: 0 0 16px;
+  font-family: var(--display);
   font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .brief-cases {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 14px;
+  gap: 16px;
 }
 
 .brief-case {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--brief-line);
-  background: rgba(0, 0, 0, 0.4);
-  transition: border-color 150ms ease, transform 150ms ease;
-  animation: brief-arrive 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: var(--shadow-1) var(--ink);
+  transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease);
+  animation: brief-arrive 460ms var(--ease) both;
   animation-delay: calc(var(--order, 0) * 90ms + 120ms);
 }
 
-.brief-case:hover {
-  border-color: var(--accent-orange);
-  transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+  .brief-case:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-2) var(--accent);
+  }
 }
 
 .brief-case__media {
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  background: var(--surface-2);
-  border-bottom: 1px solid var(--brief-line);
+  border-bottom: 2px solid var(--ink);
+  background: var(--paper-2);
 }
 
 .brief-case__media img {
@@ -674,113 +703,110 @@ textarea.brief-field {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 8px;
-  padding: 16px;
+  gap: 6px;
+  padding: 14px;
 }
 
 .brief-case__category {
-  color: var(--accent-orange);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 10px;
-  letter-spacing: 0.1em;
+  color: var(--accent-deep);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .brief-case__title {
   margin: 0;
-  font-size: 18px;
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 700;
 }
 
 .brief-case__reason {
   flex: 1;
   margin: 0;
-  color: var(--text-muted);
-  font-size: 13px;
-  line-height: 1.55;
+  color: var(--ink-2);
+  font-size: 13.5px;
+  line-height: 1.5;
 }
 
 .brief-case__link {
-  margin-top: 6px;
-  color: var(--text);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
-  letter-spacing: 0.06em;
+  margin-top: 4px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
   text-transform: uppercase;
-}
-
-.brief-case:hover .brief-case__link {
-  color: var(--accent-orange);
 }
 
 /* ── Примерная стоимость ── */
 
 .brief-estimate {
-  margin: 0 0 22px;
-  padding: clamp(18px, 3vw, 26px);
-  border: 1px solid var(--brief-line);
-  background: rgba(0, 0, 0, 0.4);
-  animation: brief-arrive 460ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both;
+  margin: 0 0 20px;
+  padding: clamp(16px, 3vw, 24px);
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  animation: brief-arrive 460ms var(--ease) 120ms both;
 }
 
 .brief-estimate__label {
-  margin: 0 0 10px;
-  color: var(--text-muted);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
-  letter-spacing: 0.1em;
+  margin: 0 0 8px;
+  color: var(--ink-2);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .brief-estimate__value {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
+  font-family: var(--display);
   font-size: clamp(26px, 4.4vw, 40px);
+  font-weight: 700;
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
 }
 
 .brief-estimate__from {
-  color: var(--text-muted);
-  font-size: 0.6em;
+  color: var(--ink-3);
+  font-size: 0.55em;
 }
 
 .brief-estimate__note {
   margin: 0;
   padding-left: 12px;
-  border-left: 2px solid var(--accent-orange);
-  color: var(--text-muted);
-  font-size: 13px;
-  line-height: 1.6;
+  border-left: 3px solid var(--accent);
+  color: var(--ink-2);
+  font-size: 13.5px;
+  line-height: 1.5;
 }
 
 /* ── Предпросмотр и ошибки ── */
 
 .brief-banner {
-  margin: 0 0 20px;
-  padding: 10px 14px;
-  border: 1px dashed var(--accent-blue);
-  color: var(--text);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.brief-state {
-  text-align: left;
+  margin: 0 0 18px;
+  padding: 8px 12px;
+  border: 2px dashed var(--ink);
+  background: var(--accent-soft);
+  font-family: var(--mono);
+  font-size: 12px;
 }
 
 .brief-state__code {
-  margin: 0 0 10px;
-  color: var(--accent-orange);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 12px;
-  letter-spacing: 0.12em;
+  margin: 0 0 8px;
+  color: var(--accent-deep);
+  font-family: var(--mono);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
 }
 
 .brief-noscript {
-  padding: 20px;
-  border: 1px solid var(--brief-line);
+  padding: 18px;
+  border: 2px solid var(--ink);
+  background: var(--card);
 }
 
 /* ── Подвал ── */
@@ -789,69 +815,177 @@ textarea.brief-field {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px 26px;
-  padding: 24px var(--page-padding) calc(24px + env(safe-area-inset-bottom, 0px));
-  border-top: 1px solid var(--brief-line);
-  color: var(--text-muted);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  gap: 8px 24px;
+  padding: 18px var(--gutter) calc(18px + env(safe-area-inset-bottom, 0px));
+  background: var(--ink);
+  color: var(--on-ink-2);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.brief-foot a {
+  text-decoration: none;
 }
 
 .brief-foot a:hover {
-  color: var(--accent-orange);
+  color: var(--accent);
 }
 
-/* ── Адаптив ── */
+/* ── Телефон: плотно по высоте ── */
 
 @media (max-width: 760px) {
   .brief-top__meta {
     display: none;
   }
 
+  .brief-main {
+    padding: 14px var(--gutter) 24px;
+  }
+
+  .brief-progress {
+    margin-bottom: 12px;
+  }
+
+  .brief-progress__track {
+    height: 8px;
+  }
+
+  .brief-card {
+    padding: 16px 14px;
+    box-shadow: var(--shadow-1) var(--ink);
+  }
+
+  .brief-eyebrow {
+    margin-bottom: 10px;
+    font-size: 11px;
+  }
+
+  .brief-title {
+    margin-bottom: 10px;
+    font-size: 25px;
+  }
+
+  .brief-lead {
+    margin-bottom: 16px;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+
   .brief-steps {
     grid-template-columns: 1fr;
+    margin-bottom: 16px;
+  }
+
+  .brief-steps li {
+    display: flex;
+    gap: 10px;
+    padding: 9px 12px;
+  }
+
+  .brief-steps strong {
+    margin: 1px 0 0;
+  }
+
+  .brief-steps span {
+    font-size: 13.5px;
+  }
+
+  .brief-note {
+    margin-bottom: 14px;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .brief-check {
+    margin-bottom: 14px;
+    font-size: 12.5px;
+  }
+
+  .brief-question__title {
+    font-size: 20px;
+  }
+
+  .brief-question__hint {
+    margin-bottom: 14px;
+    font-size: 14px;
   }
 
   .brief-options,
   .brief-skeleton-grid {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
 
   .brief-option {
-    min-height: 56px;
+    min-height: 46px;
+    padding: 9px 38px 9px 10px;
+    font-size: 14.5px;
   }
 
+  .brief-option__key,
   .brief-kbd {
     display: none;
   }
 
-  /* На телефоне главная кнопка всегда под большим пальцем. */
+  textarea.brief-field {
+    min-height: 110px;
+  }
+
+  .brief-clarify {
+    margin-top: 12px;
+  }
+
+  /* Главная кнопка всегда под большим пальцем. */
   .brief-controls {
     position: sticky;
     bottom: 0;
-    margin-left: calc(var(--page-padding) * -1);
-    margin-right: calc(var(--page-padding) * -1);
-    padding: 30px var(--page-padding) calc(14px + env(safe-area-inset-bottom, 0px));
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0), #000 26px);
-    border-top: 0;
-  }
-
-  .brief-card .brief-controls {
-    margin-left: calc(clamp(24px, 4.5vw, 48px) * -1);
-    margin-right: calc(clamp(24px, 4.5vw, 48px) * -1);
-    padding-left: clamp(24px, 4.5vw, 48px);
-    padding-right: clamp(24px, 4.5vw, 48px);
+    z-index: 5;
+    margin: 16px -14px -16px;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+    border-top: 2px solid var(--ink);
+    background: var(--card);
   }
 
   .brief-controls .button {
     flex: 1;
+    min-height: 44px;
+    box-shadow: var(--shadow-1) var(--ink);
   }
 
   .brief-controls__side {
     width: 100%;
     justify-content: space-between;
+    gap: 12px;
+  }
+
+  .brief-callout {
+    margin-bottom: 24px;
+  }
+
+  .brief-cases {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .brief-case__body {
+    padding: 10px;
+  }
+
+  .brief-case__title {
+    font-size: 14.5px;
+  }
+
+  .brief-case__reason {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 12px;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  .brief-foot {
+    gap: 6px 16px;
+    font-size: 11px;
   }
 }
 
@@ -872,24 +1006,4 @@ textarea.brief-field {
   .brief-progress__track span {
     transition: none;
   }
-}
-
-.brief-clarify {
-  margin: 18px 0 0;
-}
-
-.brief-clarify__label {
-  display: block;
-  margin: 0 0 8px;
-  color: var(--text);
-  font-size: 14px;
-}
-
-.brief-clarify__label span {
-  color: var(--text-muted);
-}
-
-.brief-clarify__field {
-  min-height: 64px;
-  resize: vertical;
 }
