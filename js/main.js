@@ -307,8 +307,8 @@ function initProcess() {
   update();
 }
 
-/* Scroll-linked choreography. Reversing scroll assembles the same letters
-   back into the wordmark; no duplicate logo and no time-based language loop. */
+/* Расшифровка — это и есть заставка: логотип во весь экран разбирается на
+   строки определения, затем блок ужимается до компактного вида и остаётся им. */
 function initHeroStory() {
   const story = document.querySelector('.hero__story');
   if (!story) return;
@@ -320,12 +320,22 @@ function initHeroStory() {
   const translation = svg.querySelector('.iso-definition__translation');
   const bracket = translation.querySelector('path');
   const russian = [...translation.querySelectorAll('text')];
-  const hint = story.querySelector('.hero__scroll-hint');
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  // Снимок логотипа до морфинга: после заставки он остаётся крупными буквами
+  // Hero, а расшифровка живёт под ними в компактном виде.
+  const wordmark = document.createElement('div');
+  wordmark.className = 'hero__wordmark';
+  const mark = svg.cloneNode(true);
+  mark.classList.remove('iso-logo');
+  mark.classList.add('iso-logo', 'iso-logo--mark');
+  mark.removeAttribute('aria-label');
+  mark.setAttribute('aria-hidden', 'true');
+  mark.querySelector('.iso-definition')?.remove();
+  wordmark.append(mark);
+  figure.querySelector('.hero__logo').before(wordmark);
   let frame = 0;
   let value = 0;
-  let target = 0;
-  let travel = 1000;
+  let duration = 1500;
   let mobile = false;
   let targets = [];
   const smooth = (n) => { const t = clamp(n, 0, 1); return t * t * (3 - 2 * t); };
@@ -353,18 +363,26 @@ function initHeroStory() {
     translation.style.opacity = ru.toFixed(3);
     translation.setAttribute('transform', `translate(0 ${10 * (1 - ru)})`);
     bracket.style.strokeDashoffset = String(1 - ru);
-    hint.style.opacity = String(1 - smooth(p / .3));
   };
-  const tick = () => {
+  const ease = (t) => 1 - Math.pow(1 - clamp(t, 0, 1), 3);
+  let started = 0;
+  const step = (now) => {
     frame = 0;
-    value += (target - value) * .16;
-    if (Math.abs(target - value) < .0003) value = target;
+    if (!started) started = now;
+    const raw = duration ? (now - started) / duration : 1;
+    value = ease(raw);
     paint();
-    if (value !== target) frame = requestAnimationFrame(tick);
+    if (raw < 1) frame = requestAnimationFrame(step);
+    else shrink();
   };
-  const request = () => {
-    target = motion.matches ? 1 : clamp(((parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 64) - story.getBoundingClientRect().top) / travel, 0, 1);
-    if (!frame) frame = requestAnimationFrame(tick);
+  const shrink = () => {
+    if (story.classList.contains('is-compact')) return;
+    setTimeout(() => story.classList.add('is-compact'), motion.matches ? 0 : 2000);
+  };
+  const play = () => {
+    if (started) return;
+    if (motion.matches) { value = 1; paint(); story.classList.add('is-compact'); return; }
+    frame = requestAnimationFrame(step);
   };
   const measure = () => {
     mobile = window.innerWidth <= 600;
@@ -391,13 +409,10 @@ function initHeroStory() {
     russian[1].textContent = mobile ? 'Вперёд к ИИ и качеству.' : 'Вперёд к ИИ';
     russian[1].style.fontSize = mobile ? '21px' : '';
     russian[2].style.display = mobile ? 'none' : '';
-    travel = Math.min(1300, Math.max(800, window.innerHeight * 1.5));
     story.style.setProperty('--story-height', `${figure.offsetHeight}px`);
-    story.style.setProperty('--story-travel', `${travel}px`);
-    request();
+    if (!frame && started) paint();
   };
   story.classList.add('is-enhanced');
-  window.addEventListener('scroll', request, { passive: true });
   window.addEventListener('resize', measure);
   motion.addEventListener('change', measure);
   // Styles and web fonts can arrive after DOMContentLoaded. Keep the pin
@@ -405,6 +420,8 @@ function initHeroStory() {
   new ResizeObserver(measure).observe(figure);
   window.addEventListener('load', measure, { once: true });
   measure();
+  // Заставка — это и есть расшифровка: стартует сразу, без скролла.
+  play();
 }
 
 /* Логотип первого экрана наклоняется за курсором. */

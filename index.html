@@ -7,50 +7,21 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="build-commit" content="be6281b17b">
+    <meta name="build-commit" content="c12da63669">
     <meta name="description" content="Разработка сайтов, Telegram-сервисов, CRM и AI-автоматизаций с фиксированной сметой и работой по договору.">
     <meta name="theme-color" content="#eeefe9">
     <title>g0FAQ — сайты, Telegram, CRM и AI под ключ</title>
     <style>
       html,body{min-width:320px;margin:0;background:#eeefe9;color:#101114}
-      /* Заставка — короткий сюжет, который превращается в первый экран.
-         На «чистом листе» прочерчиваются направляющие и печатается команда,
-         а настоящий блок с логотипом (он поднят над заставкой, см. main.css)
-         в это время собирает буквы. Потом лист заставки уходит — логотип уже
-         стоит на своём месте, и под ним въезжает остальная страница. */
-      .splash{position:fixed;inset:0;z-index:1000;background:#eeefe9;color:#101114;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;transition:background-color .7s cubic-bezier(.4,0,.2,1)}
-      .splash__rail{position:absolute;top:0;bottom:0;width:1px;background:#c9ccc2;transform:scaleY(0);transform-origin:top;animation:splash-rail .9s cubic-bezier(.65,0,.35,1) forwards}
-      .splash__rail--l{left:calc(50% - 560px)}
-      .splash__rail--r{left:calc(50% + 560px);animation-delay:.12s}
-      .splash__mark{position:absolute;width:14px;height:14px;opacity:0;animation:splash-pop .4s cubic-bezier(.3,1.6,.5,1) forwards}
-      .splash__mark::before,.splash__mark::after{content:"";position:absolute;background:#ff4f0f}
-      .splash__mark::before{left:6px;top:0;width:2px;height:14px}
-      .splash__mark::after{top:6px;left:0;width:14px;height:2px}
-      .splash__mark--a{left:calc(50% - 567px);top:calc(64px - 7px);animation-delay:.7s}
-      .splash__mark--b{left:calc(50% + 553px);top:calc(64px - 7px);animation-delay:.8s}
-      .splash__term{position:absolute;left:50%;bottom:clamp(40px,12vh,120px);transform:translateX(-50%);display:grid;justify-items:center;gap:8px;white-space:nowrap;transition:opacity .35s ease,transform .5s ease}
-      .splash__line{font-size:clamp(12px,1.6vw,15px);color:#464a52}
-      .splash__line b{color:#cf3a02;font-weight:700}
-      .splash__cursor{display:inline-block;width:.6em;height:1.1em;margin-left:2px;vertical-align:-.2em;background:#ff4f0f;animation:splash-blink .9s steps(1) infinite}
-      .splash__status{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6d727a;min-height:1.2em}
-      .splash__status i{font-style:normal;color:#1f8a4c}
-      .splash.is-leaving{background-color:rgba(238,239,233,0);pointer-events:none}
-      .splash.is-leaving .splash__term{opacity:0;transform:translate(-50%,12px)}
-      .splash.is-leaving .splash__rail,.splash.is-leaving .splash__mark{opacity:0;transition:opacity .4s}
-      @keyframes splash-rail{to{transform:scaleY(1)}}
-      @keyframes splash-pop{from{opacity:0;transform:scale(.2) rotate(-90deg)}to{opacity:1;transform:none}}
-      @keyframes splash-blink{50%{opacity:0}}
-      @media (max-width:1180px){.splash__rail,.splash__mark{display:none}}
-      @media (prefers-reduced-motion:reduce){.splash,.splash *{animation:none!important;transition-duration:.01ms!important}}
     </style>
-    <noscript><style>.splash{display:none!important}</style></noscript>
     <script>
-      // Анимации первого экрана ждут ухода заставки: класс ставится до первой
-      // отрисовки, поэтому элементы не мелькают.
+      // Заставка — это сама расшифровка в первом экране, отдельного
+      // терминального листа больше нет: анимации стартуют сразу.
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion-ready');
+      document.documentElement.classList.add('is-intro-done');
     </script>
-    <link id="main-styles" rel="stylesheet" href="./css/main.css?v=be6281b17b" fetchpriority="high" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="./css/main.css?v=be6281b17b"></noscript>
+    <link id="main-styles" rel="stylesheet" href="./css/main.css?v=c12da63669" fetchpriority="high" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="./css/main.css?v=c12da63669"></noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap&subset=cyrillic" rel="stylesheet" media="print" onload="this.media='all'">
@@ -72,77 +43,12 @@
         window.setTimeout(retry, 2500);
       })();
     </script>
-    <script src="./js/calculator-config.js?v=be6281b17b" defer></script>
-    <script src="./js/calculator.js?v=be6281b17b" defer></script>
-    <script src="./js/main.js?v=be6281b17b" defer></script>
-    <script src="./js/analytics.js?v=be6281b17b" defer></script>
+    <script src="./js/calculator-config.js?v=c12da63669" defer></script>
+    <script src="./js/calculator.js?v=c12da63669" defer></script>
+    <script src="./js/main.js?v=c12da63669" defer></script>
+    <script src="./js/analytics.js?v=c12da63669" defer></script>
   </head>
   <body>
-    <div class="splash" id="splash" aria-hidden="true">
-      <span class="splash__rail splash__rail--l"></span>
-      <span class="splash__rail splash__rail--r"></span>
-      <span class="splash__mark splash__mark--a"></span>
-      <span class="splash__mark splash__mark--b"></span>
-      <div class="splash__term">
-        <div class="splash__line"><b>$</b> <span data-splash-typed></span><span class="splash__cursor"></span></div>
-        <div class="splash__status" data-splash-status></div>
-      </div>
-    </div>
-    <script>
-      (() => {
-        const root = document.documentElement;
-        const splash = document.getElementById('splash');
-        const typed = splash.querySelector('[data-splash-typed]');
-        const status = splash.querySelector('[data-splash-status]');
-        const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const COMMAND = 'build g0faq --design --code --launch';
-        const MIN = reduced ? 0 : 2300;
-        const MAX = 4500;
-        const started = Date.now();
-        let loaded = false;
-        let typedDone = reduced;
-        let done = false;
-
-        root.classList.add('is-splash');
-
-        const finish = () => {
-          if (done) return;
-          done = true;
-          status.innerHTML = '<i>✓</i> готово';
-          setTimeout(() => {
-            splash.classList.add('is-leaving');
-            root.classList.add('is-intro-done');
-            root.classList.remove('is-splash');
-            setTimeout(() => splash.remove(), reduced ? 0 : 800);
-          }, reduced ? 0 : 280);
-        };
-
-        const maybeFinish = () => {
-          if (loaded && typedDone && Date.now() - started >= MIN) finish();
-        };
-
-        // Команда печатается посимвольно, статусы сменяют друг друга.
-        if (!reduced) {
-          let index = 0;
-          const steps = ['собираю буквы…', 'прочерчиваю контуры…', 'расставляю блоки…'];
-          const type = () => {
-            index += 1;
-            typed.textContent = COMMAND.slice(0, index);
-            if (index === 6) status.textContent = steps[0];
-            if (index === 22) status.textContent = steps[1];
-            if (index < COMMAND.length) setTimeout(type, 28 + Math.random() * 30);
-            else { status.textContent = steps[2]; typedDone = true; setTimeout(maybeFinish, 350); }
-          };
-          setTimeout(type, 250);
-        } else {
-          typed.textContent = COMMAND;
-        }
-
-        addEventListener('load', () => { loaded = true; maybeFinish(); });
-        const poll = setInterval(() => { if (done) clearInterval(poll); else maybeFinish(); }, 200);
-        setTimeout(() => { loaded = true; typedDone = true; finish(); }, MAX);
-      })();
-    </script>
     <a class="skip-link" href="#main">Перейти к содержимому</a>
 
     <header class="site-header">
@@ -197,7 +103,7 @@
 </svg>
           </div>
           <p class="hero__meaning">g0FAQ = Go For AI &amp; Quality — Вперёд к ИИ и качеству.</p>
-          <div class="hero__scroll-note" aria-hidden="true"><span>01 / ИМЯ СО СМЫСЛОМ</span><span class="hero__scroll-hint">Листайте, чтобы расшифровать <i>↓</i></span><span class="hero__scroll-progress"><i></i></span></div>
+          <div class="hero__scroll-note" aria-hidden="true"><span>01 / ИМЯ СО СМЫСЛОМ</span><span class="hero__scroll-progress"><i></i></span></div>
           <p class="fig-caption">Fig. 1</p>
         </div>
 

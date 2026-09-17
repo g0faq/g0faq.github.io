@@ -2375,10 +2375,23 @@ html.is-splash .hero__story > .hero__figure {
 
 /* Scroll-story: the actual logo letters become the initial column. */
 .hero__story { position: relative; }
-.hero__story.is-enhanced { height: calc(var(--story-height) + var(--story-travel)); }
-.hero__story.is-enhanced > .hero__figure { min-height: calc(100svh - var(--header-height)); display: flex; flex-direction: column; justify-content: center; }
+.hero__story.is-enhanced { height: auto; }
+.hero__story.is-enhanced > .hero__figure {
+  min-height: calc(100svh - var(--header-height)); display: flex; flex-direction: column; justify-content: center;
+  transition: min-height .85s cubic-bezier(.4, 0, .2, 1);
+}
+.hero__story.is-enhanced.is-compact > .hero__figure { min-height: calc(58svh - var(--header-height)); }
 .hero__story > .hero__figure { border-bottom: 1px solid var(--line); }
-.hero__story.is-enhanced .hero__logo { height: clamp(350px, 62svh, 560px); }
+.hero__story.is-enhanced .hero__logo { height: clamp(320px, 74svh, 660px); transition: height .85s cubic-bezier(.4, 0, .2, 1); }
+.hero__story.is-enhanced.is-compact .hero__logo { height: clamp(120px, 19svh, 175px); }
+/* Крупные буквы Hero возвращаются над компактной расшифровкой. */
+.hero__wordmark { display: none; }
+.hero__story.is-enhanced .hero__wordmark {
+  display: block; height: 0; opacity: 0; overflow: hidden;
+  transition: height .85s cubic-bezier(.4, 0, .2, 1), opacity .5s ease .3s, margin-bottom .85s cubic-bezier(.4, 0, .2, 1);
+}
+.hero__story.is-enhanced.is-compact .hero__wordmark { height: clamp(150px, 27svh, 260px); margin-bottom: 18px; opacity: 1; }
+.hero__wordmark .iso-logo { height: 100%; width: 100%; display: block; }
 .hero__story.is-enhanced .iso-logo { height: 100%; display: block; }
 .iso-morph { transform-origin: 0 0; }
 .hero__story.is-unfolding .iso-logo { transform: none; }
@@ -2402,18 +2415,19 @@ html.is-splash .hero__story > .hero__figure {
   width: min(100%, 860px); margin: 16px auto 4px; padding-top: 16px;
   font: 10px/1.5 var(--mono); letter-spacing: .04em; color: var(--ink-3);
 }
-.hero__scroll-hint i { font-style: normal; color: var(--accent-deep); padding-left: 10px; }
 .hero__scroll-progress { position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--line); }
-.hero__scroll-progress i { display: block; height: 100%; background: var(--accent); transform: scaleX(var(--unfold, 0)); transform-origin: left; }
+.hero__scroll-progress i { display: block; height: 100%; background: var(--accent); transform: scaleX(var(--unfold, 0)); transform-origin: left; transition: opacity .5s ease .3s; }
+.hero__story.is-compact .hero__scroll-progress i { opacity: 0; }
 html.is-splash .hero__scroll-note, html.is-splash .iso-definition { visibility: hidden; }
 @media (max-width: 600px) {
-  .hero__story.is-enhanced .hero__logo { height: clamp(350px, 62svh, 490px); }
+  .hero__story.is-enhanced .hero__logo { height: clamp(280px, 66svh, 520px); }
+  .hero__story.is-enhanced.is-compact .hero__logo { height: clamp(150px, 24svh, 220px); }
+  .hero__story.is-enhanced.is-compact .hero__wordmark { height: clamp(110px, 18svh, 160px); }
   .hero__story.is-enhanced .hero__scroll-note { font-size: 8px; gap: 8px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero__story.is-enhanced { height: auto; }
-  .hero__story > .hero__figure { position: relative; top: auto; }
-  .hero__scroll-hint { display: none; }
+  .hero__story.is-enhanced > .hero__figure,
+  .hero__story.is-enhanced .hero__logo { transition: none; }
 }
 
 /* ── Анимации ───────────────────────────────────────────────────────────────
