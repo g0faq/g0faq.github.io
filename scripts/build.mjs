@@ -22,7 +22,6 @@ const mediaOrigins = [
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
 await Promise.all([
-  cp(resolve(root, 'favicon.ico'), resolve(output, 'favicon.ico')),
   cp(resolve(root, 'assets'), resolve(output, 'assets'), { recursive: true }),
   cp(resolve(root, 'data'), resolve(output, 'data'), { recursive: true }),
   cp(resolve(root, 'img'), resolve(output, 'img'), { recursive: true }),

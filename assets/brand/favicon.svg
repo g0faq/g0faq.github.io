@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <title>g0FAQ</title>
-  <rect width="64" height="64" rx="12" fill="#101114"/>
-  <path d="M14 14 20 9H50L44 14ZM22 34 28 29H36V34ZM14 44 20 39H36V44Z" fill="#ffac86"/>
-  <path d="M44 14 50 9V45L44 50Z" fill="#cf3a02"/>
-  <path d="M14 14H44V50H14V42H36V34H14ZM22 22V27H36V22Z" fill="#ff4f0f" fill-rule="evenodd"/>
-</svg>

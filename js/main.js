@@ -307,126 +307,6 @@ function initProcess() {
   update();
 }
 
-/* Расшифровка — это и есть заставка: логотип во весь экран разбирается на
-   строки определения, затем блок ужимается до компактного вида и остаётся им. */
-function initHeroStory() {
-  const story = document.querySelector('.hero__story');
-  if (!story) return;
-  const figure = story.querySelector('.hero__figure');
-  const svg = story.querySelector('.iso-logo');
-  const letters = [...svg.querySelectorAll('.iso-morph')];
-  const bounds = letters.map((letter) => letter.querySelector('.iso-letter').getBBox());
-  const rows = [...svg.querySelectorAll('.iso-definition__row')];
-  const translation = svg.querySelector('.iso-definition__translation');
-  const bracket = translation.querySelector('path');
-  const russian = [...translation.querySelectorAll('text')];
-  const motion = matchMedia('(prefers-reduced-motion: reduce)');
-  // Снимок логотипа до морфинга: после заставки он остаётся крупными буквами
-  // Hero, а расшифровка живёт под ними в компактном виде.
-  const wordmark = document.createElement('div');
-  wordmark.className = 'hero__wordmark';
-  const mark = svg.cloneNode(true);
-  mark.classList.remove('iso-logo');
-  mark.classList.add('iso-logo', 'iso-logo--mark');
-  mark.removeAttribute('aria-label');
-  mark.setAttribute('aria-hidden', 'true');
-  mark.querySelector('.iso-definition')?.remove();
-  wordmark.append(mark);
-  figure.querySelector('.hero__logo').before(wordmark);
-  let frame = 0;
-  let value = 0;
-  let duration = 2200;
-  let mobile = false;
-  let targets = [];
-  const smooth = (n) => { const t = clamp(n, 0, 1); return t * t * (3 - 2 * t); };
-  const paint = () => {
-    const p = motion.matches ? 1 : value;
-    story.style.setProperty('--unfold', p.toFixed(4));
-    story.classList.toggle('is-unfolding', p > 0.005);
-    // The viewBox opens up vertically on phones while letters move.
-    const opening = smooth(p / .68);
-    svg.setAttribute('viewBox', `0 0 ${600 + ((mobile ? 360 : 600) - 600) * opening} ${272 + ((mobile ? 438 : 324) - 272) * opening}`);
-    letters.forEach((letter, i) => {
-      const row = Math.max(0, i - 1);
-      const t = smooth((p - .025 - row * .055) / .48);
-      const to = targets[i];
-      const scale = 1 + (to.scale - 1) * t;
-      letter.setAttribute('transform', `matrix(${scale} 0 0 ${scale} ${to.x * t} ${to.y * t})`);
-    });
-    rows.forEach((row, i) => {
-      const t = smooth((p - .34 - i * .07) / .23);
-      row.style.opacity = t.toFixed(3);
-      row.setAttribute('transform', `translate(${18 * (1 - t)} 0)`);
-      row.querySelector('path').style.strokeDashoffset = String(1 - t);
-    });
-    const ru = smooth((p - .72) / .2);
-    translation.style.opacity = ru.toFixed(3);
-    translation.setAttribute('transform', `translate(0 ${10 * (1 - ru)})`);
-    bracket.style.strokeDashoffset = String(1 - ru);
-  };
-  // Ровный ход: мягкий разгон и торможение, без рывка в начале.
-  const ease = (t) => { const n = clamp(t, 0, 1); return n * n * n * (n * (n * 6 - 15) + 10); };
-  let started = 0;
-  const step = (now) => {
-    frame = 0;
-    if (!started) started = now;
-    const raw = duration ? (now - started) / duration : 1;
-    value = ease(raw);
-    paint();
-    if (raw < 1) frame = requestAnimationFrame(step);
-    else shrink();
-  };
-  const shrink = () => {
-    if (story.classList.contains('is-compact')) return;
-    setTimeout(() => story.classList.add('is-compact'), motion.matches ? 0 : 600);
-  };
-  const play = () => {
-    if (started !== 0 || frame) return;
-    if (motion.matches) { value = 1; paint(); story.classList.add('is-compact'); return; }
-    // Первый кадр — целое слово: держим его, прежде чем разбирать на строки.
-    started = -1;
-    setTimeout(() => { started = 0; frame = requestAnimationFrame(step); }, 900);
-  };
-  const measure = () => {
-    mobile = window.innerWidth <= 600;
-    const scale = .41;
-    const step = mobile ? 84 : 74;
-    targets = bounds.map((box, i) => {
-      const row = Math.max(0, i - 1);
-      // g + 0 form a single Go unit; other initials share the same axis.
-      const x = i < 2 ? 10 + (box.x - bounds[0].x) * scale : 38;
-      const y = 8 + row * step + (i === 1 ? (box.y - bounds[0].y) * scale : 0);
-      return { scale, x: x - box.x * scale, y: y - box.y * scale };
-    });
-    rows.forEach((row, i) => {
-      const y = 42 + i * step;
-      row.querySelector('path').setAttribute('d', `M108 ${y}H128`);
-      row.querySelector('text').setAttribute('y', String(y + 13));
-      row.querySelector('text').setAttribute('x', mobile ? '140' : '142');
-    });
-    bracket.setAttribute('d', mobile ? 'M16 364H344' : 'M370 102H358V238H370');
-    russian.forEach((text, i) => {
-      text.setAttribute('x', mobile ? '16' : '386');
-      text.setAttribute('y', String(mobile ? [386, 413, 413][i] : [131, 166, 194][i]));
-    });
-    russian[1].textContent = mobile ? 'Вперёд к ИИ и качеству.' : 'Вперёд к ИИ';
-    russian[1].style.fontSize = mobile ? '21px' : '';
-    russian[2].style.display = mobile ? 'none' : '';
-    story.style.setProperty('--story-height', `${figure.offsetHeight}px`);
-    if (!frame && started) paint();
-  };
-  story.classList.add('is-enhanced');
-  window.addEventListener('resize', measure);
-  motion.addEventListener('change', measure);
-  // Styles and web fonts can arrive after DOMContentLoaded. Keep the pin
-  // distance in sync with the real figure height, including responsive changes.
-  new ResizeObserver(measure).observe(figure);
-  window.addEventListener('load', measure, { once: true });
-  measure();
-  // Заставка — это и есть расшифровка: стартует сразу, без скролла.
-  play();
-}
-
 /* Логотип первого экрана наклоняется за курсором. */
 function initHeroTilt() {
   const hero = document.querySelector('.hero__figure');
@@ -445,6 +325,28 @@ function initHeroTilt() {
     logo.style.setProperty('--tilt-x', '0deg');
     logo.style.setProperty('--tilt-y', '0deg');
   });
+}
+
+/* Логотип первого экрана «уходит под страницу»: чем дальше прокрутка, тем
+   сильнее он уменьшается и гаснет. */
+function initHeroSink() {
+  const figure = document.querySelector('.hero__figure');
+  const identity = document.querySelector('.hero__identity');
+  if (!figure || !identity || reducedMotion()) return;
+
+  let frame = 0;
+  const update = () => {
+    frame = 0;
+    const height = figure.offsetHeight || 1;
+    const sink = clamp(window.scrollY / height, 0, 1);
+    figure.style.setProperty('--sink', sink.toFixed(3));
+    // Зона размытия над краем листа проявляется в первые мгновения прокрутки.
+    identity.style.setProperty('--sheet-blur', clamp(sink * 5, 0, 1).toFixed(2));
+  };
+
+  window.addEventListener('scroll', () => { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
 }
 
 function initHeader() {
@@ -579,8 +481,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   initClock();
   initProcess();
-  initHeroStory();
   initHeroTilt();
+  initHeroSink();
   document.querySelectorAll('.tag-grid li').forEach((item, index) => item.style.setProperty('--t', String(index)));
   initRoute();
   initCases();
