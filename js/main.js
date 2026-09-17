@@ -335,7 +335,7 @@ function initHeroStory() {
   figure.querySelector('.hero__logo').before(wordmark);
   let frame = 0;
   let value = 0;
-  let duration = 2600;
+  let duration = 2200;
   let mobile = false;
   let targets = [];
   const smooth = (n) => { const t = clamp(n, 0, 1); return t * t * (3 - 2 * t); };
@@ -378,7 +378,7 @@ function initHeroStory() {
   };
   const shrink = () => {
     if (story.classList.contains('is-compact')) return;
-    setTimeout(() => story.classList.add('is-compact'), motion.matches ? 0 : 2000);
+    setTimeout(() => story.classList.add('is-compact'), motion.matches ? 0 : 600);
   };
   const play = () => {
     if (started) return;
