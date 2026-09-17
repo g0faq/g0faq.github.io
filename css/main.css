@@ -2447,6 +2447,18 @@ p {
   transition: fill 0.25s;
 }
 
+.iso-link {
+  cursor: pointer;
+}
+
+.iso-link:focus-visible {
+  outline: none;
+}
+
+.iso-link:focus-visible .iso-face {
+  fill: var(--accent);
+}
+
 /* Штриховка лица букв медленно «течёт». */
 .iso-hatch-line {
   animation: hatch-shift 3.5s linear infinite;
