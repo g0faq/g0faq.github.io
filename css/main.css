@@ -1822,6 +1822,7 @@ p {
 .social--contacts .social__link {
   width: 52px;
   height: 52px;
+  flex: 0 0 auto;
   border-width: 2px;
   box-shadow: var(--shadow-2) var(--ink);
 }
@@ -2274,6 +2275,18 @@ p {
 
   .contact-card__actions .button {
     justify-self: stretch;
+  }
+
+  /* Иконки контактов — по всей ширине чёрной кнопки над ними. */
+  .social--contacts {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .social--contacts .social__link {
+    flex: 0 0 auto;
   }
 
   .site-footer__grid {
@@ -3409,6 +3422,18 @@ html:not(.motion-ready) .section__head h2 em::after {
   .contact-card__actions .button {
     justify-self: stretch;
     min-height: 52px;
+  }
+
+  /* Иконки контактов — по всей ширине чёрной кнопки над ними. */
+  .social--contacts {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .social--contacts .social__link {
+    flex: 0 0 auto;
   }
 
   .contact-links {
