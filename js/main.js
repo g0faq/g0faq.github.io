@@ -331,7 +331,8 @@ function initHeroTilt() {
    сильнее он уменьшается и гаснет. */
 function initHeroSink() {
   const figure = document.querySelector('.hero__figure');
-  if (!figure || reducedMotion()) return;
+  const identity = document.querySelector('.hero__identity');
+  if (!figure || !identity || reducedMotion()) return;
 
   let frame = 0;
   const update = () => {
@@ -339,6 +340,8 @@ function initHeroSink() {
     const height = figure.offsetHeight || 1;
     const sink = clamp(window.scrollY / height, 0, 1);
     figure.style.setProperty('--sink', sink.toFixed(3));
+    // Зона размытия над краем листа проявляется в первые мгновения прокрутки.
+    identity.style.setProperty('--sheet-blur', clamp(sink * 5, 0, 1).toFixed(2));
   };
 
   window.addEventListener('scroll', () => { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });

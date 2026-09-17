@@ -107,6 +107,8 @@
 
         addEventListener('load', () => { loaded = true; });
         setTimeout(() => { loaded = true; }, MAX);
+        // Страховка: в фоновой вкладке кадры не рисуются, и заставка не должна застрять.
+        setTimeout(finish, MAX + 600);
         requestAnimationFrame(tick);
       })();
     </script>

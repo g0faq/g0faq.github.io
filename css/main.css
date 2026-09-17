@@ -2334,9 +2334,39 @@ p {
   box-shadow: 0 0 0 100vmax var(--ink);
 }
 
-/* Верхний край листа — линия тушью. */
-.hero__identity {
+/* Верхний край листа — линия тушью, а над ним зона плавного размытия:
+   буквы под листом расплываются постепенно, к линии сильнее.
+   У самого листа нет clip-path — он бы не дал размыть то, что под ним,
+   поэтому фон на всю ширину нарисован отдельным слоем (::after). */
+.hero > .hero__identity {
   border-top: 2px solid var(--ink);
+  box-shadow: none;
+  clip-path: none;
+  background: none;
+}
+
+.hero > .hero__identity::after {
+  content: "";
+  position: absolute;
+  inset: 0 -100vmax;
+  z-index: -1;
+  background: var(--paper);
+}
+
+.hero > .hero__identity::before {
+  content: "";
+  position: absolute;
+  left: -100vmax;
+  right: -100vmax;
+  bottom: calc(100% + 2px);
+  height: clamp(44px, 7vw, 72px);
+  background: linear-gradient(to top, rgba(238, 239, 233, 0.55), rgba(238, 239, 233, 0));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  -webkit-mask-image: linear-gradient(to top, #000 0%, #000 25%, transparent 100%);
+  mask-image: linear-gradient(to top, #000 0%, #000 25%, transparent 100%);
+  opacity: var(--sheet-blur, 0);
+  pointer-events: none;
 }
 
 /* Направляющие колонки поверх листа, чтобы сетка не обрывалась. */
