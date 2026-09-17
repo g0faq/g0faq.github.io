@@ -2221,9 +2221,35 @@ p {
     min-width: 0;
   }
 
-  .route__labels span {
-    font-size: 10px;
+  /* Подписи этапов не влезают над узкими колонками — на телефоне это легенда
+     с цветом этапа, текст целиком. */
+  .route__labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    margin-bottom: 8px;
   }
+
+  .route__labels span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0;
+    border: 0;
+    overflow: visible;
+    font-size: 11px;
+  }
+
+  .route__labels span::before {
+    content: "";
+    width: 9px;
+    height: 9px;
+    background: var(--accent);
+  }
+
+  .route__labels [data-level="1"]::before { background: #ffd2bd; }
+  .route__labels [data-level="2"]::before { background: #ffa77f; }
+  .route__labels [data-level="3"]::before { background: #ff7a40; }
 
   .services-grid {
     grid-template-columns: 1fr;

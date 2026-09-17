@@ -17,8 +17,27 @@
     "image": "/img/cases/prota.png"
   },
   {
-    "id": "studforma",
+    "id": "splash-glide",
     "num": "02",
+    "title": "Splash Glide",
+    "category": "Интернет-магазин · Telegram-бот · Mini App",
+    "demo": false,
+    "description": "Магазин бренда интимной косметики в трёх каналах: SEO-лендинг с подбором средства, Telegram-бот и Mini App с каталогом, корзиной и оформлением заказа. Оплата через ЮKassa, доставка СДЭК, админка заказов и еженедельные отчёты владельцу в Telegram.",
+    "stack": [
+      "React",
+      "TypeScript",
+      "FastAPI",
+      "aiogram",
+      "PostgreSQL",
+      "ЮKassa"
+    ],
+    "url": "https://splash-glide.ru",
+    "accent": "blue",
+    "image": "/img/cases/splash-glide.png"
+  },
+  {
+    "id": "studforma",
+    "num": "03",
     "title": "СтудФорма",
     "category": "Сервис",
     "demo": false,
@@ -33,7 +52,7 @@
   },
   {
     "id": "botai-crm",
-    "num": "03",
+    "num": "04",
     "title": "BOTai CRM",
     "category": "SaaS · В разработке",
     "demo": false,
@@ -50,7 +69,7 @@
   },
   {
     "id": "veshdok",
-    "num": "04",
+    "num": "05",
     "title": "Вещдок",
     "category": "Сайт магазина одежды",
     "demo": true,
@@ -66,7 +85,7 @@
   },
   {
     "id": "gromabulka",
-    "num": "05",
+    "num": "06",
     "title": "GromaBulka",
     "category": "Онлайн-запись для груминг-студии",
     "demo": true,
@@ -83,7 +102,7 @@
   },
   {
     "id": "provibe",
-    "num": "06",
+    "num": "07",
     "title": "ProVibe",
     "category": "Сайт-визитка",
     "demo": false,
@@ -99,7 +118,7 @@
   },
   {
     "id": "bliss-home",
-    "num": "07",
+    "num": "08",
     "title": "Bliss Home",
     "category": "Каталог мебели",
     "demo": false,
@@ -115,7 +134,7 @@
   },
   {
     "id": "ershdesign",
-    "num": "08",
+    "num": "09",
     "title": "ershdesign",
     "category": "Кабинет проекта дизайн-студии",
     "demo": true,
