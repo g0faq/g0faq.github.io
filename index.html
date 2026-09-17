@@ -9,31 +9,25 @@
     <title>g0_faq — сайты, Telegram, CRM и AI под ключ</title>
     <style>
       html,body{min-width:320px;margin:0;background:#eeefe9;color:#101114}
-      /* Заставка: стили встроены, чтобы она появилась до загрузки main.css. */
-      .splash{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:#101114;color:#eeefe9;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;clip-path:inset(0 0 0 0);transition:clip-path .75s cubic-bezier(.76,0,.24,1)}
-      .splash::after{content:"";position:absolute;inset:0;background:#ff4f0f;clip-path:inset(100% 0 0 0);transition:clip-path .75s cubic-bezier(.76,0,.24,1)}
-      .splash.is-leaving{clip-path:inset(0 0 100% 0);transition-delay:.18s}
-      .splash.is-leaving::after{clip-path:inset(0 0 0 0);transition:clip-path .45s cubic-bezier(.76,0,.24,1)}
-      .splash__inner{position:relative;z-index:1;display:grid;justify-items:center;gap:18px;width:min(260px,70vw);transition:opacity .25s,transform .45s cubic-bezier(.76,0,.24,1)}
-      .splash.is-leaving .splash__inner{opacity:0;transform:translateY(-24px)}
-      .splash__cube{width:96px;height:96px;overflow:visible}
-      .splash__cube polygon{stroke:#eeefe9;stroke-width:1.6;stroke-linejoin:round;transform-box:fill-box;transform-origin:center;animation:splash-face .6s cubic-bezier(.3,1.5,.5,1) both}
-      .splash__cube .f-top{fill:#ff4f0f;animation-delay:.05s;--from:translateY(-26px)}
-      .splash__cube .f-left{fill:#2a2d33;animation-delay:.17s;--from:translate(-22px,12px)}
-      .splash__cube .f-right{fill:#1b1d22;animation-delay:.29s;--from:translate(22px,12px)}
-      .splash__cube text{fill:#eeefe9;font:700 19px 'Unbounded','Arial Black',sans-serif;opacity:0;animation:splash-fade .3s ease .55s forwards}
-      .splash__cube g{transform-origin:48px 48px;animation:splash-spin 2.4s cubic-bezier(.65,0,.35,1) .7s infinite}
-      .splash__word{font:700 22px 'Unbounded','Arial Black',sans-serif;letter-spacing:-.03em;overflow:hidden;white-space:nowrap}
-      .splash__word span{display:inline-block;animation:splash-up .5s cubic-bezier(.3,1.4,.5,1) both;animation-delay:calc(.35s + var(--i)*45ms)}
-      .splash__bar{position:relative;width:100%;height:8px;border:1.5px solid #eeefe9;overflow:hidden}
+      /* Заставка: стили встроены, чтобы она появилась до загрузки main.css.
+         Фон и направляющие те же, что у первого экрана, поэтому заставка не
+         «уезжает», а растворяется в нём. */
+      .splash{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:#eeefe9;color:#101114;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;transition:opacity .7s cubic-bezier(.4,0,.2,1),visibility .7s}
+      .splash::before{content:"";position:absolute;inset:0;background:linear-gradient(#c9ccc2,#c9ccc2) calc(50% - 560px) 0/1px 100% no-repeat,linear-gradient(#c9ccc2,#c9ccc2) calc(50% + 560px) 0/1px 100% no-repeat}
+      .splash.is-leaving{opacity:0;visibility:hidden}
+      .splash__inner{position:relative;display:grid;justify-items:center;gap:16px;width:min(300px,76vw);transition:opacity .45s ease,transform .7s cubic-bezier(.4,0,.2,1),filter .7s}
+      .splash.is-leaving .splash__inner{opacity:0;transform:translateY(-18px) scale(1.06);filter:blur(4px)}
+      .splash__word{font:700 clamp(30px,8vw,44px) 'Unbounded','Arial Black',sans-serif;letter-spacing:-.04em;overflow:hidden;white-space:nowrap;padding-bottom:4px}
+      .splash__word span{display:inline-block;animation:splash-up .6s cubic-bezier(.3,1.4,.5,1) both;animation-delay:calc(.1s + var(--i)*55ms)}
+      .splash__word span:nth-child(2){color:#ff4f0f}
+      .splash__bar{position:relative;width:100%;height:8px;border:1.5px solid #101114;overflow:hidden;animation:splash-fade .4s ease .35s both}
       .splash__bar span{position:absolute;inset:0;background:repeating-linear-gradient(-45deg,#ff4f0f 0 6px,#ff7a40 6px 12px);transform:scaleX(var(--p,0));transform-origin:left;transition:transform .2s linear}
-      .splash__meta{display:flex;justify-content:space-between;width:100%;font-size:11px;letter-spacing:.12em;color:rgba(238,239,233,.6)}
-      .splash__meta b{color:#ff4f0f;font-variant-numeric:tabular-nums}
-      @keyframes splash-face{from{opacity:0;transform:var(--from) scale(.6)}}
-      @keyframes splash-fade{to{opacity:1}}
+      .splash__meta{display:flex;justify-content:space-between;width:100%;font-size:11px;letter-spacing:.12em;color:#6d727a;animation:splash-fade .4s ease .45s both}
+      .splash__meta b{color:#cf3a02;font-variant-numeric:tabular-nums}
+      @keyframes splash-fade{from{opacity:0}}
       @keyframes splash-up{from{opacity:0;transform:translateY(110%)}}
-      @keyframes splash-spin{0%,55%{transform:none}80%,100%{transform:rotateY(360deg)}}
-      @media (prefers-reduced-motion:reduce){.splash,.splash::after,.splash *{animation:none!important;transition-duration:.01ms!important}}
+      @media (max-width:1180px){.splash::before{display:none}}
+      @media (prefers-reduced-motion:reduce){.splash,.splash *{animation:none!important;transition-duration:.01ms!important}}
     </style>
     <script>
       // Анимации первого экрана ждут ухода заставки: класс ставится до первой
@@ -71,14 +65,6 @@
   <body>
     <div class="splash" id="splash" aria-hidden="true">
       <div class="splash__inner">
-        <svg class="splash__cube" viewBox="0 0 96 96">
-          <g>
-            <polygon class="f-top" points="48,10 80,28 48,46 16,28"/>
-            <polygon class="f-left" points="16,28 48,46 48,84 16,66"/>
-            <polygon class="f-right" points="80,28 48,46 48,84 80,66"/>
-            <text x="30" y="71">g0</text>
-          </g>
-        </svg>
         <div class="splash__word"><span style="--i:0">g</span><span style="--i:1">0</span><span style="--i:2">_</span><span style="--i:3">f</span><span style="--i:4">a</span><span style="--i:5">q</span></div>
         <div class="splash__bar"><span data-splash-bar></span></div>
         <div class="splash__meta"><span>ЗАГРУЗКА</span><b data-splash-count>000%</b></div>
@@ -115,8 +101,8 @@
           done = true;
           splash.classList.add('is-leaving');
           // Первый экран начинает анимацию, пока шторка уезжает.
-          setTimeout(() => root.classList.add('is-intro-done'), reduced ? 0 : 380);
-          setTimeout(() => splash.remove(), reduced ? 0 : 1100);
+          setTimeout(() => root.classList.add('is-intro-done'), reduced ? 0 : 150);
+          setTimeout(() => splash.remove(), reduced ? 0 : 900);
         };
 
         addEventListener('load', () => { loaded = true; });

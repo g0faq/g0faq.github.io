@@ -41,6 +41,8 @@ const HELP = [
   '<code>/name ECB7 Ольга</code> — назвать по коду',
   '<code>/name ECB7 -</code> — стереть имя',
   '<code>/names</code> — все подписанные посетители',
+  '<code>/mute 83E3</code> — не уведомлять о визитах (свои устройства)',
+  '<code>/unmute 83E3</code> — вернуть уведомления, <code>/mute</code> — список',
   '<code>/cancel</code> — отменить ввод',
   '',
   '📋 <b>Опросы для ТЗ</b>',
@@ -329,6 +331,34 @@ async function onMessage(message) {
     return;
   }
 
+  // Свои устройства: /mute 83E3 — визиты не уведомляют, /unmute — вернуть.
+  const mute = text.match(/^\/(mute|unmute)(?:@\w+)?(?:\s+#?([0-9a-fA-F]{4}))?\s*$/);
+  if (mute) {
+    if (!mute[2]) {
+      const rows = (await query(
+        `SELECT short_id, name, last_seen_at FROM visitors WHERE muted ORDER BY last_seen_at DESC LIMIT 40`,
+      )).rows;
+      const list = rows.length
+        ? rows.map((r) => `• #${esc(r.short_id)}${r.name ? ` — ${esc(r.name)}` : ''} · ${when(r.last_seen_at)}`)
+        : ['пока никого'];
+      await reply(['🔕 <b>Без уведомлений</b>', '', ...list, '', 'Формат: <code>/mute 83E3</code> или <code>/unmute 83E3</code>'].join('\n'));
+      return;
+    }
+    const { visitor, total } = await findByShort(mute[2]);
+    if (!visitor) {
+      await reply(`Посетитель <b>#${esc(mute[2].toUpperCase())}</b> не найден.`);
+      return;
+    }
+    const on = mute[1] === 'mute';
+    await query('UPDATE visitors SET muted = $2 WHERE id = $1', [visitor.id, on]);
+    const lines = [on
+      ? `🔕 <b>#${esc(visitor.short_id)}</b> — уведомлений о визитах больше не будет. Статистика пишется.`
+      : `🔔 <b>#${esc(visitor.short_id)}</b> — уведомления снова включены.`];
+    if (total > 1) lines.push('', '⚠️ С этим кодом было несколько посетителей — изменён самый свежий.');
+    await reply(lines.join('\n'));
+    return;
+  }
+
   const command = text.match(/^\/name(?:@\w+)?\s+#?([0-9a-fA-F]{4})\s+(.+)$/s);
   if (command) {
     const { visitor, total } = await findByShort(command[1]);
@@ -392,6 +422,8 @@ async function setup(req, res) {
       { command: 'briefs', description: 'Последние опросы' },
       { command: 'names', description: 'Подписанные посетители' },
       { command: 'name', description: 'Назвать: /name ECB7 Ольга' },
+      { command: 'mute', description: 'Не уведомлять о своих визитах: /mute 83E3' },
+      { command: 'unmute', description: 'Вернуть уведомления: /unmute 83E3' },
       { command: 'cancel', description: 'Отменить ввод' },
       { command: 'help', description: 'Что умеет бот' },
     ],

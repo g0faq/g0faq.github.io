@@ -158,6 +158,7 @@ async function runMaintenance({ force = false, minIntervalSec = 30 } = {}) {
        FROM sessions s JOIN visitors v ON v.id = s.visitor_id
       WHERE s.summary_sent = false
         AND s.is_bot = false
+        AND v.muted = false
         AND (s.ended_at IS NOT NULL
              OR s.last_event_at < now() - make_interval(mins => $1::int))
       ORDER BY s.last_event_at ASC LIMIT 10`,

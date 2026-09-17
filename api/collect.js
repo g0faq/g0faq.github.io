@@ -214,7 +214,9 @@ module.exports = async function handler(req, res) {
 
       // Ботов записываем, но ничего о них не шлём: Telegram не должен звенеть
       // на каждый обход поисковика.
-      const notify = !session.is_bot && !isBot;
+      // Свои устройства владельца (visitors.muted) тоже не уведомляют.
+      const muted = (await client.query('SELECT muted FROM visitors WHERE id = $1', [payload.visitor_id])).rows[0]?.muted;
+      const notify = !session.is_bot && !isBot && !muted;
       const important = [];
 
       if (session.events_count >= MAX_EVENTS_PER_SESSION) {

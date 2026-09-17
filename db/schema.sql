@@ -209,3 +209,7 @@ ALTER TABLE briefs ADD COLUMN IF NOT EXISTS awaiting_contact BOOLEAN NOT NULL DE
 
 -- Примерная стоимость, показанная клиенту после опроса.
 ALTER TABLE briefs ADD COLUMN IF NOT EXISTS estimate JSONB;
+
+-- Свои устройства владельца: визиты пишутся в статистику, но в бота о них
+-- ничего не приходит. Переключается командами /mute и /unmute.
+ALTER TABLE visitors ADD COLUMN IF NOT EXISTS muted BOOLEAN NOT NULL DEFAULT false;
