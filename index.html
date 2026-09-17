@@ -154,38 +154,52 @@
 
         <div class="frame hero__identity">
           <div class="hero__avatar">
-            <svg class="avatar-art" viewBox="0 0 120 120" role="img" aria-label="Фёдор Ершов — иллюстрация">
+            <svg class="avatar-art" viewBox="0 0 120 120" role="img" aria-label="Фёдор Ершов пишет код на ноутбуке — иллюстрация">
               <defs>
                 <clipPath id="avatar-clip"><circle cx="60" cy="60" r="58"/></clipPath>
-                <pattern id="avatar-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#ff4f0f" stroke-width="1" opacity=".35"/></pattern>
+                <pattern id="avatar-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#ff4f0f" stroke-width="1" opacity=".3"/></pattern>
               </defs>
               <g clip-path="url(#avatar-clip)">
                 <rect width="120" height="120" fill="#e9e3f7"/>
                 <rect width="120" height="120" fill="url(#avatar-hatch)"/>
-                <g class="avatar-waves" fill="none" stroke="#ff4f0f" stroke-width="2.4" stroke-linecap="round">
-                  <path d="M100 50c4 4 4 12 0 16"/>
-                  <path d="M106 45c7 7 7 19 0 26"/>
-                  <path d="M20 50c-4 4-4 12 0 16"/>
-                  <path d="M14 45c-7 7-7 19 0 26"/>
+                <g class="avatar-code" font-family="JetBrains Mono, ui-monospace, monospace" font-size="8" font-weight="700" fill="#101114">
+                  <text x="12" y="40">&lt;/&gt;</text>
+                  <text x="92" y="34" fill="#ff4f0f">{ }</text>
+                  <text x="98" y="58">;</text>
+                  <text x="10" y="62" fill="#ff4f0f">01</text>
                 </g>
-                <g class="avatar-body">
-                  <path d="M16 124c2-22 18-32 44-32s42 10 44 32z" fill="#101114"/>
-                  <path d="M50 84h20v12c-3 4-17 4-20 0z" fill="#f0c3a0" stroke="#101114" stroke-width="2"/>
-                </g>
-                <g class="avatar-head">
-                  <path d="M38 48c0-16 10-25 22-25s22 9 22 25v14c0 16-10 26-22 26S38 78 38 62z" fill="#f4cdb0" stroke="#101114" stroke-width="2.2"/>
-                  <path d="M35 46c-2-18 10-30 27-29 15 1 25 11 23 25-6-7-13-10-22-10-9 0-17 3-28 14z" fill="#6b4226" stroke="#101114" stroke-width="2.2" stroke-linejoin="round"/>
-                  <path d="M52 20c8-4 22-2 28 8" fill="none" stroke="#8a5a36" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M47 50l9-1M64 49l9 1" stroke="#101114" stroke-width="2.4" stroke-linecap="round"/>
-                  <g class="avatar-eyes" fill="#101114">
-                    <ellipse cx="52" cy="57" rx="2.8" ry="3.2"/>
-                    <ellipse cx="68" cy="57" rx="2.8" ry="3.2"/>
+                <g class="avatar-person">
+                  <path d="M20 122c2-24 17-36 40-36s38 12 40 36z" fill="#101114"/>
+                  <path d="M52 76h16v12c-3 3-13 3-16 0z" fill="#f0c3a0" stroke="#101114" stroke-width="2"/>
+                  <g class="avatar-head">
+                    <path d="M41 40c0-14 8-22 19-22s19 8 19 22v12c0 14-8 23-19 23s-19-9-19-23z" fill="#f4cdb0" stroke="#101114" stroke-width="2.2"/>
+                    <path d="M38 39c-2-16 9-27 24-26 13 1 22 10 20 22-5-6-12-9-20-9-8 0-15 3-24 13z" fill="#6b4226" stroke="#101114" stroke-width="2.2" stroke-linejoin="round"/>
+                    <path d="M53 16c7-3 18-1 23 7" fill="none" stroke="#8a5a36" stroke-width="2" stroke-linecap="round"/>
+                    <path transform="translate(0 -4)" d="M42 37c5-11 17-16 29-12 6 2 10 6 12 11-7-3-13-2-18 2-4 3-8 5-13 4-4 0-7-2-10-5z" fill="#6b4226" stroke="#101114" stroke-width="2" stroke-linejoin="round"/>
+                    <path transform="translate(0 -4)" d="M52 30c6-4 14-5 21-2" fill="none" stroke="#8a5a36" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M49 44l8-1M63 43l8 1" stroke="#101114" stroke-width="2.2" stroke-linecap="round"/>
+                    <g class="avatar-eyes" fill="#101114">
+                      <ellipse cx="53" cy="51" rx="2.4" ry="2.4"/>
+                      <ellipse cx="67" cy="51" rx="2.4" ry="2.4"/>
+                    </g>
+                    <path d="M60 53v7h-3" fill="none" stroke="#101114" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M55 66c3 1.6 7 1.6 10 0" fill="none" stroke="#101114" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M37 47c0-23 12-34 23-34s23 11 23 34" fill="none" stroke="#101114" stroke-width="4.2" stroke-linecap="round"/>
+                    <rect x="31" y="42" width="11" height="19" rx="3.5" fill="#ff4f0f" stroke="#101114" stroke-width="2.2"/>
+                    <rect x="78" y="42" width="11" height="19" rx="3.5" fill="#ff4f0f" stroke="#101114" stroke-width="2.2"/>
                   </g>
-                  <path d="M60 60v9h-3" fill="none" stroke="#101114" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M54 76c4 2 8 2 12 0" fill="none" stroke="#101114" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M34 54c0-26 14-38 26-38s26 12 26 38" fill="none" stroke="#101114" stroke-width="4.5" stroke-linecap="round"/>
-                  <rect x="27" y="48" width="12" height="22" rx="4" fill="#ff4f0f" stroke="#101114" stroke-width="2.2"/>
-                  <rect x="81" y="48" width="12" height="22" rx="4" fill="#ff4f0f" stroke="#101114" stroke-width="2.2"/>
+                  <ellipse class="avatar-glow" cx="60" cy="63" rx="17" ry="10" fill="#8fd3ff" opacity=".1"/>
+                </g>
+                <g class="avatar-laptop">
+                  <path d="M26 76h68l-5 32H31z" fill="#c9ccd3" stroke="#101114" stroke-width="2.4" stroke-linejoin="round"/>
+                  <path d="M31 80h58" stroke="#eef0f4" stroke-width="2" stroke-linecap="round"/>
+                  <circle cx="60" cy="92" r="5" fill="#eef0f4" stroke="#101114" stroke-width="1.6"/>
+                  <path d="M14 108h92v5c0 2-2 4-4 4H18c-2 0-4-2-4-4z" fill="#b3b7c0" stroke="#101114" stroke-width="2.4" stroke-linejoin="round"/>
+                  <path d="M50 108h20v2H50z" fill="#101114"/>
+                </g>
+                <g class="avatar-hands" fill="#f4cdb0" stroke="#101114" stroke-width="2">
+                  <ellipse class="avatar-hand avatar-hand--l" cx="24" cy="106" rx="8" ry="5"/>
+                  <ellipse class="avatar-hand avatar-hand--r" cx="96" cy="106" rx="8" ry="5"/>
                 </g>
               </g>
               <circle cx="60" cy="60" r="58" fill="none" stroke="#101114" stroke-width="2.5"/>

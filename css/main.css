@@ -2463,29 +2463,55 @@ p {
 }
 
 .avatar-head {
-  transform-origin: 60px 90px;
+  transform-origin: 60px 80px;
   animation: head-bob 2.4s ease-in-out infinite;
 }
 
 @keyframes head-bob {
-  0%, 100% { transform: rotate(-2deg); }
-  50% { transform: rotate(2.5deg) translateY(-1px); }
+  0%, 100% { transform: rotate(-1.5deg); }
+  50% { transform: rotate(1.5deg) translateY(1px); }
 }
 
-.avatar-waves path {
+/* Код всплывает над ноутбуком и тает. */
+.avatar-code text {
   opacity: 0;
-  animation: wave 1.6s ease-out infinite;
+  transform-box: fill-box;
+  animation: code-rise 3.2s ease-out infinite;
 }
 
-.avatar-waves path:nth-child(2),
-.avatar-waves path:nth-child(4) {
-  animation-delay: 0.3s;
+.avatar-code text:nth-child(2) { animation-delay: 0.8s; }
+.avatar-code text:nth-child(3) { animation-delay: 1.6s; }
+.avatar-code text:nth-child(4) { animation-delay: 2.4s; }
+
+@keyframes code-rise {
+  0% { opacity: 0; transform: translateY(10px); }
+  20% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-14px); }
 }
 
-@keyframes wave {
-  0% { opacity: 0; }
-  30% { opacity: 1; }
-  100% { opacity: 0; }
+/* Руки печатают по очереди, экран подсвечивает лицо. */
+.avatar-hand {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: type-tap 0.36s ease-in-out infinite alternate;
+}
+
+.avatar-hand--r {
+  animation-delay: 0.18s;
+}
+
+@keyframes type-tap {
+  from { transform: translateY(0); }
+  to { transform: translateY(-2.5px); }
+}
+
+.avatar-glow {
+  animation: glow 2.6s ease-in-out infinite;
+}
+
+@keyframes glow {
+  50% { opacity: 0.2; }
 }
 
 @media (hover: hover) and (pointer: fine) {
