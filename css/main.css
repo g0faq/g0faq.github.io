@@ -2289,8 +2289,8 @@ p {
    начальном кадре — после её ухода (html.is-intro-done) запускаются. */
 /* Блок с логотипом не ждёт: он и есть сюжет заставки — поднят над ней и
    собирает буквы, пока идёт заставка. */
-.motion-ready:not(.is-intro-done) .hero > :not(.hero__figure),
-.motion-ready:not(.is-intro-done) .hero > :not(.hero__figure) *,
+.motion-ready:not(.is-intro-done) .hero > :not(.hero__story),
+.motion-ready:not(.is-intro-done) .hero > :not(.hero__story) *,
 .motion-ready:not(.is-intro-done) .site-header * {
   animation-play-state: paused !important;
 }
@@ -2299,35 +2299,20 @@ html.is-splash main {
   z-index: auto;
 }
 
-html.is-splash .hero > .hero__figure {
+html.is-splash .hero__story > .hero__figure {
   z-index: 1001;
   border-bottom-color: transparent;
 }
 
-/* ── Логотип уходит под страницу ────────────────────────────────────────────
-   Блок с большими буквами закреплён под шапкой (sticky), а всё, что ниже,
-   — непрозрачный «лист» поверх него. Пока лист наезжает, js уменьшает,
-   гасит и размывает логотип (--sink от 0 до 1). */
-.hero > .hero__figure {
+/* Логотип закреплён под шапкой на время расшифровки. После её завершения
+   следующий непрозрачный лист естественно продолжает страницу. */
+.hero__story > .hero__figure {
   position: sticky;
   top: var(--header-height);
   z-index: 0;
 }
 
-.hero__logo {
-  transform: translateY(calc(var(--sink, 0) * -16px)) scale(calc(1 - var(--sink, 0) * 0.12));
-  opacity: calc(1 - var(--sink, 0) * 0.55);
-  filter: blur(calc(var(--sink, 0) * 3px));
-  transform-origin: center center;
-  will-change: transform, opacity, filter;
-}
-
-.hero__figure .guide--diag,
-.hero__figure .fig-caption {
-  opacity: calc(1 - var(--sink, 0));
-}
-
-.hero > :not(.hero__figure) {
+.hero > :not(.hero__story) {
   position: relative;
   z-index: 1;
   background-color: var(--paper);
@@ -2386,6 +2371,49 @@ html.is-splash .hero > .hero__figure {
     border-left: 1px solid var(--line);
     border-right: 1px solid var(--line);
   }
+}
+
+/* Scroll-story: the actual logo letters become the initial column. */
+.hero__story { position: relative; }
+.hero__story.is-enhanced { height: calc(var(--story-height) + var(--story-travel)); }
+.hero__story.is-enhanced > .hero__figure { min-height: calc(100svh - var(--header-height)); display: flex; flex-direction: column; justify-content: center; }
+.hero__story > .hero__figure { border-bottom: 1px solid var(--line); }
+.hero__story.is-enhanced .hero__logo { height: clamp(350px, 62svh, 560px); }
+.hero__story.is-enhanced .iso-logo { height: 100%; display: block; }
+.iso-morph { transform-origin: 0 0; }
+.hero__story.is-unfolding .iso-logo { transform: none; }
+.hero__story.is-unfolding .iso-letter { animation: none; transform: none; translate: none; }
+.hero__story.is-unfolding .iso-link { pointer-events: none; }
+.iso-definition { visibility: hidden; pointer-events: none; }
+.hero__story.is-enhanced .iso-definition { visibility: visible; }
+.iso-definition__row, .iso-definition__translation { opacity: 0; }
+.iso-definition text { font-family: var(--font); font-size: 40px; font-weight: 500; letter-spacing: -1.4px; fill: var(--ink); }
+.iso-definition .iso-definition__ai { fill: var(--accent-deep); }
+.iso-definition .iso-definition__amp { font-size: 25px; fill: var(--ink-3); }
+.iso-definition__rule { fill: none; stroke: var(--accent); stroke-width: 1; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.iso-definition__bracket { fill: none; stroke: var(--accent); stroke-width: 1; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.iso-definition .iso-definition__label { font-family: var(--mono); font-size: 9px; letter-spacing: 1.8px; fill: var(--ink-3); }
+.iso-definition .iso-definition__russian { font-size: 23px; letter-spacing: -.6px; }
+.hero__meaning { font: 14px/1.6 var(--mono); max-width: 860px; margin: 20px auto; }
+.hero__story.is-enhanced .hero__meaning { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.hero__scroll-note { display: none; }
+.hero__story.is-enhanced .hero__scroll-note {
+  display: flex; justify-content: space-between; gap: 16px; position: relative;
+  width: min(100%, 860px); margin: 16px auto 4px; padding-top: 16px;
+  font: 10px/1.5 var(--mono); letter-spacing: .04em; color: var(--ink-3);
+}
+.hero__scroll-hint i { font-style: normal; color: var(--accent-deep); padding-left: 10px; }
+.hero__scroll-progress { position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--line); }
+.hero__scroll-progress i { display: block; height: 100%; background: var(--accent); transform: scaleX(var(--unfold, 0)); transform-origin: left; }
+html.is-splash .hero__scroll-note, html.is-splash .iso-definition { visibility: hidden; }
+@media (max-width: 600px) {
+  .hero__story.is-enhanced .hero__logo { height: clamp(350px, 62svh, 490px); }
+  .hero__story.is-enhanced .hero__scroll-note { font-size: 8px; gap: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__story.is-enhanced { height: auto; }
+  .hero__story > .hero__figure { position: relative; top: auto; }
+  .hero__scroll-hint { display: none; }
 }
 
 /* ── Анимации ───────────────────────────────────────────────────────────────

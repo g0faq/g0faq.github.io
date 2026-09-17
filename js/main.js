@@ -307,6 +307,106 @@ function initProcess() {
   update();
 }
 
+/* Scroll-linked choreography. Reversing scroll assembles the same letters
+   back into the wordmark; no duplicate logo and no time-based language loop. */
+function initHeroStory() {
+  const story = document.querySelector('.hero__story');
+  if (!story) return;
+  const figure = story.querySelector('.hero__figure');
+  const svg = story.querySelector('.iso-logo');
+  const letters = [...svg.querySelectorAll('.iso-morph')];
+  const bounds = letters.map((letter) => letter.querySelector('.iso-letter').getBBox());
+  const rows = [...svg.querySelectorAll('.iso-definition__row')];
+  const translation = svg.querySelector('.iso-definition__translation');
+  const bracket = translation.querySelector('path');
+  const russian = [...translation.querySelectorAll('text')];
+  const hint = story.querySelector('.hero__scroll-hint');
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  let frame = 0;
+  let value = 0;
+  let target = 0;
+  let travel = 1000;
+  let mobile = false;
+  let targets = [];
+  const smooth = (n) => { const t = clamp(n, 0, 1); return t * t * (3 - 2 * t); };
+  const paint = () => {
+    const p = motion.matches ? 1 : value;
+    story.style.setProperty('--unfold', p.toFixed(4));
+    story.classList.toggle('is-unfolding', p > 0.005);
+    // The viewBox opens up vertically on phones while letters move.
+    const opening = smooth(p / .68);
+    svg.setAttribute('viewBox', `0 0 ${600 + ((mobile ? 360 : 600) - 600) * opening} ${272 + ((mobile ? 438 : 324) - 272) * opening}`);
+    letters.forEach((letter, i) => {
+      const row = Math.max(0, i - 1);
+      const t = smooth((p - .025 - row * .055) / .48);
+      const to = targets[i];
+      const scale = 1 + (to.scale - 1) * t;
+      letter.setAttribute('transform', `matrix(${scale} 0 0 ${scale} ${to.x * t} ${to.y * t})`);
+    });
+    rows.forEach((row, i) => {
+      const t = smooth((p - .34 - i * .07) / .23);
+      row.style.opacity = t.toFixed(3);
+      row.setAttribute('transform', `translate(${18 * (1 - t)} 0)`);
+      row.querySelector('path').style.strokeDashoffset = String(1 - t);
+    });
+    const ru = smooth((p - .72) / .2);
+    translation.style.opacity = ru.toFixed(3);
+    translation.setAttribute('transform', `translate(0 ${10 * (1 - ru)})`);
+    bracket.style.strokeDashoffset = String(1 - ru);
+    hint.style.opacity = String(1 - smooth(p / .3));
+  };
+  const tick = () => {
+    frame = 0;
+    value += (target - value) * .16;
+    if (Math.abs(target - value) < .0003) value = target;
+    paint();
+    if (value !== target) frame = requestAnimationFrame(tick);
+  };
+  const request = () => {
+    target = motion.matches ? 1 : clamp(((parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 64) - story.getBoundingClientRect().top) / travel, 0, 1);
+    if (!frame) frame = requestAnimationFrame(tick);
+  };
+  const measure = () => {
+    mobile = window.innerWidth <= 600;
+    const scale = .41;
+    const step = mobile ? 84 : 74;
+    targets = bounds.map((box, i) => {
+      const row = Math.max(0, i - 1);
+      // g + 0 form a single Go unit; other initials share the same axis.
+      const x = i < 2 ? 10 + (box.x - bounds[0].x) * scale : 38;
+      const y = 8 + row * step + (i === 1 ? (box.y - bounds[0].y) * scale : 0);
+      return { scale, x: x - box.x * scale, y: y - box.y * scale };
+    });
+    rows.forEach((row, i) => {
+      const y = 42 + i * step;
+      row.querySelector('path').setAttribute('d', `M108 ${y}H128`);
+      row.querySelector('text').setAttribute('y', String(y + 13));
+      row.querySelector('text').setAttribute('x', mobile ? '140' : '142');
+    });
+    bracket.setAttribute('d', mobile ? 'M16 364H344' : 'M370 102H358V238H370');
+    russian.forEach((text, i) => {
+      text.setAttribute('x', mobile ? '16' : '386');
+      text.setAttribute('y', String(mobile ? [386, 413, 413][i] : [131, 166, 194][i]));
+    });
+    russian[1].textContent = mobile ? 'Вперёд к ИИ и качеству.' : 'Вперёд к ИИ';
+    russian[1].style.fontSize = mobile ? '21px' : '';
+    russian[2].style.display = mobile ? 'none' : '';
+    travel = Math.min(1300, Math.max(800, window.innerHeight * 1.5));
+    story.style.setProperty('--story-height', `${figure.offsetHeight}px`);
+    story.style.setProperty('--story-travel', `${travel}px`);
+    request();
+  };
+  story.classList.add('is-enhanced');
+  window.addEventListener('scroll', request, { passive: true });
+  window.addEventListener('resize', measure);
+  motion.addEventListener('change', measure);
+  // Styles and web fonts can arrive after DOMContentLoaded. Keep the pin
+  // distance in sync with the real figure height, including responsive changes.
+  new ResizeObserver(measure).observe(figure);
+  window.addEventListener('load', measure, { once: true });
+  measure();
+}
+
 /* Логотип первого экрана наклоняется за курсором. */
 function initHeroTilt() {
   const hero = document.querySelector('.hero__figure');
@@ -325,28 +425,6 @@ function initHeroTilt() {
     logo.style.setProperty('--tilt-x', '0deg');
     logo.style.setProperty('--tilt-y', '0deg');
   });
-}
-
-/* Логотип первого экрана «уходит под страницу»: чем дальше прокрутка, тем
-   сильнее он уменьшается и гаснет. */
-function initHeroSink() {
-  const figure = document.querySelector('.hero__figure');
-  const identity = document.querySelector('.hero__identity');
-  if (!figure || !identity || reducedMotion()) return;
-
-  let frame = 0;
-  const update = () => {
-    frame = 0;
-    const height = figure.offsetHeight || 1;
-    const sink = clamp(window.scrollY / height, 0, 1);
-    figure.style.setProperty('--sink', sink.toFixed(3));
-    // Зона размытия над краем листа проявляется в первые мгновения прокрутки.
-    identity.style.setProperty('--sheet-blur', clamp(sink * 5, 0, 1).toFixed(2));
-  };
-
-  window.addEventListener('scroll', () => { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });
-  window.addEventListener('resize', update);
-  update();
 }
 
 function initHeader() {
@@ -481,8 +559,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   initClock();
   initProcess();
+  initHeroStory();
   initHeroTilt();
-  initHeroSink();
   document.querySelectorAll('.tag-grid li').forEach((item, index) => item.style.setProperty('--t', String(index)));
   initRoute();
   initCases();

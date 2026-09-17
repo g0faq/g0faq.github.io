@@ -29,39 +29,18 @@ const GLYPHS = {
     '.....',
     '.....',
   ],
-  f: [
-    '..###',
-    '..#..',
-    '#####',
-    '..#..',
-    '..#..',
-    '..#..',
-    '.....',
-    '.....',
+  F: [
+    '#####', '#....', '#....', '####.', '#....', '#....', '.....', '.....',
   ],
-  a: [
-    '.....',
-    '#####',
-    '....#',
-    '#####',
-    '#...#',
-    '#####',
-    '.....',
-    '.....',
+  A: [
+    '.###.', '#...#', '#...#', '#####', '#...#', '#...#', '.....', '.....',
   ],
-  q: [
-    '.....',
-    '#####',
-    '#...#',
-    '#...#',
-    '#####',
-    '....#',
-    '....#',
-    '....#',
+  Q: [
+    '.###.', '#...#', '#...#', '#...#', '#.#.#', '.###.', '....#', '.....',
   ],
 };
 
-const WORD = 'g0faq';
+const WORD = 'g0FAQ';
 const GAP = 2;
 const CELL = 18;
 const DEPTH = 1.25;
@@ -148,7 +127,7 @@ all.forEach(([x, z]) => {
 const width = (maxX - minX).toFixed(0);
 const height = (maxY - minY).toFixed(0);
 
-process.stdout.write(`<svg class="iso-logo" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" aria-label="g0faq — написать в Telegram">
+process.stdout.write(`<svg class="iso-logo" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" aria-label="g0FAQ — написать в Telegram">
 <defs><pattern id="iso-hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(40)"><line x1="0" y1="0" x2="0" y2="5" class="iso-hatch-line"/></pattern></defs>
 ${groups.map((shapes, index) => `<a class="iso-link" href="https://t.me/g0_faq" target="_blank" rel="noreferrer" aria-label="Написать в Telegram @g0_faq"><g class="iso-letter" style="--l:${index}">${shapes.join('')}</g></a>`).join('\n')}
 </svg>
