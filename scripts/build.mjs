@@ -34,7 +34,6 @@ await Promise.all([
 await Promise.all([
   cp(resolve(root, 'privacy.html'), resolve(output, 'privacy.html')),
   cp(resolve(root, 'css/doc.css'), resolve(output, 'css/doc.css')),
-  cp(resolve(root, 'css/legacy.css'), resolve(output, 'css/legacy.css')),
   cp(resolve(root, 'contract.html'), resolve(output, 'contract.html')),
   cp(resolve(root, 'brief/index.html'), resolve(output, 'brief/index.html')),
   cp(resolve(root, 'brief.html'), resolve(output, 'brief.html')),

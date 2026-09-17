@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="build-commit" content="f0a07b3">
     <meta name="description" content="Разработка сайтов, Telegram-сервисов, CRM и AI-автоматизаций с фиксированной сметой и работой по договору.">
-    <meta name="theme-color" content="#eeefe9">
     <title>g0_faq — сайты, Telegram, CRM и AI под ключ</title>
     <style>
-      html,body{min-width:320px;margin:0;background:#eeefe9;color:#101114}
+      html,body{min-width:320px;margin:0;background:#000;color:#d8eaff}
+      .site-particles{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+      main,.site-header,.site-footer{position:relative;z-index:1}
     </style>
     <link id="main-styles" rel="stylesheet" href="./css/main.css" fetchpriority="high" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="./css/main.css"></noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap&subset=cyrillic" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap&subset=cyrillic" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet"></noscript>
     <script id="style-recovery">
       (() => {
         const link = document.querySelector('#main-styles');
@@ -39,398 +40,107 @@
     <script src="./js/analytics.js" defer></script>
   </head>
   <body>
-    <a class="skip-link" href="#main">Перейти к содержимому</a>
-
+    <canvas class="site-particles" aria-hidden="true"></canvas>
+    <aside class="page-slider" data-page-slider aria-label="Навигация по странице">
+      <span class="page-slider__index" aria-hidden="true">01</span>
+      <button
+        class="page-slider__track"
+        type="button"
+        role="slider"
+        aria-label="Положение на странице"
+        aria-orientation="vertical"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+      >
+        <span class="page-slider__rail" aria-hidden="true">
+          <span class="page-slider__markers"></span>
+          <span class="page-slider__fill"></span>
+          <span class="page-slider__thumb"></span>
+        </span>
+      </button>
+      <span class="page-slider__percent" aria-hidden="true">000%</span>
+      <span class="page-slider__section" aria-hidden="true">ГЛАВНАЯ</span>
+    </aside>
     <header class="site-header">
-      <div class="site-header__inner">
-        <a class="logo" href="#top" aria-label="g0_faq — в начало страницы">
-          <span class="logo__mark" aria-hidden="true"></span>
-          <span class="logo__text">g0_faq</span>
-        </a>
-        <nav class="site-nav" id="site-nav" aria-label="Основная навигация">
-          <a href="#cases">Кейсы</a>
-          <a href="#services">Услуги</a>
-          <a href="#process">Процесс</a>
-          <a href="#calculator">Стоимость</a>
-          <a href="#faq">FAQ</a>
-          <a href="./brief/">Помощь с ТЗ</a>
-        </nav>
-        <a class="button button--primary button--small site-header__cta" href="https://t.me/g0_faq" target="_blank" rel="noreferrer">Обсудить проект</a>
-        <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Меню">
-          <span></span><span></span>
-        </button>
+      <a class="logo" href="#top" aria-label="В начало страницы">g0_faq</a>
+      <div class="header-signal" aria-hidden="true">
+        <span class="header-signal__beam"></span>
+        <div class="header-signal__track">
+          <span>WEB</span><i>01</i><span>TELEGRAM</span><i>02</i><span>CRM</span><i>03</i><span>AI</span><i>04</i>
+          <span>WEB</span><i>01</i><span>TELEGRAM</span><i>02</i><span>CRM</span><i>03</i><span>AI</span><i>04</i>
+        </div>
       </div>
+      <nav class="site-nav" aria-label="Основная навигация">
+        <a href="#cases">Кейсы</a>
+        <a href="#services">Услуги</a>
+        <a href="#process">Процесс</a>
+        <a href="#faq">FAQ</a>
+        <a href="#calculator">Стоимость</a>
+        <a href="./brief/">Помощь с ТЗ</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+      <a class="header-chip" href="#contacts">ОБСУДИТЬ ПРОЕКТ ↗</a>
     </header>
 
-    <main id="main">
-      <!-- ── Первый экран ─────────────────────────────────────────────────── -->
-      <section class="hero" id="top" data-section-name="Главная">
-        <div class="frame hero__figure">
-          <span class="guide guide--diag guide--diag-a" aria-hidden="true"></span>
-          <span class="guide guide--diag guide--diag-b" aria-hidden="true"></span>
-          <div class="hero__logo">
-            <svg class="iso-logo" viewBox="0 0 600 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="g0faq">
-<defs><pattern id="iso-hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(40)"><line x1="0" y1="0" x2="0" y2="5" class="iso-hatch-line"/></pattern></defs>
-<polygon class="iso-side iso-side--top" points="20.2,111.0 37.7,115.4 20.5,129.8 3.0,125.5"/>
-<polygon class="iso-face" points="3.0,143.5 20.5,147.8 20.5,129.8 3.0,125.5"/>
-<path class="iso-edge" d="M20.2,111.0L37.7,115.4M20.2,111.0L3.0,125.5M3.0,125.5L20.5,129.8M3.0,143.5L20.5,147.8M3.0,143.5L3.0,125.5"/>
-<polygon class="iso-side iso-side--top" points="37.7,115.4 55.2,119.7 37.9,134.2 20.5,129.8"/>
-<polygon class="iso-face" points="20.5,147.8 37.9,152.2 37.9,134.2 20.5,129.8"/>
-<path class="iso-edge" d="M37.7,115.4L55.2,119.7M20.5,129.8L37.9,134.2M20.5,147.8L37.9,152.2"/>
-<polygon class="iso-side iso-side--top" points="55.2,119.7 72.6,124.1 55.4,138.5 37.9,134.2"/>
-<polygon class="iso-face" points="37.9,152.2 55.4,156.5 55.4,138.5 37.9,134.2"/>
-<path class="iso-edge" d="M55.2,119.7L72.6,124.1M37.9,134.2L55.4,138.5M37.9,152.2L55.4,156.5"/>
-<polygon class="iso-face" points="3.0,89.5 20.5,93.8 20.5,75.8 3.0,71.5"/>
-<path class="iso-edge" d="M3.0,89.5L20.5,93.8M3.0,89.5L3.0,71.5"/>
-<polygon class="iso-side iso-side--top" points="72.6,124.1 90.1,128.4 72.9,142.9 55.4,138.5"/>
-<polygon class="iso-face" points="55.4,156.5 72.9,160.9 72.9,142.9 55.4,138.5"/>
-<path class="iso-edge" d="M72.6,124.1L90.1,128.4M90.1,128.4L72.9,142.9M55.4,138.5L72.9,142.9M55.4,156.5L72.9,160.9"/>
-<polygon class="iso-side iso-side--right" points="37.7,61.4 37.7,43.4 20.5,57.8 20.5,75.8"/>
-<polygon class="iso-face" points="3.0,71.5 20.5,75.8 20.5,57.8 3.0,53.5"/>
-<path class="iso-edge" d="M37.7,61.4L37.7,43.4M37.7,61.4L20.5,75.8M3.0,71.5L3.0,53.5M20.5,75.8L20.5,57.8"/>
-<polygon class="iso-side iso-side--top" points="37.7,61.4 55.2,65.7 37.9,80.2 20.5,75.8"/>
-<polygon class="iso-face" points="20.5,93.8 37.9,98.2 37.9,80.2 20.5,75.8"/>
-<path class="iso-edge" d="M37.7,61.4L55.2,65.7M37.7,61.4L20.5,75.8M20.5,75.8L37.9,80.2M20.5,93.8L37.9,98.2"/>
-<polygon class="iso-side iso-side--right" points="107.6,150.8 107.6,132.8 90.3,147.2 90.3,165.2"/>
-<polygon class="iso-face" points="72.9,160.9 90.3,165.2 90.3,147.2 72.9,142.9"/>
-<path class="iso-edge" d="M107.6,150.8L107.6,132.8M107.6,150.8L90.3,165.2M72.9,160.9L90.3,165.2M90.3,165.2L90.3,147.2"/>
-<polygon class="iso-side iso-side--right" points="37.7,43.4 37.7,25.4 20.5,39.8 20.5,57.8"/>
-<polygon class="iso-face" points="3.0,53.5 20.5,57.8 20.5,39.8 3.0,35.5"/>
-<path class="iso-edge" d="M37.7,43.4L37.7,25.4M37.7,25.4L20.5,39.8M3.0,53.5L3.0,35.5M20.5,57.8L20.5,39.8"/>
-<polygon class="iso-side iso-side--top" points="55.2,65.7 72.6,70.1 55.4,84.5 37.9,80.2"/>
-<polygon class="iso-face" points="37.9,98.2 55.4,102.5 55.4,84.5 37.9,80.2"/>
-<path class="iso-edge" d="M55.2,65.7L72.6,70.1M37.9,80.2L55.4,84.5M37.9,98.2L55.4,102.5"/>
-<polygon class="iso-side iso-side--right" points="107.6,132.8 107.6,114.8 90.3,129.2 90.3,147.2"/>
-<polygon class="iso-face" points="72.9,142.9 90.3,147.2 90.3,129.2 72.9,124.9"/>
-<path class="iso-edge" d="M107.6,132.8L107.6,114.8M72.9,142.9L72.9,124.9M90.3,147.2L90.3,129.2"/>
-<polygon class="iso-side iso-side--top" points="20.2,3.0 37.7,7.4 20.5,21.8 3.0,17.5"/>
-<polygon class="iso-face" points="3.0,35.5 20.5,39.8 20.5,21.8 3.0,17.5"/>
-<path class="iso-edge" d="M20.2,3.0L37.7,7.4M20.2,3.0L3.0,17.5M3.0,17.5L20.5,21.8M3.0,35.5L3.0,17.5"/>
-<polygon class="iso-side iso-side--top" points="72.6,70.1 90.1,74.4 72.9,88.9 55.4,84.5"/>
-<polygon class="iso-face" points="55.4,102.5 72.9,106.9 72.9,88.9 55.4,84.5"/>
-<path class="iso-edge" d="M72.6,70.1L90.1,74.4M90.1,74.4L72.9,88.9M55.4,84.5L72.9,88.9M55.4,102.5L72.9,106.9"/>
-<polygon class="iso-side iso-side--right" points="107.6,114.8 107.6,96.8 90.3,111.2 90.3,129.2"/>
-<polygon class="iso-face" points="72.9,124.9 90.3,129.2 90.3,111.2 72.9,106.9"/>
-<path class="iso-edge" d="M107.6,114.8L107.6,96.8M72.9,124.9L72.9,106.9M90.3,129.2L90.3,111.2"/>
-<polygon class="iso-side iso-side--top" points="37.7,7.4 55.2,11.7 37.9,26.2 20.5,21.8"/>
-<polygon class="iso-face" points="20.5,39.8 37.9,44.2 37.9,26.2 20.5,21.8"/>
-<path class="iso-edge" d="M37.7,7.4L55.2,11.7M20.5,21.8L37.9,26.2M20.5,39.8L37.9,44.2"/>
-<polygon class="iso-side iso-side--right" points="107.6,96.8 107.6,78.8 90.3,93.2 90.3,111.2"/>
-<polygon class="iso-face" points="72.9,106.9 90.3,111.2 90.3,93.2 72.9,88.9"/>
-<path class="iso-edge" d="M107.6,96.8L107.6,78.8M90.3,111.2L90.3,93.2"/>
-<polygon class="iso-side iso-side--top" points="55.2,11.7 72.6,16.1 55.4,30.5 37.9,26.2"/>
-<polygon class="iso-face" points="37.9,44.2 55.4,48.5 55.4,30.5 37.9,26.2"/>
-<path class="iso-edge" d="M55.2,11.7L72.6,16.1M37.9,26.2L55.4,30.5M37.9,44.2L55.4,48.5"/>
-<polygon class="iso-side iso-side--right" points="107.6,78.8 107.6,60.8 90.3,75.2 90.3,93.2"/>
-<polygon class="iso-face" points="72.9,88.9 90.3,93.2 90.3,75.2 72.9,70.9"/>
-<path class="iso-edge" d="M107.6,78.8L107.6,60.8M72.9,88.9L72.9,70.9M90.3,93.2L90.3,75.2"/>
-<polygon class="iso-side iso-side--top" points="72.6,16.1 90.1,20.4 72.9,34.9 55.4,30.5"/>
-<polygon class="iso-face" points="55.4,48.5 72.9,52.9 72.9,34.9 55.4,30.5"/>
-<path class="iso-edge" d="M72.6,16.1L90.1,20.4M55.4,30.5L72.9,34.9M55.4,48.5L72.9,52.9"/>
-<polygon class="iso-side iso-side--right" points="107.6,60.8 107.6,42.8 90.3,57.2 90.3,75.2"/>
-<polygon class="iso-face" points="72.9,70.9 90.3,75.2 90.3,57.2 72.9,52.9"/>
-<path class="iso-edge" d="M107.6,60.8L107.6,42.8M72.9,70.9L72.9,52.9M90.3,75.2L90.3,57.2"/>
-<polygon class="iso-face" points="125.3,137.9 142.7,142.3 142.7,124.3 125.3,119.9"/>
-<path class="iso-edge" d="M125.3,137.9L142.7,142.3M125.3,137.9L125.3,119.9"/>
-<polygon class="iso-side iso-side--top" points="90.1,20.4 107.6,24.8 90.3,39.2 72.9,34.9"/>
-<polygon class="iso-side iso-side--right" points="107.6,42.8 107.6,24.8 90.3,39.2 90.3,57.2"/>
-<polygon class="iso-face" points="72.9,52.9 90.3,57.2 90.3,39.2 72.9,34.9"/>
-<path class="iso-edge" d="M90.1,20.4L107.6,24.8M107.6,24.8L90.3,39.2M107.6,42.8L107.6,24.8M107.6,24.8L90.3,39.2M72.9,34.9L90.3,39.2M90.3,57.2L90.3,39.2"/>
-<polygon class="iso-side iso-side--right" points="160.0,109.8 160.0,91.8 142.7,106.3 142.7,124.3"/>
-<polygon class="iso-face" points="125.3,119.9 142.7,124.3 142.7,106.3 125.3,101.9"/>
-<path class="iso-edge" d="M160.0,109.8L160.0,91.8M160.0,109.8L142.7,124.3M125.3,119.9L125.3,101.9M142.7,124.3L142.7,106.3"/>
-<polygon class="iso-side iso-side--top" points="160.0,109.8 177.4,114.2 160.2,128.7 142.7,124.3"/>
-<polygon class="iso-face" points="142.7,142.3 160.2,146.7 160.2,128.7 142.7,124.3"/>
-<path class="iso-edge" d="M160.0,109.8L177.4,114.2M160.0,109.8L142.7,124.3M142.7,124.3L160.2,128.7M142.7,142.3L160.2,146.7"/>
-<polygon class="iso-side iso-side--right" points="160.0,91.8 160.0,73.8 142.7,88.3 142.7,106.3"/>
-<polygon class="iso-face" points="125.3,101.9 142.7,106.3 142.7,88.3 125.3,83.9"/>
-<path class="iso-edge" d="M160.0,91.8L160.0,73.8M125.3,101.9L125.3,83.9M142.7,106.3L142.7,88.3"/>
-<polygon class="iso-side iso-side--top" points="177.4,114.2 194.9,118.5 177.7,133.0 160.2,128.7"/>
-<polygon class="iso-face" points="160.2,146.7 177.7,151.0 177.7,133.0 160.2,128.7"/>
-<path class="iso-edge" d="M177.4,114.2L194.9,118.5M160.2,128.7L177.7,133.0M160.2,146.7L177.7,151.0"/>
-<polygon class="iso-side iso-side--right" points="160.0,73.8 160.0,55.8 142.7,70.3 142.7,88.3"/>
-<polygon class="iso-face" points="125.3,83.9 142.7,88.3 142.7,70.3 125.3,65.9"/>
-<path class="iso-edge" d="M160.0,73.8L160.0,55.8M125.3,83.9L125.3,65.9M142.7,88.3L142.7,70.3"/>
-<polygon class="iso-side iso-side--top" points="194.9,118.5 212.4,122.9 195.1,137.4 177.7,133.0"/>
-<polygon class="iso-face" points="177.7,151.0 195.1,155.4 195.1,137.4 177.7,133.0"/>
-<path class="iso-edge" d="M194.9,118.5L212.4,122.9M212.4,122.9L195.1,137.4M177.7,133.0L195.1,137.4M177.7,151.0L195.1,155.4"/>
-<polygon class="iso-side iso-side--right" points="160.0,55.8 160.0,37.8 142.7,52.3 142.7,70.3"/>
-<polygon class="iso-face" points="125.3,65.9 142.7,70.3 142.7,52.3 125.3,47.9"/>
-<path class="iso-edge" d="M160.0,55.8L160.0,37.8M160.0,37.8L142.7,52.3M125.3,65.9L125.3,47.9M142.7,70.3L142.7,52.3"/>
-<polygon class="iso-side iso-side--right" points="229.8,145.3 229.8,127.3 212.6,141.7 212.6,159.7"/>
-<polygon class="iso-face" points="195.1,155.4 212.6,159.7 212.6,141.7 195.1,137.4"/>
-<path class="iso-edge" d="M229.8,145.3L229.8,127.3M229.8,145.3L212.6,159.7M195.1,155.4L212.6,159.7M212.6,159.7L212.6,141.7"/>
-<polygon class="iso-side iso-side--top" points="142.5,15.5 160.0,19.8 142.7,34.3 125.3,29.9"/>
-<polygon class="iso-face" points="125.3,47.9 142.7,52.3 142.7,34.3 125.3,29.9"/>
-<path class="iso-edge" d="M142.5,15.5L160.0,19.8M142.5,15.5L125.3,29.9M125.3,29.9L142.7,34.3M125.3,47.9L125.3,29.9"/>
-<polygon class="iso-side iso-side--right" points="229.8,127.3 229.8,109.3 212.6,123.7 212.6,141.7"/>
-<polygon class="iso-face" points="195.1,137.4 212.6,141.7 212.6,123.7 195.1,119.4"/>
-<path class="iso-edge" d="M229.8,127.3L229.8,109.3M195.1,137.4L195.1,119.4M212.6,141.7L212.6,123.7"/>
-<polygon class="iso-side iso-side--top" points="160.0,19.8 177.4,24.2 160.2,38.7 142.7,34.3"/>
-<polygon class="iso-face" points="142.7,52.3 160.2,56.7 160.2,38.7 142.7,34.3"/>
-<path class="iso-edge" d="M160.0,19.8L177.4,24.2M142.7,34.3L160.2,38.7M142.7,52.3L160.2,56.7"/>
-<polygon class="iso-side iso-side--right" points="229.8,109.3 229.8,91.3 212.6,105.7 212.6,123.7"/>
-<polygon class="iso-face" points="195.1,119.4 212.6,123.7 212.6,105.7 195.1,101.4"/>
-<path class="iso-edge" d="M229.8,109.3L229.8,91.3M195.1,119.4L195.1,101.4M212.6,123.7L212.6,105.7"/>
-<polygon class="iso-side iso-side--top" points="177.4,24.2 194.9,28.5 177.7,43.0 160.2,38.7"/>
-<polygon class="iso-face" points="160.2,56.7 177.7,61.0 177.7,43.0 160.2,38.7"/>
-<path class="iso-edge" d="M177.4,24.2L194.9,28.5M160.2,38.7L177.7,43.0M160.2,56.7L177.7,61.0"/>
-<polygon class="iso-side iso-side--right" points="229.8,91.3 229.8,73.3 212.6,87.7 212.6,105.7"/>
-<polygon class="iso-face" points="195.1,101.4 212.6,105.7 212.6,87.7 195.1,83.4"/>
-<path class="iso-edge" d="M229.8,91.3L229.8,73.3M195.1,101.4L195.1,83.4M212.6,105.7L212.6,87.7"/>
-<polygon class="iso-side iso-side--top" points="194.9,28.5 212.4,32.9 195.1,47.4 177.7,43.0"/>
-<polygon class="iso-face" points="177.7,61.0 195.1,65.4 195.1,47.4 177.7,43.0"/>
-<path class="iso-edge" d="M194.9,28.5L212.4,32.9M177.7,43.0L195.1,47.4M177.7,61.0L195.1,65.4"/>
-<polygon class="iso-side iso-side--right" points="229.8,73.3 229.8,55.3 212.6,69.7 212.6,87.7"/>
-<polygon class="iso-face" points="195.1,83.4 212.6,87.7 212.6,69.7 195.1,65.4"/>
-<path class="iso-edge" d="M229.8,73.3L229.8,55.3M195.1,83.4L195.1,65.4M212.6,87.7L212.6,69.7"/>
-<polygon class="iso-side iso-side--top" points="212.4,32.9 229.8,37.3 212.6,51.7 195.1,47.4"/>
-<polygon class="iso-side iso-side--right" points="229.8,55.3 229.8,37.3 212.6,51.7 212.6,69.7"/>
-<polygon class="iso-face" points="195.1,65.4 212.6,69.7 212.6,51.7 195.1,47.4"/>
-<path class="iso-edge" d="M212.4,32.9L229.8,37.3M229.8,37.3L212.6,51.7M229.8,55.3L229.8,37.3M229.8,37.3L212.6,51.7M195.1,47.4L212.6,51.7M212.6,69.7L212.6,51.7"/>
-<polygon class="iso-side iso-side--right" points="317.1,167.0 317.1,149.0 299.9,163.5 299.9,181.5"/>
-<polygon class="iso-face" points="282.4,177.1 299.9,181.5 299.9,163.5 282.4,159.1"/>
-<path class="iso-edge" d="M317.1,167.0L317.1,149.0M317.1,167.0L299.9,181.5M282.4,177.1L299.9,181.5M282.4,177.1L282.4,159.1M299.9,181.5L299.9,163.5"/>
-<polygon class="iso-side iso-side--top" points="264.8,82.0 282.2,86.3 265.0,100.8 247.5,96.4"/>
-<polygon class="iso-face" points="247.5,114.4 265.0,118.8 265.0,100.8 247.5,96.4"/>
-<path class="iso-edge" d="M264.8,82.0L282.2,86.3M264.8,82.0L247.5,96.4M247.5,96.4L265.0,100.8M247.5,114.4L265.0,118.8M247.5,114.4L247.5,96.4"/>
-<polygon class="iso-side iso-side--right" points="317.1,149.0 317.1,131.0 299.9,145.5 299.9,163.5"/>
-<polygon class="iso-face" points="282.4,159.1 299.9,163.5 299.9,145.5 282.4,141.1"/>
-<path class="iso-edge" d="M317.1,149.0L317.1,131.0M282.4,159.1L282.4,141.1M299.9,163.5L299.9,145.5"/>
-<polygon class="iso-side iso-side--top" points="282.2,86.3 299.7,90.7 282.4,105.1 265.0,100.8"/>
-<polygon class="iso-face" points="265.0,118.8 282.4,123.1 282.4,105.1 265.0,100.8"/>
-<path class="iso-edge" d="M282.2,86.3L299.7,90.7M299.7,90.7L282.4,105.1M265.0,100.8L282.4,105.1M265.0,118.8L282.4,123.1"/>
-<polygon class="iso-side iso-side--right" points="317.1,131.0 317.1,113.0 299.9,127.5 299.9,145.5"/>
-<polygon class="iso-face" points="282.4,141.1 299.9,145.5 299.9,127.5 282.4,123.1"/>
-<path class="iso-edge" d="M317.1,131.0L317.1,113.0M317.1,113.0L299.9,127.5M282.4,141.1L282.4,123.1M299.9,145.5L299.9,127.5"/>
-<polygon class="iso-face" points="282.4,123.1 299.9,127.5 299.9,109.5 282.4,105.1"/>
-<path class="iso-edge" d=""/>
-<polygon class="iso-side iso-side--right" points="317.1,95.0 317.1,77.0 299.9,91.5 299.9,109.5"/>
-<polygon class="iso-face" points="282.4,105.1 299.9,109.5 299.9,91.5 282.4,87.1"/>
-<path class="iso-edge" d="M317.1,95.0L317.1,77.0M317.1,77.0L299.9,91.5M317.1,95.0L299.9,109.5M282.4,105.1L282.4,87.1M299.9,109.5L299.9,91.5"/>
-<polygon class="iso-side iso-side--top" points="317.1,95.0 334.6,99.4 317.4,113.8 299.9,109.5"/>
-<polygon class="iso-face" points="299.9,127.5 317.4,131.8 317.4,113.8 299.9,109.5"/>
-<path class="iso-edge" d="M317.1,95.0L334.6,99.4M317.1,95.0L299.9,109.5M299.9,109.5L317.4,113.8M299.9,127.5L317.4,131.8"/>
-<polygon class="iso-side iso-side--top" points="299.7,54.7 317.1,59.0 299.9,73.5 282.4,69.1"/>
-<polygon class="iso-face" points="282.4,87.1 299.9,91.5 299.9,73.5 282.4,69.1"/>
-<path class="iso-edge" d="M299.7,54.7L317.1,59.0M299.7,54.7L282.4,69.1M282.4,69.1L299.9,73.5M282.4,87.1L282.4,69.1"/>
-<polygon class="iso-side iso-side--top" points="334.6,99.4 352.1,103.7 334.8,118.2 317.4,113.8"/>
-<polygon class="iso-side iso-side--right" points="352.1,121.7 352.1,103.7 334.8,118.2 334.8,136.2"/>
-<polygon class="iso-face" points="317.4,131.8 334.8,136.2 334.8,118.2 317.4,113.8"/>
-<path class="iso-edge" d="M334.6,99.4L352.1,103.7M352.1,103.7L334.8,118.2M352.1,121.7L352.1,103.7M352.1,103.7L334.8,118.2M352.1,121.7L334.8,136.2M317.4,113.8L334.8,118.2M317.4,131.8L334.8,136.2M334.8,136.2L334.8,118.2"/>
-<polygon class="iso-face" points="369.8,198.9 387.2,203.3 387.2,185.3 369.8,180.9"/>
-<path class="iso-edge" d="M369.8,198.9L387.2,203.3M369.8,198.9L369.8,180.9"/>
-<polygon class="iso-side iso-side--top" points="317.1,59.0 334.6,63.4 317.4,77.8 299.9,73.5"/>
-<polygon class="iso-face" points="299.9,91.5 317.4,95.8 317.4,77.8 299.9,73.5"/>
-<path class="iso-edge" d="M317.1,59.0L334.6,63.4M299.9,73.5L317.4,77.8M299.9,91.5L317.4,95.8"/>
-<polygon class="iso-side iso-side--right" points="404.5,170.8 404.5,152.8 387.2,167.3 387.2,185.3"/>
-<polygon class="iso-face" points="369.8,180.9 387.2,185.3 387.2,167.3 369.8,162.9"/>
-<path class="iso-edge" d="M404.5,170.8L404.5,152.8M404.5,152.8L387.2,167.3M404.5,170.8L387.2,185.3M369.8,180.9L369.8,162.9M387.2,185.3L387.2,167.3"/>
-<polygon class="iso-side iso-side--top" points="404.5,170.8 421.9,175.2 404.7,189.6 387.2,185.3"/>
-<polygon class="iso-face" points="387.2,203.3 404.7,207.6 404.7,189.6 387.2,185.3"/>
-<path class="iso-edge" d="M404.5,170.8L421.9,175.2M404.5,170.8L387.2,185.3M387.2,185.3L404.7,189.6M387.2,203.3L404.7,207.6"/>
-<polygon class="iso-side iso-side--top" points="334.6,63.4 352.1,67.7 334.8,82.2 317.4,77.8"/>
-<polygon class="iso-side iso-side--right" points="352.1,85.7 352.1,67.7 334.8,82.2 334.8,100.2"/>
-<polygon class="iso-face" points="317.4,95.8 334.8,100.2 334.8,82.2 317.4,77.8"/>
-<path class="iso-edge" d="M334.6,63.4L352.1,67.7M352.1,67.7L334.8,82.2M352.1,85.7L352.1,67.7M352.1,67.7L334.8,82.2M352.1,85.7L334.8,100.2M317.4,77.8L334.8,82.2M317.4,95.8L334.8,100.2M334.8,100.2L334.8,82.2"/>
-<polygon class="iso-side iso-side--top" points="387.0,130.4 404.5,134.8 387.2,149.3 369.8,144.9"/>
-<polygon class="iso-face" points="369.8,162.9 387.2,167.3 387.2,149.3 369.8,144.9"/>
-<path class="iso-edge" d="M387.0,130.4L404.5,134.8M387.0,130.4L369.8,144.9M369.8,144.9L387.2,149.3M369.8,162.9L369.8,144.9"/>
-<polygon class="iso-side iso-side--top" points="421.9,175.2 439.4,179.5 422.2,194.0 404.7,189.6"/>
-<polygon class="iso-face" points="404.7,207.6 422.2,212.0 422.2,194.0 404.7,189.6"/>
-<path class="iso-edge" d="M421.9,175.2L439.4,179.5M404.7,189.6L422.2,194.0M404.7,207.6L422.2,212.0"/>
-<polygon class="iso-side iso-side--top" points="404.5,134.8 421.9,139.2 404.7,153.6 387.2,149.3"/>
-<polygon class="iso-face" points="387.2,167.3 404.7,171.6 404.7,153.6 387.2,149.3"/>
-<path class="iso-edge" d="M404.5,134.8L421.9,139.2M387.2,149.3L404.7,153.6M387.2,167.3L404.7,171.6"/>
-<polygon class="iso-side iso-side--top" points="439.4,179.5 456.9,183.9 439.6,198.3 422.2,194.0"/>
-<polygon class="iso-face" points="422.2,212.0 439.6,216.3 439.6,198.3 422.2,194.0"/>
-<path class="iso-edge" d="M439.4,179.5L456.9,183.9M456.9,183.9L439.6,198.3M422.2,194.0L439.6,198.3M422.2,212.0L439.6,216.3"/>
-<polygon class="iso-side iso-side--top" points="387.0,94.4 404.5,98.8 387.2,113.3 369.8,108.9"/>
-<polygon class="iso-face" points="369.8,126.9 387.2,131.3 387.2,113.3 369.8,108.9"/>
-<path class="iso-edge" d="M387.0,94.4L404.5,98.8M387.0,94.4L369.8,108.9M369.8,108.9L387.2,113.3M369.8,126.9L387.2,131.3M369.8,126.9L369.8,108.9"/>
-<polygon class="iso-side iso-side--top" points="421.9,139.2 439.4,143.5 422.2,158.0 404.7,153.6"/>
-<polygon class="iso-face" points="404.7,171.6 422.2,176.0 422.2,158.0 404.7,153.6"/>
-<path class="iso-edge" d="M421.9,139.2L439.4,143.5M404.7,153.6L422.2,158.0M404.7,171.6L422.2,176.0"/>
-<polygon class="iso-side iso-side--right" points="474.3,206.2 474.3,188.2 457.1,202.7 457.1,220.7"/>
-<polygon class="iso-face" points="439.6,216.3 457.1,220.7 457.1,202.7 439.6,198.3"/>
-<path class="iso-edge" d="M474.3,206.2L474.3,188.2M474.3,206.2L457.1,220.7M439.6,216.3L457.1,220.7M457.1,220.7L457.1,202.7"/>
-<polygon class="iso-side iso-side--top" points="404.5,98.8 421.9,103.2 404.7,117.6 387.2,113.3"/>
-<polygon class="iso-face" points="387.2,131.3 404.7,135.6 404.7,117.6 387.2,113.3"/>
-<path class="iso-edge" d="M404.5,98.8L421.9,103.2M387.2,113.3L404.7,117.6M387.2,131.3L404.7,135.6"/>
-<polygon class="iso-side iso-side--top" points="439.4,143.5 456.9,147.9 439.6,162.3 422.2,158.0"/>
-<polygon class="iso-face" points="422.2,176.0 439.6,180.3 439.6,162.3 422.2,158.0"/>
-<path class="iso-edge" d="M439.4,143.5L456.9,147.9M456.9,147.9L439.6,162.3M422.2,158.0L439.6,162.3M422.2,176.0L439.6,180.3"/>
-<polygon class="iso-side iso-side--right" points="474.3,188.2 474.3,170.2 457.1,184.7 457.1,202.7"/>
-<polygon class="iso-face" points="439.6,198.3 457.1,202.7 457.1,184.7 439.6,180.3"/>
-<path class="iso-edge" d="M474.3,188.2L474.3,170.2M439.6,198.3L439.6,180.3M457.1,202.7L457.1,184.7"/>
-<polygon class="iso-side iso-side--top" points="421.9,103.2 439.4,107.5 422.2,122.0 404.7,117.6"/>
-<polygon class="iso-face" points="404.7,135.6 422.2,140.0 422.2,122.0 404.7,117.6"/>
-<path class="iso-edge" d="M421.9,103.2L439.4,107.5M404.7,117.6L422.2,122.0M404.7,135.6L422.2,140.0"/>
-<polygon class="iso-side iso-side--right" points="474.3,170.2 474.3,152.2 457.1,166.7 457.1,184.7"/>
-<polygon class="iso-face" points="439.6,180.3 457.1,184.7 457.1,166.7 439.6,162.3"/>
-<path class="iso-edge" d="M474.3,170.2L474.3,152.2M457.1,184.7L457.1,166.7"/>
-<polygon class="iso-side iso-side--top" points="439.4,107.5 456.9,111.9 439.6,126.3 422.2,122.0"/>
-<polygon class="iso-face" points="422.2,140.0 439.6,144.3 439.6,126.3 422.2,122.0"/>
-<path class="iso-edge" d="M439.4,107.5L456.9,111.9M422.2,122.0L439.6,126.3M422.2,140.0L439.6,144.3"/>
-<polygon class="iso-side iso-side--right" points="474.3,152.2 474.3,134.2 457.1,148.7 457.1,166.7"/>
-<polygon class="iso-face" points="439.6,162.3 457.1,166.7 457.1,148.7 439.6,144.3"/>
-<path class="iso-edge" d="M474.3,152.2L474.3,134.2M439.6,162.3L439.6,144.3M457.1,166.7L457.1,148.7"/>
-<polygon class="iso-side iso-side--top" points="456.9,111.9 474.3,116.2 457.1,130.7 439.6,126.3"/>
-<polygon class="iso-side iso-side--right" points="474.3,134.2 474.3,116.2 457.1,130.7 457.1,148.7"/>
-<polygon class="iso-face" points="439.6,144.3 457.1,148.7 457.1,130.7 439.6,126.3"/>
-<path class="iso-edge" d="M456.9,111.9L474.3,116.2M474.3,116.2L457.1,130.7M474.3,134.2L474.3,116.2M474.3,116.2L457.1,130.7M439.6,126.3L457.1,130.7M457.1,148.7L457.1,130.7"/>
-<polygon class="iso-face" points="492.0,211.4 509.5,215.7 509.5,197.7 492.0,193.4"/>
-<path class="iso-edge" d="M492.0,211.4L509.5,215.7M492.0,211.4L492.0,193.4"/>
-<polygon class="iso-side iso-side--right" points="526.7,183.3 526.7,165.3 509.5,179.7 509.5,197.7"/>
-<polygon class="iso-face" points="492.0,193.4 509.5,197.7 509.5,179.7 492.0,175.4"/>
-<path class="iso-edge" d="M526.7,183.3L526.7,165.3M526.7,183.3L509.5,197.7M492.0,193.4L492.0,175.4M509.5,197.7L509.5,179.7"/>
-<polygon class="iso-side iso-side--top" points="526.7,183.3 544.2,187.6 527.0,202.1 509.5,197.7"/>
-<polygon class="iso-face" points="509.5,215.7 527.0,220.1 527.0,202.1 509.5,197.7"/>
-<path class="iso-edge" d="M526.7,183.3L544.2,187.6M526.7,183.3L509.5,197.7M509.5,197.7L527.0,202.1M509.5,215.7L527.0,220.1"/>
-<polygon class="iso-side iso-side--right" points="596.6,272.7 596.6,254.7 579.4,269.2 579.4,287.2"/>
-<polygon class="iso-face" points="561.9,282.8 579.4,287.2 579.4,269.2 561.9,264.8"/>
-<path class="iso-edge" d="M596.6,272.7L596.6,254.7M596.6,272.7L579.4,287.2M561.9,282.8L579.4,287.2M561.9,282.8L561.9,264.8M579.4,287.2L579.4,269.2"/>
-<polygon class="iso-side iso-side--right" points="526.7,165.3 526.7,147.3 509.5,161.7 509.5,179.7"/>
-<polygon class="iso-face" points="492.0,175.4 509.5,179.7 509.5,161.7 492.0,157.4"/>
-<path class="iso-edge" d="M526.7,165.3L526.7,147.3M526.7,147.3L509.5,161.7M492.0,175.4L492.0,157.4M509.5,179.7L509.5,161.7"/>
-<polygon class="iso-side iso-side--top" points="544.2,187.6 561.7,192.0 544.4,206.5 527.0,202.1"/>
-<polygon class="iso-face" points="527.0,220.1 544.4,224.5 544.4,206.5 527.0,202.1"/>
-<path class="iso-edge" d="M544.2,187.6L561.7,192.0M527.0,202.1L544.4,206.5M527.0,220.1L544.4,224.5"/>
-<polygon class="iso-side iso-side--right" points="596.6,254.7 596.6,236.7 579.4,251.2 579.4,269.2"/>
-<polygon class="iso-face" points="561.9,264.8 579.4,269.2 579.4,251.2 561.9,246.8"/>
-<path class="iso-edge" d="M596.6,254.7L596.6,236.7M561.9,264.8L561.9,246.8M579.4,269.2L579.4,251.2"/>
-<polygon class="iso-side iso-side--top" points="509.3,124.9 526.7,129.3 509.5,143.7 492.0,139.4"/>
-<polygon class="iso-face" points="492.0,157.4 509.5,161.7 509.5,143.7 492.0,139.4"/>
-<path class="iso-edge" d="M509.3,124.9L526.7,129.3M509.3,124.9L492.0,139.4M492.0,139.4L509.5,143.7M492.0,157.4L492.0,139.4"/>
-<polygon class="iso-side iso-side--top" points="561.7,192.0 579.1,196.3 561.9,210.8 544.4,206.5"/>
-<polygon class="iso-face" points="544.4,224.5 561.9,228.8 561.9,210.8 544.4,206.5"/>
-<path class="iso-edge" d="M561.7,192.0L579.1,196.3M579.1,196.3L561.9,210.8M544.4,206.5L561.9,210.8M544.4,224.5L561.9,228.8"/>
-<polygon class="iso-side iso-side--right" points="596.6,236.7 596.6,218.7 579.4,233.2 579.4,251.2"/>
-<polygon class="iso-face" points="561.9,246.8 579.4,251.2 579.4,233.2 561.9,228.8"/>
-<path class="iso-edge" d="M596.6,236.7L596.6,218.7M561.9,246.8L561.9,228.8M579.4,251.2L579.4,233.2"/>
-<polygon class="iso-side iso-side--top" points="526.7,129.3 544.2,133.6 527.0,148.1 509.5,143.7"/>
-<polygon class="iso-face" points="509.5,161.7 527.0,166.1 527.0,148.1 509.5,143.7"/>
-<path class="iso-edge" d="M526.7,129.3L544.2,133.6M509.5,143.7L527.0,148.1M509.5,161.7L527.0,166.1"/>
-<polygon class="iso-side iso-side--right" points="596.6,218.7 596.6,200.7 579.4,215.2 579.4,233.2"/>
-<polygon class="iso-face" points="561.9,228.8 579.4,233.2 579.4,215.2 561.9,210.8"/>
-<path class="iso-edge" d="M596.6,218.7L596.6,200.7M579.4,233.2L579.4,215.2"/>
-<polygon class="iso-side iso-side--top" points="544.2,133.6 561.7,138.0 544.4,152.5 527.0,148.1"/>
-<polygon class="iso-face" points="527.0,166.1 544.4,170.5 544.4,152.5 527.0,148.1"/>
-<path class="iso-edge" d="M544.2,133.6L561.7,138.0M527.0,148.1L544.4,152.5M527.0,166.1L544.4,170.5"/>
-<polygon class="iso-side iso-side--right" points="596.6,200.7 596.6,182.7 579.4,197.2 579.4,215.2"/>
-<polygon class="iso-face" points="561.9,210.8 579.4,215.2 579.4,197.2 561.9,192.8"/>
-<path class="iso-edge" d="M596.6,200.7L596.6,182.7M561.9,210.8L561.9,192.8M579.4,215.2L579.4,197.2"/>
-<polygon class="iso-side iso-side--top" points="561.7,138.0 579.1,142.3 561.9,156.8 544.4,152.5"/>
-<polygon class="iso-face" points="544.4,170.5 561.9,174.8 561.9,156.8 544.4,152.5"/>
-<path class="iso-edge" d="M561.7,138.0L579.1,142.3M544.4,152.5L561.9,156.8M544.4,170.5L561.9,174.8"/>
-<polygon class="iso-side iso-side--right" points="596.6,182.7 596.6,164.7 579.4,179.2 579.4,197.2"/>
-<polygon class="iso-face" points="561.9,192.8 579.4,197.2 579.4,179.2 561.9,174.8"/>
-<path class="iso-edge" d="M596.6,182.7L596.6,164.7M561.9,192.8L561.9,174.8M579.4,197.2L579.4,179.2"/>
-<polygon class="iso-side iso-side--top" points="579.1,142.3 596.6,146.7 579.4,161.2 561.9,156.8"/>
-<polygon class="iso-side iso-side--right" points="596.6,164.7 596.6,146.7 579.4,161.2 579.4,179.2"/>
-<polygon class="iso-face" points="561.9,174.8 579.4,179.2 579.4,161.2 561.9,156.8"/>
-<path class="iso-edge" d="M579.1,142.3L596.6,146.7M596.6,146.7L579.4,161.2M596.6,164.7L596.6,146.7M596.6,146.7L579.4,161.2M561.9,156.8L579.4,161.2M579.4,179.2L579.4,161.2"/>
-</svg>
+    <main>
+      <section class="hero section-tone section-assembly section-tone--hero" id="top" data-section-name="Главная">
+        <div class="hero-flow" data-hero-flow aria-hidden="true">
+          <svg class="hero-flow__paths" viewBox="0 0 720 520" preserveAspectRatio="none">
+            <path d="M40 88 C220 88 180 220 360 220"/>
+            <path d="M80 252 C230 252 230 252 360 252"/>
+            <path d="M35 430 C215 430 200 286 360 286"/>
+            <path d="M520 252 C610 252 620 146 690 146"/>
+            <path d="M520 276 C610 276 620 378 690 378"/>
+          </svg>
+          <div class="hero-flow__node hero-flow__node--one"><small>INPUT 01</small><strong>ИДЕЯ</strong></div>
+          <div class="hero-flow__node hero-flow__node--two"><small>INPUT 02</small><strong>ПРОЦЕССЫ</strong></div>
+          <div class="hero-flow__node hero-flow__node--three"><small>INPUT 03</small><strong>ДАННЫЕ</strong></div>
+          <div class="hero-flow__core">
+            <small>g0 / DELIVERY</small>
+            <strong>ГОТОВЫЙ<br>ПРОДУКТ</strong>
+            <span>DESIGN · CODE · LAUNCH</span>
           </div>
-          <p class="fig-caption">Fig. 1</p>
+          <div class="hero-flow__metric hero-flow__metric--one"><span>+</span> ЗАЯВКИ</div>
+          <div class="hero-flow__metric hero-flow__metric--two"><span>−</span> РУТИНА</div>
         </div>
-
-        <div class="frame hero__identity">
-          <div class="hero__avatar">
-            <img class="hero__photo" src="./img/avatar.jpg" alt="Фёдор Ершов" width="320" height="320" decoding="async" onerror="this.remove()">
-            <svg viewBox="0 0 96 96" aria-hidden="true">
-              <polygon class="cube-top" points="48,14 78,31 48,48 18,31"/>
-              <polygon class="cube-left" points="18,31 48,48 48,82 18,65"/>
-              <polygon class="cube-right" points="78,31 48,48 48,82 78,65"/>
-              <text x="33" y="70">g0</text>
-            </svg>
-          </div>
-          <div class="hero__name">
-            <h1>
-              <span class="hero__title">Фёдор Ершов</span>
-              <span class="hero__status" title="Беру новые проекты"><i aria-hidden="true"></i>открыт для проектов</span>
-            </h1>
-            <p class="hero__tagline">Запускаю сайты, Telegram-сервисы, CRM и AI-автоматизации, которые <b>работают на бизнес</b>.</p>
-          </div>
-        </div>
-
-        <div class="hatch-band" aria-hidden="true"></div>
-
-        <div class="frame hero__info">
-          <ul class="info-list">
-            <li><span class="info-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg></span><span>Разработчик <b>@g0_faq</b></span></li>
-            <li><span class="info-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16v13H4zM9 7V4h6v3"/></svg></span><span>Под ключ: от ТЗ до запуска</span></li>
-            <li><span class="info-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6"/></svg></span><span>Работаю <a href="./contract.html">по договору</a></span></li>
-          </ul>
-          <ul class="info-list">
-            <li><span class="info-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span><b data-clock>--:--</b> <span class="muted">// время по Москве</span></span></li>
-            <li><span class="info-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 11 18-7-4 17-6-5-3 4v-6l10-7"/></svg></span><a href="https://t.me/g0_faq" target="_blank" rel="noreferrer">t.me/g0_faq</a></li>
-            <li><span class="info-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1Z"/></svg></span><a href="tel:+79779742510">+7 977 974-25-10</a></li>
-          </ul>
-        </div>
-
-        <div class="frame hero__social">
-          <p class="hand-note" aria-hidden="true">пишите
-            <svg viewBox="0 0 40 30"><path d="M4 4c2 12 12 20 30 20M28 18l6 6-8 3"/></svg>
-          </p>
-          <div class="social">
-            <a class="social__link" href="https://t.me/g0_faq" target="_blank" rel="noreferrer" aria-label="Telegram">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path class="fill" d="M23.9 3.8 20.3 20.9c-.3 1.2-1 1.5-2 .9l-5.5-4.1-2.7 2.6c-.3.3-.5.5-1.1.5l.4-5.7 10.3-9.3c.4-.4-.1-.6-.7-.2L6.3 13.6.8 11.9c-1.2-.4-1.2-1.2.3-1.8l21.4-8.2c1-.4 1.9.2 1.4 1.9Z"/></svg>
-            </a>
-            <a class="social__link" href="https://vk.com/g0_faq" target="_blank" rel="noreferrer" aria-label="VK">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path class="fill" d="M23.5 6c.2-.6 0-1-.8-1H20c-.7 0-1 .4-1.2.8 0 0-1.3 3.2-3.2 5.3-.6.6-.9.8-1.2.8-.2 0-.4-.2-.4-.8V6c0-.7-.2-1-.8-1H9.1c-.4 0-.7.3-.7.6 0 .6.9.8 1 2.6V12c0 .8-.1 1-.5 1-.9 0-3-3.3-4.3-7-.2-.7-.5-1-1.2-1H.9c-.8 0-.9.4-.9.8 0 .7.9 4.1 4.1 8.7 2.2 3.1 5.2 4.8 8 4.8 1.7 0 1.9-.4 1.9-1v-2.4c0-.7.2-.9.7-.9.4 0 1.1.2 2.6 1.7 1.8 1.8 2.1 2.6 3.1 2.6H23c.8 0 1.1-.4.9-1.1-.2-.7-1.1-1.8-2.2-3.1-.6-.7-1.5-1.5-1.8-1.9-.4-.5-.3-.7 0-1.2 0 0 3.2-4.5 3.6-6Z"/></svg>
-            </a>
-            <a class="social__link" href="https://github.com/g0faq" target="_blank" rel="noreferrer" aria-label="GitHub">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path class="fill" d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z"/></svg>
-            </a>
-            <a class="social__link social__link--text" href="https://web.max.ru/" target="_blank" rel="noreferrer" aria-label="MAX по номеру +7 977 974-25-10">MAX</a>
-          </div>
+        <div class="hero__inner">
+          <p class="eyebrow">САЙТЫ · TELEGRAM · CRM · AI-АВТОМАТИЗАЦИЯ</p>
+          <h1>Запускаю продукты, которые <span>работают на бизнес</span></h1>
+          <p class="hero__lead">Превращаю задачу в готовый цифровой продукт: фиксирую смету, показываю промежуточные версии и довожу проект до рабочего запуска.</p>
           <div class="hero__actions">
-            <a class="button button--primary" href="#calculator">Рассчитать стоимость</a>
-            <a class="button" href="./brief/">Нет ТЗ? Помогу собрать</a>
+            <a class="button button--primary" href="#calculator">Рассчитать стоимость ↘</a>
+            <a class="button" href="#cases">Посмотреть кейсы</a>
           </div>
-        </div>
-
-        <div class="frame hero__route">
-          <div class="route" role="img" aria-label="Базовый запуск проекта занимает 7–14 дней: созвон, ТЗ и фиксация цены, разработка с демо, запуск, поддержка">
-            <div class="route__labels" aria-hidden="true">
-              <span style="--from:1;--to:2">Созвон</span>
-              <span style="--from:2;--to:4">ТЗ и цена</span>
-              <span style="--from:4;--to:12">Разработка с демо</span>
-              <span style="--from:12;--to:14">Запуск</span>
-              <span style="--from:14;--to:15">Поддержка</span>
-            </div>
-            <div class="route__grid" aria-hidden="true" data-route></div>
-          </div>
-          <div class="route__footer">
-            <p class="fig-caption fig-caption--inline">Fig. 2 <span>Базовый запуск — 7–14 дней. Цена фиксируется до начала разработки.</span></p>
-            <p class="route__legend" aria-hidden="true">День 1 <i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i> День 14</p>
-          </div>
+          <ul class="hero__proof" aria-label="Условия работы">
+            <li><strong>7–14 дней</strong><span>на базовый запуск</span></li>
+            <li><strong>Фиксированная цена</strong><span>до начала разработки</span></li>
+            <li><strong>Работа по договору</strong><span>этапы, сроки и результат</span></li>
+          </ul>
+          <p class="hero__status"><span aria-hidden="true"></span>STATUS: OPEN FOR PROJECTS · 2026</p>
         </div>
       </section>
 
-      <!-- ── Кейсы ────────────────────────────────────────────────────────── -->
-      <section class="section" id="cases" data-section-name="Кейсы" aria-labelledby="cases-title">
-        <div class="frame section__head">
-          <p class="kicker"><span>01</span>Кейсы</p>
-          <h2 id="cases-title">Проекты, которые уже <em>работают</em></h2>
-          <p class="lede">Живые сервисы и демо-версии. У демо вымышленные данные — реальные клиенты не раскрываются.</p>
+      <section class="cases-section section-tone section-assembly section-tone--cases" id="cases" data-section-name="Кейсы" aria-labelledby="cases-title">
+        <h2 class="visually-hidden" id="cases-title">Кейсы</h2>
+        <div class="cases-sticky" id="cases-stack" aria-live="polite">
+          <p class="cases-loading">ЗАГРУЖАЮ КЕЙСЫ…</p>
         </div>
-        <div class="frame cases-grid" id="cases-stack" aria-live="polite">
-          <p class="cases-loading">Загружаю кейсы…</p>
+        <!-- Подсказка о горизонтальной прокрутке: показывается один раз, только на телефоне -->
+        <div class="cases-hint" id="cases-hint" hidden>
+          <span class="cases-hint__arrows" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
+          <span class="cases-hint__text">Листайте вбок</span>
         </div>
       </section>
 
-      <div class="frame hatch-band" aria-hidden="true"></div>
-
-      <!-- ── Услуги ───────────────────────────────────────────────────────── -->
-      <section class="section" id="services" data-section-name="Услуги" aria-labelledby="services-title">
-        <div class="frame section__head">
-          <p class="kicker"><span>02</span>Услуги</p>
-          <h2 id="services-title">Что я <em>делаю</em></h2>
-          <p class="lede">Цены — нижняя и верхняя граница. Точная стоимость фиксируется в ТЗ до старта работ.</p>
+      <section class="content-section section-tone section-assembly section-tone--services" id="services" data-section-name="Услуги" aria-labelledby="services-title">
+        <div class="section-heading">
+          <p class="eyebrow">01 / УСЛУГИ</p>
+          <h2 id="services-title">Что я делаю</h2>
         </div>
-        <div class="frame frame--tight services-grid">
+        <div class="services-grid">
           <article class="service-card">
             <p class="service-card__num">01</p>
             <h3>Лендинг</h3>
@@ -482,147 +192,176 @@
         </div>
       </section>
 
-      <!-- ── Процесс ──────────────────────────────────────────────────────── -->
-      <section class="section section--ink" id="process" data-section-name="Процесс" aria-labelledby="process-title">
-        <div class="frame section__head">
-          <p class="kicker"><span>03</span>Процесс</p>
-          <h2 id="process-title">От задачи <em>до запуска</em></h2>
-          <p class="lede">Пять шагов без сюрпризов: решения принимаются по ходу, а не после финальной сборки.</p>
+      <section class="content-section process-section section-tone section-assembly section-tone--process" id="process" data-section-name="Процесс" aria-labelledby="process-title">
+        <div class="section-heading">
+          <p class="eyebrow">02 / ПРОЦЕСС</p>
+          <h2 id="process-title">От задачи до запуска</h2>
         </div>
-        <ol class="frame process-list">
-          <li>
-            <span class="process-list__num">01</span>
-            <h3>Созвон и разбор задачи</h3>
-            <p>Обсуждаем цель, аудиторию и ограничения. Определяем, какой результат нужен бизнесу.</p>
-          </li>
-          <li>
-            <span class="process-list__num">02</span>
-            <h3>ТЗ и фиксация цены</h3>
-            <p>Собираю требования в понятный документ, согласовываем сроки и фиксированную стоимость.</p>
-          </li>
-          <li>
-            <span class="process-list__num">03</span>
-            <h3>Разработка с демо</h3>
-            <p>Показываю результат по этапам, чтобы важные решения принимались до финальной сборки.</p>
-          </li>
-          <li>
-            <span class="process-list__num">04</span>
-            <h3>Запуск и проверка</h3>
-            <p>Разворачиваю проект, проверяю основные сценарии и передаю все доступы.</p>
-          </li>
-          <li>
-            <span class="process-list__num">05</span>
-            <h3>Поддержка</h3>
-            <p>Остаюсь на связи после релиза, исправляю найденное и помогаю с развитием.</p>
-          </li>
-        </ol>
+        <div class="process-layout">
+          <aside class="process-visual" aria-hidden="true">
+            <p class="process-visual__kicker">PROJECT ROUTE</p>
+            <p class="process-visual__counter"><span data-process-current>01</span><small>/ 05</small></p>
+            <p class="process-visual__label" data-process-label>Созвон и разбор задачи</p>
+            <div class="process-visual__track">
+              <span class="is-active"></span><span></span><span></span><span></span><span></span>
+            </div>
+            <p class="process-visual__footer">ЗАДАЧА → ЗАПУСК</p>
+          </aside>
+          <ol class="process-list">
+            <li>
+              <span>01 →</span>
+              <div><h3>Созвон и разбор задачи</h3><p>Обсуждаем цель, аудиторию и ограничения. Определяем, какой результат нужен бизнесу.</p></div>
+            </li>
+            <li>
+              <span>02 →</span>
+              <div><h3>ТЗ и фиксация цены</h3><p>Собираю требования в понятный документ, согласовываем сроки и фиксированную стоимость.</p></div>
+            </li>
+            <li>
+              <span>03 →</span>
+              <div><h3>Разработка с промежуточными демо</h3><p>Показываю результат по этапам, чтобы важные решения принимались до финальной сборки.</p></div>
+            </li>
+            <li>
+              <span>04 →</span>
+              <div><h3>Запуск и проверка</h3><p>Разворачиваю проект, проверяю основные сценарии и передаю все доступы.</p></div>
+            </li>
+            <li>
+              <span>05 →</span>
+              <div><h3>Поддержка</h3><p>Остаюсь на связи после релиза, исправляю найденное и помогаю с развитием.</p></div>
+            </li>
+          </ol>
+        </div>
       </section>
 
-      <!-- ── Стек ─────────────────────────────────────────────────────────── -->
-      <section class="section" id="stack" data-section-name="Стек" aria-labelledby="stack-title">
-        <div class="frame section__head section__head--row">
+      <section class="content-section stack-section section-tone section-assembly section-tone--stack" id="stack" data-section-name="Стек" aria-labelledby="stack-title">
+        <div class="section-heading section-heading--compact">
+          <p class="eyebrow">03 / СТЕК</p>
+          <h2 id="stack-title">Инструменты</h2>
+        </div>
+        <div class="stack-layout">
+          <aside class="stack-readout" aria-hidden="true">
+            <span>AI TOOLCHAIN / READY</span>
+            <strong data-stack-active>Node.js</strong>
+            <small><span data-stack-index>01</span> / 25 · SELECT TOOL</small>
+          </aside>
+          <ul class="tag-list" aria-label="Технологии и инструменты разработки">
+            <li>Node.js</li><li>Express</li><li>JavaScript</li><li>TypeScript</li><li>React</li><li>Next.js</li><li>HTML5</li><li>CSS3</li><li>Tilda</li><li>WordPress</li><li>Python</li><li>FastAPI</li><li>SQLite</li><li>PostgreSQL</li><li>Supabase</li><li>Redis</li><li>REST API</li><li>Webhooks</li><li>Telegram Bot API</li><li>OpenAI API</li><li>ЮKassa</li><li>Docker</li><li>GitHub Actions</li><li>Vercel</li><li>Timeweb</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="content-section faq-section section-tone section-assembly section-tone--faq" id="faq" data-section-name="FAQ" aria-labelledby="faq-title">
+        <div class="section-heading">
+          <p class="eyebrow">04 / FAQ</p>
+          <h2 id="faq-title">Частые вопросы</h2>
+        </div>
+        <div class="faq-layout">
+          <aside class="faq-visual" aria-hidden="true">
+            <p class="faq-visual__kicker">OPEN KNOWLEDGE / 07</p>
+            <div class="faq-visual__display">
+              <span class="faq-visual__glyph">?</span>
+              <p class="faq-visual__counter"><span data-faq-current>01</span><small>/ 07</small></p>
+            </div>
+            <p class="faq-visual__label" data-faq-label>Сколько стоит сайт?</p>
+            <div class="faq-visual__deck"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          </aside>
+          <div class="faq-list">
+          <details>
+            <summary>Сколько стоит сайт?<span aria-hidden="true">+</span></summary>
+            <div class="faq-answer"><div class="faq-answer__inner"><p>Стоимость зависит от объёма и сложности задачи. После короткого созвона я подготовлю оценку и зафиксирую её в ТЗ до начала работ.</p></div></div>
+          </details>
+          <details>
+            <summary>Какие сроки?<span aria-hidden="true">+</span></summary>
+            <div class="faq-answer"><div class="faq-answer__inner"><p>Небольшой проект обычно занимает от 7 до 14 дней. Точный срок зависит от состава функций и фиксируется вместе с этапами работы.</p></div></div>
+          </details>
+          <details>
+            <summary>Что нужно от меня?<span aria-hidden="true">+</span></summary>
+            <div class="faq-answer"><div class="faq-answer__inner"><p>Нужно рассказать о задаче, продукте и желаемом результате. Тексты, материалы и доступы соберём по понятному списку без лишней бюрократии.</p></div></div>
+          </details>
+          <details>
+            <summary>Кто занимается хостингом и доменом?<span aria-hidden="true">+</span></summary>
+            <div class="faq-answer"><div class="faq-answer__inner"><p>Я помогу выбрать площадку, подключить домен и развернуть проект. Все аккаунты и доступы после запуска остаются у вас.</p></div></div>
+          </details>
+          <details>
+            <summary>Что после сдачи?<span aria-hidden="true">+</span></summary>
+            <div class="faq-answer"><div class="faq-answer__inner"><p>После запуска я проверяю рабочие сценарии и остаюсь на связи. Дальнейшие доработки и поддержку можно согласовать отдельно.</p></div></div>
+          </details>
+          <details>
+            <summary>Как проходит оплата?<span aria-hidden="true">+</span></summary>
+            <div class="faq-answer"><div class="faq-answer__inner"><p>Доступны два варианта поэтапной оплаты: 25/25/50 — 25% до старта, 25% после согласования структуры и дизайна, 50% после завершения и приёмки; или 50/50 — 50% до старта и 50% после завершения и приёмки.</p></div></div>
+          </details>
+          <details>
+            <summary>Работаете по договору?<span aria-hidden="true">+</span></summary>
+            <div class="faq-answer"><div class="faq-answer__inner"><p>Да. В договоре фиксируются задача, этапы оплаты, сроки, порядок приёмки и гарантия. Мой шаблон договора на разработку ПО выложен бесплатно — можно посмотреть, по каким правилам я работаю, и забрать себе.</p><p class="faq-answer__actions"><a class="button" href="./contract.html">Посмотреть шаблон договора</a></p></div></div>
+          </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section calculator-section section-tone section-assembly section-tone--calculator" id="calculator" data-section-name="Стоимость" aria-labelledby="calculator-title">
+        <div class="section-heading">
           <div>
-            <p class="kicker"><span>04</span>Стек</p>
-            <h2 id="stack-title">Инструменты</h2>
+            <p class="eyebrow">05 / РАСЧЁТ СТОИМОСТИ</p>
+            <p class="calculator-duration">≈ 1–2 МИНУТЫ</p>
           </div>
-          <p class="lede">Выбираю под задачу, а не под привычку: от Tilda до своего бэкенда на Node.js или Python.</p>
-        </div>
-        <ul class="frame frame--tight tag-grid" aria-label="Технологии и инструменты разработки">
-          <li>Node.js</li><li>Express</li><li>JavaScript</li><li>TypeScript</li><li>React</li><li>Next.js</li><li>HTML5</li><li>CSS3</li><li>Tilda</li><li>WordPress</li><li>Python</li><li>FastAPI</li><li>SQLite</li><li>PostgreSQL</li><li>Supabase</li><li>Redis</li><li>REST API</li><li>Webhooks</li><li>Telegram Bot API</li><li>OpenAI API</li><li>ЮKassa</li><li>Docker</li><li>GitHub Actions</li><li>Vercel</li><li>Timeweb</li>
-        </ul>
-      </section>
-
-      <div class="frame hatch-band" aria-hidden="true"></div>
-
-      <!-- ── Калькулятор ──────────────────────────────────────────────────── -->
-      <section class="section" id="calculator" data-section-name="Стоимость" aria-labelledby="calculator-title">
-        <div class="frame section__head">
-          <p class="kicker"><span>05</span>Расчёт стоимости · 1–2 минуты</p>
-          <h2 id="calculator-title">Сколько будет <em>стоить</em> ваш проект</h2>
-          <p class="lede">Ответьте на пять вопросов и получите предварительную вилку стоимости разработки.</p>
-        </div>
-        <div class="frame calculator-frame">
-          <div class="calculator-shell" data-calculator>
-            <div class="calculator-head">
-              <span data-calculator-step>01 / 05</span>
-              <div class="calculator-progress" role="progressbar" aria-label="Прогресс расчёта" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-calculator-progress>
-                <span></span>
-              </div>
-              <span data-calculator-progress-text>0%</span>
-            </div>
-            <div class="calculator-stage" data-calculator-stage aria-live="polite"></div>
-            <div class="calculator-controls">
-              <button class="button" type="button" data-calculator-back>← Назад</button>
-              <p data-calculator-hint aria-live="polite"></p>
-              <button class="button button--primary" type="button" data-calculator-next>Далее →</button>
-            </div>
+          <div>
+            <h2 id="calculator-title">Рассчитайте стоимость проекта</h2>
+            <p class="section-heading__lead">Ответьте на несколько вопросов и получите предварительную вилку стоимости разработки.</p>
           </div>
-          <aside class="brief-promo" aria-labelledby="brief-promo-title">
-            <p class="kicker kicker--plain">Нет технического задания?</p>
+        </div>
+        <div class="calculator-shell" data-calculator>
+          <div class="calculator-head">
+            <span data-calculator-step>01 / 05</span>
+            <div class="calculator-progress" role="progressbar" aria-label="Прогресс расчёта" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-calculator-progress>
+              <span></span>
+            </div>
+            <span data-calculator-progress-text>0%</span>
+          </div>
+          <div class="calculator-stage" data-calculator-stage aria-live="polite"></div>
+          <div class="calculator-controls">
+            <button class="button" type="button" data-calculator-back>← Назад</button>
+            <p data-calculator-hint aria-live="polite"></p>
+            <button class="button" type="button" data-calculator-next>Далее →</button>
+          </div>
+        </div>
+        <aside class="brief-promo" aria-labelledby="brief-promo-title">
+          <div class="brief-promo__text">
+            <p class="brief-promo__eyebrow">НЕТ ТЕХНИЧЕСКОГО ЗАДАНИЯ?</p>
             <h3 id="brief-promo-title">Соберём ТЗ вместе — без терминов и шаблонов</h3>
             <p>Опишите идею своими словами и ответьте на уточняющие вопросы — каждый следующий подстраивается под ваши ответы. Я получу бриф и подготовлю подробное техническое задание, а вы сразу увидите похожие проекты и примерную стоимость.</p>
-            <a class="button" href="./brief/">Помощь с ТЗ →</a>
-          </aside>
-        </div>
+          </div>
+          <a class="button brief-promo__button" href="./brief/">Помощь с ТЗ →</a>
+        </aside>
       </section>
 
-      <!-- ── FAQ ──────────────────────────────────────────────────────────── -->
-      <section class="section" id="faq" data-section-name="FAQ" aria-labelledby="faq-title">
-        <div class="frame faq-layout">
-          <div class="section__head section__head--sticky">
-            <p class="kicker"><span>06</span>FAQ</p>
-            <h2 id="faq-title">Частые <em>вопросы</em></h2>
-            <p class="lede">Не нашли ответ — напишите в Telegram, отвечу в течение дня.</p>
-          </div>
-          <div class="faq-list">
-            <details>
-              <summary>Сколько стоит сайт?<span aria-hidden="true"></span></summary>
-              <div class="faq-answer"><p>Стоимость зависит от объёма и сложности задачи. После короткого созвона я подготовлю оценку и зафиксирую её в ТЗ до начала работ.</p></div>
-            </details>
-            <details>
-              <summary>Какие сроки?<span aria-hidden="true"></span></summary>
-              <div class="faq-answer"><p>Небольшой проект обычно занимает от 7 до 14 дней. Точный срок зависит от состава функций и фиксируется вместе с этапами работы.</p></div>
-            </details>
-            <details>
-              <summary>Что нужно от меня?<span aria-hidden="true"></span></summary>
-              <div class="faq-answer"><p>Нужно рассказать о задаче, продукте и желаемом результате. Тексты, материалы и доступы соберём по понятному списку без лишней бюрократии.</p></div>
-            </details>
-            <details>
-              <summary>Кто занимается хостингом и доменом?<span aria-hidden="true"></span></summary>
-              <div class="faq-answer"><p>Я помогу выбрать площадку, подключить домен и развернуть проект. Все аккаунты и доступы после запуска остаются у вас.</p></div>
-            </details>
-            <details>
-              <summary>Что после сдачи?<span aria-hidden="true"></span></summary>
-              <div class="faq-answer"><p>После запуска я проверяю рабочие сценарии и остаюсь на связи. Дальнейшие доработки и поддержку можно согласовать отдельно.</p></div>
-            </details>
-            <details>
-              <summary>Как проходит оплата?<span aria-hidden="true"></span></summary>
-              <div class="faq-answer"><p>Доступны два варианта поэтапной оплаты: 25/25/50 — 25% до старта, 25% после согласования структуры и дизайна, 50% после завершения и приёмки; или 50/50 — 50% до старта и 50% после завершения и приёмки.</p></div>
-            </details>
-            <details>
-              <summary>Работаете по договору?<span aria-hidden="true"></span></summary>
-              <div class="faq-answer"><p>Да. В договоре фиксируются задача, этапы оплаты, сроки, порядок приёмки и гарантия. Мой шаблон договора на разработку ПО выложен бесплатно — можно посмотреть, по каким правилам я работаю, и забрать себе.</p><p><a class="button button--small" href="./contract.html">Шаблон договора →</a></p></div>
-            </details>
-          </div>
-        </div>
-      </section>
-
-      <!-- ── Контакты ─────────────────────────────────────────────────────── -->
-      <section class="section section--accent" id="contacts" data-section-name="Контакты" aria-labelledby="contacts-title">
-        <div class="frame contact-card">
+      <section class="content-section contacts-section section-tone section-assembly section-tone--contacts" id="contacts" data-section-name="Контакты" aria-labelledby="contacts-title">
+        <div class="contact-card contact-card--single">
           <div class="contact-card__intro">
-            <p class="kicker kicker--on-accent"><span>07</span>Контакты</p>
+            <p class="eyebrow">06 / КОНТАКТЫ</p>
             <h2 id="contacts-title">Обсудим ваш проект</h2>
             <p>Расскажите о задаче — отвечу в течение дня и предложу следующий шаг.</p>
-          </div>
-          <div class="contact-card__actions">
-            <a class="button button--ink button--large" href="https://t.me/g0_faq" target="_blank" rel="noreferrer">Написать в Telegram ↗</a>
-            <ul class="contact-links">
-              <li><a href="https://vk.com/g0_faq" target="_blank" rel="noreferrer">VK <span>vk.com/g0_faq</span></a></li>
-              <li><a href="https://web.max.ru/" target="_blank" rel="noreferrer">MAX <span>+7 977 974-25-10</span></a></li>
-              <li><a href="tel:+79779742510">Телефон <span>+7 977 974-25-10</span></a></li>
-              <li><a href="https://github.com/g0faq" target="_blank" rel="noreferrer">GitHub <span>github.com/g0faq</span></a></li>
-            </ul>
+            <a class="button contact-cta" href="https://t.me/g0_faq" target="_blank" rel="noreferrer">Написать в Telegram ↗</a>
+            <div class="contact-links">
+              <a class="contact-icon-link contact-icon-link--vk" href="https://vk.com/g0_faq" target="_blank" rel="noreferrer" aria-label="VK — g0_faq">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6c.2-.6 0-1-.8-1H20c-.7 0-1 .4-1.2.8 0 0-1.3 3.2-3.2 5.3-.6.6-.9.8-1.2.8-.2 0-.4-.2-.4-.8V6c0-.7-.2-1-.8-1H9.1c-.4 0-.7.3-.7.6 0 .6.9.8 1 2.6V12c0 .8-.1 1-.5 1-.9 0-3-3.3-4.3-7-.2-.7-.5-1-1.2-1H.9c-.8 0-.9.4-.9.8 0 .7.9 4.1 4.1 8.7 2.2 3.1 5.2 4.8 8 4.8 1.7 0 1.9-.4 1.9-1v-2.4c0-.7.2-.9.7-.9.4 0 1.1.2 2.6 1.7 1.8 1.8 2.1 2.6 3.1 2.6H23c.8 0 1.1-.4.9-1.1-.2-.7-1.1-1.8-2.2-3.1-.6-.7-1.5-1.5-1.8-1.9-.4-.5-.3-.7 0-1.2 0 0 3.2-4.5 3.6-6Z"/></svg>
+                <span>VK</span>
+              </a>
+              <a class="contact-icon-link contact-icon-link--github" href="https://github.com/g0faq" target="_blank" rel="noreferrer" aria-label="GitHub — g0faq">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z"/></svg>
+                <span>GITHUB</span>
+              </a>
+              <a class="contact-icon-link contact-icon-link--telegram" href="https://t.me/g0_faq" target="_blank" rel="noreferrer" aria-label="Telegram — g0_faq">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.9 3.8 20.3 20.9c-.3 1.2-1 1.5-2 .9l-5.5-4.1-2.7 2.6c-.3.3-.5.5-1.1.5l.4-5.7 10.3-9.3c.4-.4-.1-.6-.7-.2L6.3 13.6.8 11.9c-1.2-.4-1.2-1.2.3-1.8l21.4-8.2c1-.4 1.9.2 1.4 1.9Z"/></svg>
+                <span>TELEGRAM</span>
+              </a>
+              <a class="contact-icon-link contact-icon-link--max" href="https://web.max.ru/" target="_blank" rel="noreferrer" aria-label="MAX по номеру +7 977 974-25-10">
+                <svg class="max-wordmark" viewBox="0 0 44 24" aria-hidden="true"><defs><linearGradient id="max-contact-gradient" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#00bfff"/><stop offset=".5" stop-color="#6e1aff"/><stop offset="1" stop-color="#9500ff"/></linearGradient></defs><text x="22" y="17" text-anchor="middle">MAX</text></svg>
+                <span>MAX</span><small>+7 977 974-25-10</small>
+              </a>
+              <a class="contact-icon-link contact-icon-link--phone" href="tel:+79779742510" aria-label="Позвонить +7 977 974-25-10">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1l-2.3 2.2Z"/></svg>
+                <span>+7 977 974-25-10</span>
+              </a>
+            </div>
           </div>
           <!-- включить после подключения эндпоинта: снять класс contact-form--disabled
                здесь и в форме калькулятора, задать CONTACT_ENDPOINT в js/main.js и js/calculator.js -->
@@ -630,12 +369,15 @@
             <label for="name">Имя</label>
             <input id="name" name="name" type="text" autocomplete="name" maxlength="100" required>
             <label for="contact-channel">Предпочтительный способ связи</label>
-            <select id="contact-channel" name="channel" required>
-              <option value="Telegram">Telegram</option>
-              <option value="VK">VK</option>
-              <option value="MAX">MAX</option>
-              <option value="Телефон">Телефон</option>
-            </select>
+            <div class="contact-select">
+              <select id="contact-channel" name="channel" required>
+                <option value="Telegram">Telegram</option>
+                <option value="VK">VK</option>
+                <option value="MAX">MAX</option>
+                <option value="Телефон">Телефон</option>
+              </select>
+              <span aria-hidden="true">↓</span>
+            </div>
             <label for="contact" data-contact-label>Ваш Telegram</label>
             <input id="contact" name="contact" type="text" autocomplete="off" maxlength="200" placeholder="@username" required>
             <label for="message">Описание задачи</label>
@@ -652,38 +394,34 @@
     </main>
 
     <footer class="site-footer">
-      <div class="frame site-footer__grid">
-        <div class="site-footer__brand">
-          <a class="logo" href="#top"><span class="logo__mark" aria-hidden="true"></span><span class="logo__text">g0_faq</span></a>
-          <p>Ершов Фёдор Николаевич</p>
-          <p class="muted">Разработка цифровых продуктов под ключ</p>
-        </div>
-        <nav class="site-footer__column" aria-label="Разделы сайта">
-          <strong>Разделы</strong>
-          <a href="#cases">Кейсы</a>
-          <a href="#services">Услуги</a>
-          <a href="#process">Процесс</a>
-          <a href="#calculator">Стоимость</a>
-          <a href="#faq">FAQ</a>
-        </nav>
-        <div class="site-footer__column">
-          <strong>Связь</strong>
-          <a href="https://t.me/g0_faq" target="_blank" rel="noreferrer">Telegram</a>
-          <a href="https://vk.com/g0_faq" target="_blank" rel="noreferrer">VK</a>
-          <a href="https://github.com/g0faq" target="_blank" rel="noreferrer">GitHub</a>
-          <a href="tel:+79779742510">+7 977 974-25-10</a>
-        </div>
-        <div class="site-footer__column">
-          <strong>Документы</strong>
-          <a href="./brief/">Помощь с ТЗ</a>
-          <a href="./contract.html">Шаблон договора</a>
-          <a href="./privacy.html">Данные и cookie</a>
-          <a href="#" data-consent-revoke>Настройки cookie</a>
-        </div>
+      <div class="site-footer__brand">
+        <a class="logo" href="#top">g0_faq</a>
+        <p>Ершов Фёдор Николаевич</p>
+        <span>Разработка цифровых продуктов под ключ</span>
       </div>
-      <div class="frame site-footer__bottom">
-        <span>© 2026 g0_faq</span>
-        <span>Работа по договору · фиксированная смета</span>
+      <nav class="site-footer__column" aria-label="Разделы сайта">
+        <strong>РАЗДЕЛЫ</strong>
+        <a href="#cases">Кейсы</a>
+        <a href="#services">Услуги</a>
+        <a href="#process">Процесс</a>
+        <a href="#calculator">Стоимость</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="site-footer__column">
+        <strong>СВЯЗЬ</strong>
+        <a href="https://vk.com/g0_faq" target="_blank" rel="noreferrer">VK</a>
+        <a href="https://t.me/g0_faq" target="_blank" rel="noreferrer">Telegram</a>
+        <a href="https://github.com/g0faq" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="tel:+79779742510">+7 977 974-25-10</a>
+      </div>
+      <div class="site-footer__column site-footer__column--docs">
+        <strong>ДОКУМЕНТЫ</strong>
+        <span>Работа по договору</span>
+        <a href="./brief/">Помощь с ТЗ</a>
+        <a href="./contract.html">Шаблон договора</a>
+        <a href="./privacy.html">Данные и cookie</a>
+        <a href="#" data-consent-revoke>Настройки cookie</a>
+        <p>© 2026</p>
       </div>
     </footer>
 
@@ -697,8 +435,8 @@
           <a class="consent__more" href="./privacy.html">Подробнее</a>
         </p>
         <div class="consent__actions">
-          <button class="button button--small consent__accept" type="button" data-consent="granted">Принять</button>
-          <button class="button button--small" type="button" data-consent="denied">Отклонить</button>
+          <button class="button consent__accept" type="button" data-consent="granted">Принять</button>
+          <button class="button" type="button" data-consent="denied">Отклонить</button>
         </div>
       </div>
     </div>
