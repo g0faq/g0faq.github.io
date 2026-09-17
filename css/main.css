@@ -2287,10 +2287,21 @@ p {
 
 /* Пока заставка на экране, анимации первого экрана стоят на паузе в
    начальном кадре — после её ухода (html.is-intro-done) запускаются. */
-.motion-ready:not(.is-intro-done) .hero,
-.motion-ready:not(.is-intro-done) .hero *,
+/* Блок с логотипом не ждёт: он и есть сюжет заставки — поднят над ней и
+   собирает буквы, пока идёт заставка. */
+.motion-ready:not(.is-intro-done) .hero > :not(.hero__figure),
+.motion-ready:not(.is-intro-done) .hero > :not(.hero__figure) *,
 .motion-ready:not(.is-intro-done) .site-header * {
   animation-play-state: paused !important;
+}
+
+html.is-splash main {
+  z-index: auto;
+}
+
+html.is-splash .hero > .hero__figure {
+  z-index: 1001;
+  border-bottom-color: transparent;
 }
 
 /* ── Логотип уходит под страницу ────────────────────────────────────────────
@@ -2403,15 +2414,15 @@ p {
     letter-drop 0.9s cubic-bezier(0.25, 1.4, 0.45, 1) backwards,
     letter-float 4.2s ease-in-out infinite;
   animation-delay:
-    calc(var(--l) * 120ms + 150ms),
-    calc(var(--l) * -700ms + 1.4s);
+    calc(var(--l) * 120ms + 350ms),
+    calc(var(--l) * 350ms + 1.6s);
 }
 
 .motion-ready .iso-edge {
   stroke-dasharray: 120;
   stroke-dashoffset: 120;
-  animation: draw-edge 1.2s var(--ease) forwards;
-  animation-delay: calc(var(--l, 0) * 120ms);
+  animation: draw-edge 1.3s var(--ease) forwards;
+  animation-delay: calc(var(--l, 0) * 120ms + 300ms);
 }
 
 @keyframes letter-drop {

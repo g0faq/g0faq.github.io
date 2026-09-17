@@ -9,24 +9,34 @@
     <title>g0_faq — сайты, Telegram, CRM и AI под ключ</title>
     <style>
       html,body{min-width:320px;margin:0;background:#eeefe9;color:#101114}
-      /* Заставка: стили встроены, чтобы она появилась до загрузки main.css.
-         Фон и направляющие те же, что у первого экрана, поэтому заставка не
-         «уезжает», а растворяется в нём. */
-      .splash{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:#eeefe9;color:#101114;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;transition:opacity .7s cubic-bezier(.4,0,.2,1),visibility .7s}
-      .splash::before{content:"";position:absolute;inset:0;background:linear-gradient(#c9ccc2,#c9ccc2) calc(50% - 560px) 0/1px 100% no-repeat,linear-gradient(#c9ccc2,#c9ccc2) calc(50% + 560px) 0/1px 100% no-repeat}
-      .splash.is-leaving{opacity:0;visibility:hidden}
-      .splash__inner{position:relative;display:grid;justify-items:center;gap:16px;width:min(300px,76vw);transition:opacity .45s ease,transform .7s cubic-bezier(.4,0,.2,1),filter .7s}
-      .splash.is-leaving .splash__inner{opacity:0;transform:translateY(-18px) scale(1.06);filter:blur(4px)}
-      .splash__word{font:700 clamp(30px,8vw,44px) 'Unbounded','Arial Black',sans-serif;letter-spacing:-.04em;overflow:hidden;white-space:nowrap;padding-bottom:4px}
-      .splash__word span{display:inline-block;animation:splash-up .6s cubic-bezier(.3,1.4,.5,1) both;animation-delay:calc(.1s + var(--i)*55ms)}
-      .splash__word span:nth-child(2){color:#ff4f0f}
-      .splash__bar{position:relative;width:100%;height:8px;border:1.5px solid #101114;overflow:hidden;animation:splash-fade .4s ease .35s both}
-      .splash__bar span{position:absolute;inset:0;background:repeating-linear-gradient(-45deg,#ff4f0f 0 6px,#ff7a40 6px 12px);transform:scaleX(var(--p,0));transform-origin:left;transition:transform .2s linear}
-      .splash__meta{display:flex;justify-content:space-between;width:100%;font-size:11px;letter-spacing:.12em;color:#6d727a;animation:splash-fade .4s ease .45s both}
-      .splash__meta b{color:#cf3a02;font-variant-numeric:tabular-nums}
-      @keyframes splash-fade{from{opacity:0}}
-      @keyframes splash-up{from{opacity:0;transform:translateY(110%)}}
-      @media (max-width:1180px){.splash::before{display:none}}
+      /* Заставка — короткий сюжет, который превращается в первый экран.
+         На «чистом листе» прочерчиваются направляющие и печатается команда,
+         а настоящий блок с логотипом (он поднят над заставкой, см. main.css)
+         в это время собирает буквы. Потом лист заставки уходит — логотип уже
+         стоит на своём месте, и под ним въезжает остальная страница. */
+      .splash{position:fixed;inset:0;z-index:1000;background:#eeefe9;color:#101114;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;transition:background-color .7s cubic-bezier(.4,0,.2,1)}
+      .splash__rail{position:absolute;top:0;bottom:0;width:1px;background:#c9ccc2;transform:scaleY(0);transform-origin:top;animation:splash-rail .9s cubic-bezier(.65,0,.35,1) forwards}
+      .splash__rail--l{left:calc(50% - 560px)}
+      .splash__rail--r{left:calc(50% + 560px);animation-delay:.12s}
+      .splash__mark{position:absolute;width:14px;height:14px;opacity:0;animation:splash-pop .4s cubic-bezier(.3,1.6,.5,1) forwards}
+      .splash__mark::before,.splash__mark::after{content:"";position:absolute;background:#ff4f0f}
+      .splash__mark::before{left:6px;top:0;width:2px;height:14px}
+      .splash__mark::after{top:6px;left:0;width:14px;height:2px}
+      .splash__mark--a{left:calc(50% - 567px);top:calc(64px - 7px);animation-delay:.7s}
+      .splash__mark--b{left:calc(50% + 553px);top:calc(64px - 7px);animation-delay:.8s}
+      .splash__term{position:absolute;left:50%;bottom:clamp(40px,12vh,120px);transform:translateX(-50%);display:grid;justify-items:center;gap:8px;white-space:nowrap;transition:opacity .35s ease,transform .5s ease}
+      .splash__line{font-size:clamp(12px,1.6vw,15px);color:#464a52}
+      .splash__line b{color:#cf3a02;font-weight:700}
+      .splash__cursor{display:inline-block;width:.6em;height:1.1em;margin-left:2px;vertical-align:-.2em;background:#ff4f0f;animation:splash-blink .9s steps(1) infinite}
+      .splash__status{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6d727a;min-height:1.2em}
+      .splash__status i{font-style:normal;color:#1f8a4c}
+      .splash.is-leaving{background-color:rgba(238,239,233,0);pointer-events:none}
+      .splash.is-leaving .splash__term{opacity:0;transform:translate(-50%,12px)}
+      .splash.is-leaving .splash__rail,.splash.is-leaving .splash__mark{opacity:0;transition:opacity .4s}
+      @keyframes splash-rail{to{transform:scaleY(1)}}
+      @keyframes splash-pop{from{opacity:0;transform:scale(.2) rotate(-90deg)}to{opacity:1;transform:none}}
+      @keyframes splash-blink{50%{opacity:0}}
+      @media (max-width:1180px){.splash__rail,.splash__mark{display:none}}
       @media (prefers-reduced-motion:reduce){.splash,.splash *{animation:none!important;transition-duration:.01ms!important}}
     </style>
     <script>
@@ -64,52 +74,68 @@
   </head>
   <body>
     <div class="splash" id="splash" aria-hidden="true">
-      <div class="splash__inner">
-        <div class="splash__word"><span style="--i:0">g</span><span style="--i:1">0</span><span style="--i:2">_</span><span style="--i:3">f</span><span style="--i:4">a</span><span style="--i:5">q</span></div>
-        <div class="splash__bar"><span data-splash-bar></span></div>
-        <div class="splash__meta"><span>ЗАГРУЗКА</span><b data-splash-count>000%</b></div>
+      <span class="splash__rail splash__rail--l"></span>
+      <span class="splash__rail splash__rail--r"></span>
+      <span class="splash__mark splash__mark--a"></span>
+      <span class="splash__mark splash__mark--b"></span>
+      <div class="splash__term">
+        <div class="splash__line"><b>$</b> <span data-splash-typed></span><span class="splash__cursor"></span></div>
+        <div class="splash__status" data-splash-status></div>
       </div>
     </div>
     <script>
       (() => {
         const root = document.documentElement;
         const splash = document.getElementById('splash');
-        const bar = splash.querySelector('[data-splash-bar]');
-        const count = splash.querySelector('[data-splash-count]');
+        const typed = splash.querySelector('[data-splash-typed]');
+        const status = splash.querySelector('[data-splash-status]');
         const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const started = performance.now();
-        const MIN = reduced ? 0 : 1300;
-        const MAX = 4000;
+        const COMMAND = 'build g0faq --design --code --launch';
+        const MIN = reduced ? 0 : 2300;
+        const MAX = 4500;
+        const started = Date.now();
         let loaded = false;
-        let shown = 0;
+        let typedDone = reduced;
         let done = false;
 
-        // Счётчик идёт к 90% сам и добегает до 100%, когда страница загрузилась.
-        const tick = () => {
-          if (done) return;
-          const target = loaded ? 100 : 90;
-          shown += (target - shown) * (loaded ? 0.25 : 0.045);
-          if (loaded && shown > 99.5) shown = 100;
-          bar.style.setProperty('--p', (shown / 100).toFixed(3));
-          count.textContent = `${String(Math.round(shown)).padStart(3, '0')}%`;
-          if (shown === 100 && performance.now() - started >= MIN) return finish();
-          requestAnimationFrame(tick);
-        };
+        root.classList.add('is-splash');
 
         const finish = () => {
           if (done) return;
           done = true;
-          splash.classList.add('is-leaving');
-          // Первый экран начинает анимацию, пока шторка уезжает.
-          setTimeout(() => root.classList.add('is-intro-done'), reduced ? 0 : 150);
-          setTimeout(() => splash.remove(), reduced ? 0 : 900);
+          status.innerHTML = '<i>✓</i> готово';
+          setTimeout(() => {
+            splash.classList.add('is-leaving');
+            root.classList.add('is-intro-done');
+            root.classList.remove('is-splash');
+            setTimeout(() => splash.remove(), reduced ? 0 : 800);
+          }, reduced ? 0 : 280);
         };
 
-        addEventListener('load', () => { loaded = true; });
-        setTimeout(() => { loaded = true; }, MAX);
-        // Страховка: в фоновой вкладке кадры не рисуются, и заставка не должна застрять.
-        setTimeout(finish, MAX + 600);
-        requestAnimationFrame(tick);
+        const maybeFinish = () => {
+          if (loaded && typedDone && Date.now() - started >= MIN) finish();
+        };
+
+        // Команда печатается посимвольно, статусы сменяют друг друга.
+        if (!reduced) {
+          let index = 0;
+          const steps = ['собираю буквы…', 'прочерчиваю контуры…', 'расставляю блоки…'];
+          const type = () => {
+            index += 1;
+            typed.textContent = COMMAND.slice(0, index);
+            if (index === 6) status.textContent = steps[0];
+            if (index === 22) status.textContent = steps[1];
+            if (index < COMMAND.length) setTimeout(type, 28 + Math.random() * 30);
+            else { status.textContent = steps[2]; typedDone = true; setTimeout(maybeFinish, 350); }
+          };
+          setTimeout(type, 250);
+        } else {
+          typed.textContent = COMMAND;
+        }
+
+        addEventListener('load', () => { loaded = true; maybeFinish(); });
+        const poll = setInterval(() => { if (done) clearInterval(poll); else maybeFinish(); }, 200);
+        setTimeout(() => { loaded = true; typedDone = true; finish(); }, MAX);
       })();
     </script>
     <a class="skip-link" href="#main">Перейти к содержимому</a>
