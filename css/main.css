@@ -434,6 +434,23 @@ p {
   stroke-linejoin: round;
 }
 
+/* Расшифровка имени — тихой строкой под логотипом. */
+.hero__decode {
+  margin: 18px var(--gutter) 0;
+  padding-right: 64px;
+  font: 10px/1.7 var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.hero__decode b { font-weight: 700; color: var(--ink-2); }
+.hero__decode i { font-style: normal; color: var(--accent-deep); padding: 0 6px; }
+
+.motion-ready .hero__decode {
+  animation: rise .8s var(--ease) 1.1s backwards;
+}
+
 .hero__figure .fig-caption {
   position: absolute;
   right: var(--gutter);
@@ -2190,6 +2207,8 @@ p {
 }
 
 @media (max-width: 560px) {
+  .hero__decode { font-size: 9px; letter-spacing: .06em; padding-right: 56px; margin-top: 14px; }
+
   .site-header__cta {
     display: none;
   }
