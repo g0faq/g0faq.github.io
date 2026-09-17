@@ -335,7 +335,7 @@ function initHeroStory() {
   figure.querySelector('.hero__logo').before(wordmark);
   let frame = 0;
   let value = 0;
-  let duration = 1500;
+  let duration = 2600;
   let mobile = false;
   let targets = [];
   const smooth = (n) => { const t = clamp(n, 0, 1); return t * t * (3 - 2 * t); };
@@ -364,7 +364,8 @@ function initHeroStory() {
     translation.setAttribute('transform', `translate(0 ${10 * (1 - ru)})`);
     bracket.style.strokeDashoffset = String(1 - ru);
   };
-  const ease = (t) => 1 - Math.pow(1 - clamp(t, 0, 1), 3);
+  // Ровный ход: мягкий разгон и торможение, без рывка в начале.
+  const ease = (t) => { const n = clamp(t, 0, 1); return n * n * n * (n * (n * 6 - 15) + 10); };
   let started = 0;
   const step = (now) => {
     frame = 0;
